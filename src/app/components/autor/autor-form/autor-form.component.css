@@ -1,0 +1,37 @@
+.toolbar-title{
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+}
+
+/*mat-form-field*/
+.full-width-input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+mat-card{
+    max-width: 800px;
+    margin: 2rem auto;
+    /*Centraliza horizontalmente*/
+}
+
+mat-card-actions{
+    display: flex;
+    justify-content: flex-end;
+}
+
+/*para a div*/
+.form-container{
+    padding: 2rem;
+}
+
+button[mat-raised-button]{
+    width: 120px;
+    /*tamanho do botao*/
+}
+
+button[mat-raised-button]:not(:last-child){
+    margin-right: 1rem;
+    /*Adiciona margem à direita de todos os botões, exceto o último*/
+}
