@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+    <div class="flex-container">
+      <span class="toolbar-title"> Controle de Generos</span>
+      <button mat-fab color="accent" routerLink="/generos/new">
+        <!--Router Link: Direcionar para outra rota (outro componente para adicionar)-->
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  
+  <table mat-table [dataSource]="generos" class="mat-elevation-z8">
+    <!--O dataSource é o generos, muda dependendo do que vc quer listar-->
+  
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let genero"> {{genero.id}} </td>
+    </ng-container>
+  
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let genero"> {{genero.nome}} </td>
+    </ng-container>
+  
+    <!-- Descriçao Column -->
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef> Descriçao </th>
+      <td mat-cell *matCellDef="let genero"> {{genero.descricao}} </td>
+    </ng-container>
+  
+    <!-- acao Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef> Ação </th>
+      <td mat-cell *matCellDef="let genero">
+        <button mat-icon-button color="primary" routerLink="/generos/edit/{{genero.id}}">
+          <mat-icon> edit </mat-icon>
+        </button>
+  
+        <button mat-icon-button color="warn" (click)="excluir(genero)">
+          <mat-icon> delete </mat-icon>
+        </button>
+  
+      </td>
+    </ng-container>
+  
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
