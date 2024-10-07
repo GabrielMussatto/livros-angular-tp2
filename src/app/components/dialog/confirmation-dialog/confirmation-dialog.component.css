@@ -1,0 +1,68 @@
+.custom-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    padding: 10px; /* Adiciona um espaçamento nas bordas do diálogo */
+  }
+  
+  /* Estilo para o título do diálogo */
+  .custom-dialog-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(0, 0, 0); /* Cor do título */
+  }
+  
+  /* Estilo para o conteúdo do diálogo */
+  .custom-dialog-content p {
+    text-align: center; /* Centraliza o texto */
+    margin: 0 auto; /* Remove margem superior e inferior para o parágrafo */
+    padding: 0 20px; /* Adiciona espaçamento horizontal para o texto */
+    color: rgb(255, 0, 0); /* Cor do texto */
+  }
+  
+  /* Estilo para o contêiner de ações do diálogo */
+  .custom-dialog-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    width: 100%; /* Faz o container de botões ocupar 100% da largura */
+    padding: 10px 0;
+  }
+  
+  /* Estilo para os botões */
+  .custom-button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-radius: 20px; /* Borda arredondada */
+    transition: 0.3s;
+    border: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  }
+  
+  /* Estilo para o botão "Cancelar" */
+  .cancel-button {
+    background-color: #dddddd; /* Cor de fundo */
+    color: #646060; /* Cor do texto */
+  }
+  
+  /* Estilo para o botão "Sim" */
+  .confirm-button {
+    background-color: rgb(241, 64, 64); /* Cor de fundo */
+    color: #fff; /* Cor do texto */
+    width: 120px;
+  }
+  
+  /* Efeitos de hover para os botões */
+  .custom-button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  
+  /* Ajuste de cor da mensagem */
+  p {
+    color: rgb(255, 0, 0);
+  }
+  

@@ -1,0 +1,10 @@
+<div mat-dialog-container class="custom-dialog">
+  <h1 mat-dialog-title class="custom-dialog-title">Tem certeza?</h1>
+  <div mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </div>
+  <div mat-dialog-actions class="custom-dialog-actions">
+    <button mat-button class="custom-button cancel-button" (click)="onNoClick()">Cancelar</button>
+    <button mat-button class="custom-button confirm-button" (click)="onConfirm()">Sim</button>
+  </div>
+</div>
