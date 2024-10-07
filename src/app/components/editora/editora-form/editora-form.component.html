@@ -1,0 +1,85 @@
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Editoras</mat-toolbar>
+<div class="form-container">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Nome</mat-label>
+                    <input matInput type="text" formControlName="nome">
+                    <mat-error *ngIf="formGroup.get('nome')
+                                    && formGroup.get('nome')?.invalid
+                                    && formGroup.get('nome')?.touched">
+                            {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" formControlName="email">
+                    <mat-error *ngIf="formGroup.get('email')
+                                    && formGroup.get('email')?.invalid
+                                    && formGroup.get('email')?.touched">
+                        {{getErrorMessage('email', formGroup.get('email')?.errors)}}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Endereço</mat-label>
+                    <input matInput type="text" formControlName="endereco">
+                    <mat-error *ngIf="formGroup.get('endereco')
+                                    && formGroup.get('endereco')?.invalid
+                                    && formGroup.get('endereco')?.touched">
+                        {{getErrorMessage('endereco', formGroup.get('endereco')?.errors)}}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Estado</mat-label>
+                    <input matInput type="text" formControlName="estado">
+                    <mat-error *ngIf="formGroup.get('estado')
+                                    && formGroup.get('estado')?.invalid
+                                    && formGroup.get('estado')?.touched">
+                        {{getErrorMessage('estado', formGroup.get('estado')?.errors)}}
+                    </mat-error>
+                </mat-form-field>
+
+                <div formGroupName="telefone" class="telefone-fields">
+                    <mat-form-field appearance="fill" class="half-width-input">
+                        <mat-label>Código de Área</mat-label>
+                        <input matInput type="text" formControlName="codigoArea">
+                        <mat-error *ngIf="formGroup.get('telefone')?.get('codigoArea')
+                                        && formGroup.get('telefone')?.get('codigoArea')?.invalid
+                                        && formGroup.get('telefone')?.get('codigoArea')?.touched">
+                            {{getErrorMessage('telefone.codigoArea', formGroup.get('telefone')?.get('codigoArea')?.errors)}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="half-width-input">
+                        <mat-label>Número</mat-label>
+                        <input matInput type="text" formControlName="numero">
+                        <mat-error *ngIf="formGroup.get('telefone')?.get('numero')
+                                        && formGroup.get('telefone')?.get('numero')?.invalid
+                                        && formGroup.get('telefone')?.get('numero')?.touched">
+                            {{getErrorMessage('telefone.numero', formGroup.get('telefone')?.get('numero')?.errors)}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()">
+                Salvar
+            </button>
+
+            <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
+                [disabled]="formGroup.invalid">
+                Excluir
+            </button>
+
+            <button mat-raised-button routerLink="/editoras">
+                Cancelar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
