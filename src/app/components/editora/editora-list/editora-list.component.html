@@ -1,0 +1,58 @@
+<mat-toolbar color="primary">
+    <div class="flex-container">
+      <span class="toolbar-title"> Controle de Editoras</span>
+      <button mat-fab color="accent" routerLink="/editoras/new">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  
+  <table mat-table [dataSource]="editoras" class="mat-elevation-z8">
+  
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let editora"> {{editora.id}} </td>
+    </ng-container>
+  
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let editora"> {{editora.nome}} </td>
+    </ng-container>
+  
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let editora"> {{editora.email}} </td>
+    </ng-container>
+  
+    <!-- Endereço Column -->
+    <ng-container matColumnDef="endereco">
+      <th mat-header-cell *matHeaderCellDef> Endereço </th>
+      <td mat-cell *matCellDef="let editora"> {{editora.endereco}} </td>
+    </ng-container>
+  
+    <!-- Telefone Column -->
+    <ng-container matColumnDef="telefone">
+      <th mat-header-cell *matHeaderCellDef> Telefone </th>
+      <td mat-cell *matCellDef="let editora"> {{editora.telefone?.codigoArea}} - {{editora.telefone?.numero}} </td>
+    </ng-container>
+  
+    <!-- acao Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef> Ação </th>
+      <td mat-cell *matCellDef="let editora">
+        <button mat-icon-button color="primary" routerLink="/editoras/edit/{{editora.id}}">
+          <mat-icon>edit</mat-icon>
+        </button>
+  
+        <button mat-icon-button color="warn" (click)="excluir(editora)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
