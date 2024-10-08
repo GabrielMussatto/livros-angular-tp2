@@ -10,6 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EditoraService } from '../../../services/editora.service';
 import { Editora } from '../../../models/editora.model';
+import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
 
 @Component({
   selector: 'app-editora-form',
@@ -25,7 +27,9 @@ export class EditoraFormComponent {
   constructor(private formBuilder: FormBuilder,
     private editoraService: EditoraService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog // Injeta MatDialog
+  ) {
 
     const editora: Editora = this.activatedRoute.snapshot.data['editora'];
 
@@ -71,12 +75,21 @@ export class EditoraFormComponent {
     if (this.formGroup.valid) {
       const editora = this.formGroup.value;
       if (editora.id != null) {
-        this.editoraService.delete(editora).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/editoras');
-          },
-          error: (err) => {
-            console.log('Erro ao excluir' + JSON.stringify(err));
+        // Abre o diálogo de confirmação
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          data: { message: 'Deseja realmente excluir esta editora? Não será possível reverter.' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.editoraService.delete(editora).subscribe({
+              next: () => {
+                this.router.navigateByUrl('/editoras');
+              },
+              error: (err) => {
+                console.log('Erro ao excluir' + JSON.stringify(err));
+              }
+            });
           }
         });
       }
@@ -96,7 +109,7 @@ export class EditoraFormComponent {
     return 'Campo inválido';
   }
 
-  errorMessage: {[controlName: string]: {[errorName: string] : string}} = {
+  errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'O nome deve ser informado',
       minlength: 'O nome deve ter no mínimo 3 caracteres',
@@ -119,7 +132,6 @@ export class EditoraFormComponent {
     'telefone.numero': {
       required: 'O número de telefone deve ser informado',
       minlength: 'O número de telefone deve ter no mínimo 8 caracteres',
-     
     }
-  }
+  };
 }

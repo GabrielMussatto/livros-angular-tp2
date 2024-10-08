@@ -10,6 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { Fornecedor } from '../../../models/fornecedor.model';
+import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
 
 @Component({
   selector: 'app-fornecedor-form',
@@ -25,7 +27,9 @@ export class FornecedorFormComponent {
   constructor(private formBuilder: FormBuilder,
     private fornecedorService: FornecedorService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog // Injeta MatDialog
+  ) {
 
     const fornecedor: Fornecedor = this.activatedRoute.snapshot.data['fornecedor'];
 
@@ -76,12 +80,21 @@ export class FornecedorFormComponent {
     if (this.formGroup.valid) {
       const fornecedor = this.formGroup.value;
       if (fornecedor.id != null) {
-        this.fornecedorService.delete(fornecedor).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/fornecedores');
-          },
-          error: (err) => {
-            console.log('Erro ao excluir' + JSON.stringify(err));
+        // Abre o diálogo de confirmação
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          data: { message: 'Deseja realmente excluir este fornecedor? Não será possível reverter.' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.fornecedorService.delete(fornecedor).subscribe({
+              next: () => {
+                this.router.navigateByUrl('/fornecedores');
+              },
+              error: (err) => {
+                console.log('Erro ao excluir' + JSON.stringify(err));
+              }
+            });
           }
         });
       }
@@ -101,7 +114,7 @@ export class FornecedorFormComponent {
     return 'Campo inválido';
   }
 
-  errorMessage: {[controlName: string]: {[errorName: string] : string}} = {
+  errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'O nome deve ser informado',
       minlength: 'O nome deve ter no mínimo 3 caracteres',
@@ -144,5 +157,5 @@ export class FornecedorFormComponent {
       required: 'O número de telefone deve ser informado',
       minlength: 'O número de telefone deve ter no mínimo 8 caracteres',
     }
-  }
+  };
 }
