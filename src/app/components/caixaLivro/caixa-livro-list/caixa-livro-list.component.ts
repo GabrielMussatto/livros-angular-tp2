@@ -18,7 +18,7 @@ import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/co
   styleUrl: './caixa-livro-list.component.css'
 })
 export class CaixaLivroListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
+  displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'fornecedor', 'editora', 'classificacao', 'acao'];
   caixaLivros: CaixaLivro[] = [];
 
   constructor(
