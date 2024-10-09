@@ -91,8 +91,8 @@ export class CaixaLivroFormComponent implements OnInit {
       quantidadeEstoque: [(caixaLivro && caixaLivro.quantidadeEstoque) ? caixaLivro.quantidadeEstoque : null, Validators.compose([Validators.required, Validators.minLength(1)])],
       fornecedor: [fornecedor, Validators.required],
       editora: [editora, Validators.required],
-      generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : null, Validators.required],
-      autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : null, Validators.required],
+      //generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : null, Validators.required],
+      //autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : null, Validators.required],
       classificacao: [(caixaLivro && caixaLivro.classificacao) ? caixaLivro.classificacao : null, Validators.required]
     })
   }
