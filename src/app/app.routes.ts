@@ -11,12 +11,20 @@ import { FornecedorFormComponent } from './components/fornecedor/fornecedor-form
 import { FornecedorListComponent } from './components/fornecedor/fornecedor-list/fornecedor-list.component';
 import { EditoraFormComponent } from './components/editora/editora-form/editora-form.component';
 import { EditoraListComponent } from './components/editora/editora-list/editora-list.component';
+import { CaixaLivroListComponent } from './components/caixaLivro/caixa-livro-list/caixa-livro-list.component';
+import { CaixaLivroFormComponent } from './components/caixaLivro/caixa-livro-form/caixa-livro-form.component';
+import { caixaLivroResolver } from './components/caixaLivro/resolver/caixa-livro.resolver';
 
 export const routes: Routes = [
     // Rotas para Autores
     { path: 'autores', component: AutorListComponent, title: 'Lista de Autores' },
     { path: 'autores/new', component: AutorFormComponent, title: 'Novo Autor' },
     { path: 'autores/edit/:id', component: AutorFormComponent, resolve: { autor: autorResolver } },
+
+    // Rotas para Caixa de Livros
+    { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros' },
+    { path: 'caixaLivros/new', component: CaixaLivroFormComponent, title: 'Nova Caixa de Livro' },
+    { path: 'caixaLivros/edit/:id', component: CaixaLivroFormComponent, resolve: { caixaLivro: caixaLivroResolver } },
 
     // Rotas para Generos
     { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' },
