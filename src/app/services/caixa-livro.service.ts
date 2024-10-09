@@ -26,8 +26,8 @@ export class CaixaLivroService {
       quantidadeEstoque: caixaLivro.quantidadeEstoque,
       fornecedor: caixaLivro.fornecedor.id,
       editora: caixaLivro.editora.id,
-      generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
-      autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
+      //generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
+      //autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
       classificacao: caixaLivro.classificacao
     };
 
@@ -41,8 +41,8 @@ export class CaixaLivroService {
       quantidadeEstoque: caixaLivro.quantidadeEstoque,
       fornecedor: caixaLivro.fornecedor.id,
       editora: caixaLivro.editora.id,
-      generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
-      autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
+      //generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
+      //autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
       classificacao: caixaLivro.classificacao
     };
     return this.httpClient.put<CaixaLivro>(`${this.baseUrl}`, data);
