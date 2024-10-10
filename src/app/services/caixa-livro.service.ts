@@ -24,13 +24,13 @@ export class CaixaLivroService {
       nome: caixaLivro.nome,
       descricao: caixaLivro.descricao,
       quantidadeEstoque: caixaLivro.quantidadeEstoque,
-      fornecedor: caixaLivro.fornecedor.id,
-      editora: caixaLivro.editora.id,
-      //generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
-      //autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
+      fornecedor: caixaLivro.fornecedor?.id,
+      preco: caixaLivro.preco,
+      editora: caixaLivro.editora?.id,
+      generos: caixaLivro.generos.filter(genero => genero?.id).map(genero => genero.id),
+      autores: caixaLivro.autores.filter(autor => autor?.id).map(autor => autor.id),
       classificacao: caixaLivro.classificacao
     };
-
     return this.httpClient.post<CaixaLivro>(this.baseUrl, data);
   }
 
@@ -39,13 +39,14 @@ export class CaixaLivroService {
       nome: caixaLivro.nome,
       descricao: caixaLivro.descricao,
       quantidadeEstoque: caixaLivro.quantidadeEstoque,
-      fornecedor: caixaLivro.fornecedor.id,
-      editora: caixaLivro.editora.id,
-      //generos: caixaLivro.generos.map(genero => genero.id), // Mapeia os IDs dos gêneros
-      //autores: caixaLivro.autores.map(autor => autor.id),   // Mapeia os IDs dos autores
+      fornecedor: caixaLivro.fornecedor?.id,
+      preco: caixaLivro.preco,
+      editora: caixaLivro.editora?.id,
+      generos: caixaLivro.generos.filter(genero => genero?.id).map(genero => genero.id),
+      autores: caixaLivro.autores.filter(autor => autor?.id).map(autor => autor.id),
       classificacao: caixaLivro.classificacao
     };
-    return this.httpClient.put<CaixaLivro>(`${this.baseUrl}`, data);
+    return this.httpClient.put<CaixaLivro>(`${this.baseUrl}/${caixaLivro.id}`, data);
   }
 
   delete(caixaLivro: CaixaLivro): Observable<any>{
