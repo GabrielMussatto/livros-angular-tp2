@@ -1,1 +1,104 @@
-<p>livro-list works!</p>
+<mat-toolbar color="primary">
+    <div class="flex-container">
+        <span class="toolbar-title">Controle de Livros</span>
+        <button mat-fab color="accent" routerLink="/livros/new">
+            <!--Router Link: Direcionar para outra rota (outro componente para adicionar)-->
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+
+<table mat-table [dataSource]="livros" class="mat-elevation-z8">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.id}}</td>
+    </ng-container>
+
+    <!-- Titulo Column -->
+    <ng-container matColumnDef="titulo">
+        <th mat-header-cell *matHeaderCellDef> Titulo </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.titulo}}</td>
+    </ng-container>
+
+    <!-- Descrição Column -->
+    <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.descricao}}</td>
+    </ng-container>
+
+    <!-- Quantidade Em Estoque Column -->
+    <ng-container matColumnDef="quantidadeEstoque">
+        <th mat-header-cell *matHeaderCellDef> Quantidade em Estoque </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.quantidadeEstoque}}</td>
+    </ng-container>
+
+    <!-- ISBN Column -->
+    <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef> ISBN </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.isbn}}</td>
+    </ng-container>
+
+    <!-- Preco Column -->
+    <ng-container matColumnDef="preco">
+        <th mat-header-cell *matHeaderCellDef> Preço </th>
+        <td mat-cell *matCellDef="let livro"> R${{livro.preco}}</td>
+    </ng-container>
+
+    <!-- Fornecedor Column -->
+    <ng-container matColumnDef="fornecedor">
+        <th mat-header-cell *matHeaderCellDef> Fornecedor </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.fornecedor.nome}}</td>
+    </ng-container>
+
+    <!-- Editora Column -->
+    <ng-container matColumnDef="editora">
+        <th mat-header-cell *matHeaderCellDef> Editora </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.editora.nome}}</td>
+    </ng-container>
+
+    <!-- Gênero Column -->
+    <ng-container matColumnDef="genero">
+        <th mat-header-cell *matHeaderCellDef> Gênero </th>
+        <td mat-cell *matCellDef="let livro"> 
+          <span *ngFor="let genero of livro.generos"> {{genero.nome}} - </span>
+        </td>
+    </ng-container>
+
+    <!-- Autor Column -->
+    <ng-container matColumnDef="autor">
+        <th mat-header-cell *matHeaderCellDef> Autor </th>
+        <td mat-cell *matCellDef="let livro"> 
+          <span *ngFor="let autor of livro.autores">{{autor.nome}} -</span>
+        </td>
+    </ng-container>
+
+    <!-- Classificação Column -->
+    <ng-container matColumnDef="classificacao">
+        <th mat-header-cell *matHeaderCellDef> Classificação </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.classificacao.descricao}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="datalancamento">
+        <th mat-header-cell *matHeaderCellDef> Data de Lançamento </th>
+        <td mat-cell *matCellDef="let livro"> {{livro.datalancamento}}</td>
+    </ng-container>
+
+    <!-- acao Column -->
+    <ng-container matColumnDef="acao">
+        <th mat-header-cell *matHeaderCellDef> Ação </th>
+        <td mat-cell *matCellDef="let livro">
+          <button mat-icon-button color="primary" routerLink="/livros/edit/{{livro.id}}">
+            <mat-icon>edit</mat-icon>
+          </button>
+    
+          <button mat-icon-button color="warn" (click)="excluir(livro)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> <!--Colunas que serao exibidas-->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
