@@ -10,8 +10,8 @@ export class CaixaLivro {
     quantidadeEstoque!: number;
     fornecedor!: Fornecedor;
     editora!: Editora;
-    //generos!: Genero[];
-    //autores!: Autor[];
+    generos!: Genero[];
+    autores!: Autor[];
     classificacao!: string;
-    //fazer preco depois
+    preco!: number;
 }
