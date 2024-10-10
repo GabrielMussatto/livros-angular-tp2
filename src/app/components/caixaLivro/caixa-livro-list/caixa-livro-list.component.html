@@ -34,6 +34,12 @@
         <td mat-cell *matCellDef="let caixaLivro"> {{caixaLivro.quantidadeEstoque}}</td>
     </ng-container>
 
+    <!-- Preco Column -->
+    <ng-container matColumnDef="preco">
+        <th mat-header-cell *matHeaderCellDef> Preço </th>
+        <td mat-cell *matCellDef="let caixaLivro"> R${{caixaLivro.preco}}</td>
+    </ng-container>
+
     <!-- Fornecedor Column -->
     <ng-container matColumnDef="fornecedor">
         <th mat-header-cell *matHeaderCellDef> Fornecedor </th>
@@ -50,7 +56,7 @@
     <ng-container matColumnDef="genero">
         <th mat-header-cell *matHeaderCellDef> Gênero </th>
         <td mat-cell *matCellDef="let caixaLivro"> 
-          <span *ngFor="let genero of caixaLivro.generos">{{genero.nome}} </span>
+          <span *ngFor="let genero of caixaLivro.generos"> {{genero.nome}} - </span>
         </td>
     </ng-container>
 
@@ -58,7 +64,7 @@
     <ng-container matColumnDef="autor">
         <th mat-header-cell *matHeaderCellDef> Autor </th>
         <td mat-cell *matCellDef="let caixaLivro"> 
-          <span *ngFor="let autor of caixaLivro.autores">{{autor.nome}} </span>
+          <span *ngFor="let autor of caixaLivro.autores">{{autor.nome}} - </span>
         </td>
     </ng-container>
 

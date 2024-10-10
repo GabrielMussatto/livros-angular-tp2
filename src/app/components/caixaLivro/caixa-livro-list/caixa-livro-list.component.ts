@@ -15,10 +15,10 @@ import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/co
   standalone: true,
   imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule],
   templateUrl: './caixa-livro-list.component.html',
-  styleUrl: './caixa-livro-list.component.css'
+  styleUrls: ['./caixa-livro-list.component.css']
 })
 export class CaixaLivroListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'fornecedor', 'editora', 'classificacao', 'acao'];
+  displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
   caixaLivros: CaixaLivro[] = [];
 
   constructor(
