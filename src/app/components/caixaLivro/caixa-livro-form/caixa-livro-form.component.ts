@@ -35,7 +35,7 @@ export class CaixaLivroFormComponent implements OnInit {
   fornecedores: Fornecedor[] = [];
   editoras: Editora[] = [];
 
-  constructor(private formBiulder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private caixaLivroService: CaixaLivroService,
     private generoService: GeneroService,
     private autorService: AutorService,
@@ -46,16 +46,17 @@ export class CaixaLivroFormComponent implements OnInit {
 
     const caixaLivro: CaixaLivro = this.activatedRoute.snapshot.data['caixaLivro'];
 
-    this.formGroup = this.formBiulder.group({
+    this.formGroup = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
       descricao: ['', Validators.required],
-      quantidadeEstoque: ['', Validators.required],
+      quantidadeEstoque: [null, Validators.required],
+      preco: [null, Validators.required],
       fornecedor: [null, Validators.required],
       editora: [null, Validators.required],
-      generos: [null, Validators.required],
-      autores: [null, Validators.required],
-      classificacao: [null, Validators.required]
+      generos: [[], Validators.required],
+      autores: [[], Validators.required],
+      classificacao: ['', Validators.required]
     })
   }
 
@@ -64,18 +65,18 @@ export class CaixaLivroFormComponent implements OnInit {
       this.generos = data;
       this.initializeForm();
     }),
-      this.fornecedorService.findAll().subscribe(data => {
-        this.fornecedores = data;
-        this.initializeForm();
-      }),
-      this.editoraService.findAll().subscribe(data => {
-        this.editoras = data;
-        this.initializeForm();
-      }),
-      this.autorService.findAll().subscribe(data => {
-        this.autores = data;
-        this.initializeForm();
-      })
+    this.fornecedorService.findAll().subscribe(data => {
+      this.fornecedores = data;
+      this.initializeForm();
+    }),
+    this.editoraService.findAll().subscribe(data => {
+      this.editoras = data;
+      this.initializeForm();
+    })
+    this.autorService.findAll().subscribe(data => {
+      this.autores = data;
+      this.initializeForm();
+    })
   }
 
   initializeForm(): void {
@@ -84,15 +85,16 @@ export class CaixaLivroFormComponent implements OnInit {
     const fornecedor = this.fornecedores.find(fornecedor => fornecedor.id === (caixaLivro?.fornecedor?.id || null));
     const editora = this.editoras.find(editora => editora.id === (caixaLivro?.editora?.id || null));
 
-    this.formGroup = this.formBiulder.group({
+    this.formGroup = this.formBuilder.group({
       id: [(caixaLivro && caixaLivro.id) ? caixaLivro.id : null],
       nome: [(caixaLivro && caixaLivro.nome) ? caixaLivro.nome : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],
       descricao: [(caixaLivro && caixaLivro.descricao) ? caixaLivro.descricao : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20000)])],
       quantidadeEstoque: [(caixaLivro && caixaLivro.quantidadeEstoque) ? caixaLivro.quantidadeEstoque : null, Validators.compose([Validators.required, Validators.minLength(1)])],
+      preco: [(caixaLivro && caixaLivro.preco) ? caixaLivro.preco : null, Validators.required],
       fornecedor: [fornecedor, Validators.required],
       editora: [editora, Validators.required],
-      //generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : null, Validators.required],
-      //autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : null, Validators.required],
+      generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : [], Validators.required],
+      autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : [], Validators.required],
       classificacao: [(caixaLivro && caixaLivro.classificacao) ? caixaLivro.classificacao : null, Validators.required]
     })
   }
@@ -141,7 +143,7 @@ export class CaixaLivroFormComponent implements OnInit {
     }
   }
 
-  cancelar(){
+  cancelar() {
     this.router.navigateByUrl('/caixaLivros');
   }
 
@@ -172,6 +174,9 @@ export class CaixaLivroFormComponent implements OnInit {
     quantidadeEstoque: {
       required: 'Quantidade Estoque é obrigatório',
       minlength: 'Quantidade Estoque deve ser maior que zero'
+    },
+    preco: {
+      required: 'Preço é obrigatório',
     },
     fornecedor: {
       required: 'Fornecedor é obrigatório'

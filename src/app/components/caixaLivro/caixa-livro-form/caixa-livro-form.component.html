@@ -33,6 +33,16 @@
                     </mat-error>
                 </mat-form-field>
 
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="number" formControlName="preco">
+                    <mat-error *ngIf="formGroup.get('preco')
+                               && formGroup.get('preco')?.invalid
+                               && formGroup.get('preco')?.touched">
+                        {{getErrorMessage('preco' , formGroup.get('preco')?.errors)}}
+                    </mat-error>
+                </mat-form-field>
+
                 <mat-form-field appearance="fill">
                     <mat-label>Fornecedor</mat-label>
                     <mat-select formControlName="fornecedor">
@@ -64,11 +74,11 @@
                         {{getErrorMessage('editora', formGroup.get('editora')?.errors)}}
                     </mat-error>
                 </mat-form-field>
-<!-- 
+
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label>Gêneros</mat-label>
                     <mat-select formControlName="generos" name="generos" multiple>
-                        <mat-option *ngFor="let genero of generos" [value]="genero.id">
+                        <mat-option *ngFor="let genero of generos" [value]="genero">
                             {{genero.nome}}
                         </mat-option>
                     </mat-select>
@@ -78,11 +88,11 @@
                         {{getErrorMessage('generos', formGroup.get('generos')?.errors)}}
                     </mat-error>
                 </mat-form-field>
-
+                
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label>Autores</mat-label>
                     <mat-select formControlName="autores" name="autores" multiple>
-                        <mat-option *ngFor="let autor of autores" [value]="autor.id">
+                        <mat-option *ngFor="let autor of autores" [value]="autor">
                             {{autor.nome}}
                         </mat-option>
                     </mat-select>
@@ -92,7 +102,7 @@
                         {{getErrorMessage('autores', formGroup.get('autores')?.errors)}}
                     </mat-error>
                 </mat-form-field>
-             -->
+            
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label> Classificação </mat-label>
                     <mat-select formControlName="classificacao" name="classificacao">
@@ -103,13 +113,11 @@
                         <mat-option value="5">16 Anos</mat-option>
                         <mat-option value="6">18 Anos</mat-option>
                     </mat-select>
-                    <!--
                     <mat-error *ngIf="formGroup.get('classificacao')
                                 && formGroup.get('classificacao')?.invalid
                                 && formGroup.get('classificacao')?.touched">
                         {{getErrorMessage('classificacao', formGroup.get('classificacao')?.errors)}}
                     </mat-error>
-                -->
                 </mat-form-field>
 
             </form>
@@ -125,7 +133,7 @@
                 Excluir
             </button>
 
-            <button mat-raised-button routerLink="/caixaLivros">
+            <button mat-raised-button routerLink="/caixaLivros" (click)="cancelar()">
                 Cancelar
             </button>
         </mat-card-actions>
