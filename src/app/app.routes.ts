@@ -14,6 +14,9 @@ import { EditoraListComponent } from './components/editora/editora-list/editora-
 import { CaixaLivroListComponent } from './components/caixaLivro/caixa-livro-list/caixa-livro-list.component';
 import { CaixaLivroFormComponent } from './components/caixaLivro/caixa-livro-form/caixa-livro-form.component';
 import { caixaLivroResolver } from './components/caixaLivro/resolver/caixa-livro.resolver';
+import { livroResolver } from './components/livro/resolver/livro.resolver';
+import { LivroFormComponent } from './components/livro/livro-form/livro-form.component';
+import { LivroListComponent } from './components/livro/livro-list/livro-list.component';
 
 export const routes: Routes = [
     // Rotas para Autores
@@ -25,6 +28,11 @@ export const routes: Routes = [
     { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros' },
     { path: 'caixaLivros/new', component: CaixaLivroFormComponent, title: 'Nova Caixa de Livro' },
     { path: 'caixaLivros/edit/:id', component: CaixaLivroFormComponent, resolve: { caixaLivro: caixaLivroResolver } },
+
+    // Rotas para Livros
+    { path: 'livros', component: LivroListComponent, title: 'Lista de Livros' },
+    { path: 'livros/new', component: LivroFormComponent, title: 'Novo Livro' },
+    { path: 'livros/edit/:id', component: LivroFormComponent, resolve: { livro: livroResolver } },
 
     // Rotas para Generos
     { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' },
