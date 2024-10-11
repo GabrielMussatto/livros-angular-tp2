@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     font-size: x-large;
+    flex: 1;
+    text-align: center;
 }
 
 /*mat-form-field*/
@@ -24,6 +26,11 @@ mat-card-actions{
 /*para a div*/
 .form-container{
     padding: 2rem;
+}
+.flex-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 button[mat-raised-button]{

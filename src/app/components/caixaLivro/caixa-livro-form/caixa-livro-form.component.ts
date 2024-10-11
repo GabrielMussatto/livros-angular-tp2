@@ -19,12 +19,16 @@ import { GeneroService } from '../../../services/genero.service';
 import { AutorService } from '../../../services/autor.service';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { EditoraService } from '../../../services/editora.service';
+import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-caixa-livro-form',
   standalone: true,
   imports: [NgFor, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
-    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule],
+    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule, MatIconModule, MatMenuModule],
   templateUrl: './caixa-livro-form.component.html',
   styleUrls: ['./caixa-livro-form.component.css']
 })
@@ -42,7 +46,8 @@ export class CaixaLivroFormComponent implements OnInit {
     private fornecedorService: FornecedorService,
     private editoraService: EditoraService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) { 
 
     const caixaLivro: CaixaLivro = this.activatedRoute.snapshot.data['caixaLivro'];
 
@@ -131,12 +136,21 @@ export class CaixaLivroFormComponent implements OnInit {
     if (this.formGroup.valid) {
       const caixaLivro = this.formGroup.value;
       if (caixaLivro.id != null) {
-        this.caixaLivroService.delete(caixaLivro).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/caixaLivros');
-          },
-          error: (err) => {
-            console.log('Erro ao Excluir' + JSON.stringify(err));
+        // Abre o diálogo de confirmação
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          data: { message: 'Deseja realmente excluir esta Caixa de Livros? Não será possível reverter.' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.caixaLivroService.delete(caixaLivro).subscribe({
+              next: () => {
+                this.router.navigateByUrl('/caixaLivros');
+              },
+              error: (err) => {
+                console.log('Erro ao excluir' + JSON.stringify(err));
+              }
+            });
           }
         });
       }
