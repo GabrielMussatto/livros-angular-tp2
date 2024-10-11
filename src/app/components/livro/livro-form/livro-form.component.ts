@@ -21,6 +21,8 @@ import { GeneroService } from '../../../services/genero.service';
 import { AutorService } from '../../../services/autor.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
 
 @Component({
   selector: 'app-livro-form',
@@ -46,7 +48,8 @@ export class LivroFormComponent implements OnInit {
     private generoService: GeneroService,
     private autorService: AutorService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private dialog: MatDialog) {
 
     const livro: Livro = this.activatedRoute.snapshot.data['livro'];
 
@@ -141,12 +144,21 @@ export class LivroFormComponent implements OnInit {
     if (this.formGroup.valid) {
       const livro = this.formGroup.value;
       if (livro.id != null) {
-        this.livroService.delete(livro).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/livros');
-          },
-          error: (err) => {
-            console.log('Erro ao Excluir' + JSON.stringify(err));
+        // Abre o diálogo de confirmação
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+          data: { message: 'Deseja realmente excluir este Livro? Não será possível reverter.' }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.livroService.delete(livro).subscribe({
+              next: () => {
+                this.router.navigateByUrl('/livros');
+              },
+              error: (err) => {
+                console.log('Erro ao excluir' + JSON.stringify(err));
+              }
+            });
           }
         });
       }
