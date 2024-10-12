@@ -101,7 +101,7 @@ export class LivroFormComponent implements OnInit {
       titulo: [(livro && livro.titulo) ? livro.titulo : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],
       descricao: [(livro && livro.descricao) ? livro.descricao : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20000)])],
       quantidadeEstoque: [(livro && livro.quantidadeEstoque) ? livro.quantidadeEstoque : null, Validators.compose([Validators.required, Validators.minLength(1)])],
-      isbn: [(livro && livro.isbn) ? livro.isbn : null, Validators.compose([Validators.minLength(13), Validators.maxLength(13)])],
+      isbn: [(livro && livro.isbn) ? livro.isbn : null, Validators.compose([Validators.required, Validators.minLength(13), Validators.maxLength(13)])],
       preco: [(livro && livro.preco) ? livro.preco : null, Validators.required],
       fornecedor: [fornecedor, Validators.required],
       editora: [editora, Validators.required],

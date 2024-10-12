@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -48,8 +48,8 @@ export class GeneroFormComponent {
 
     this.formGroup = this.formBuilder.group({
       id: [(genero && genero.id) ? genero.id : null],
-      nome: [(genero && genero.nome) ? genero.nome : '', Validators.required],
-      descricao: [(genero && genero.descricao) ? genero.descricao : '', Validators.required]
+      nome: [(genero && genero.nome) ? genero.nome : '', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],
+      descricao: [(genero && genero.descricao) ? genero.descricao : '', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(500)])]
     });
   }
 
@@ -99,6 +99,32 @@ export class GeneroFormComponent {
           }
         });
       }
+    }
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors) {
+      return '';
+    }
+    for (const errorName in errors) {
+      if (errors.hasOwnProperty(errorName) && this.errorMessage[controlName][errorName]) {
+        return this.errorMessage[controlName][errorName];
+      }
+    }
+
+    return 'invalid field';
+  }
+
+  errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
+    nome: {
+      required: 'O nome deve ser informado',
+      minlength: 'O nome deve ter no mínimo 3 caracteres',
+      maxlength: 'O nome de ter no maxímo 60 caracteres'
+    },
+    descricao: {
+      required: 'A descrição deve ser informada',
+      minlength: 'A descrição deve ter no mínimo 2 caracteres',
+      maxlength: 'A descrição deve ter no maximo 500 caracteres'
     }
   }
 
