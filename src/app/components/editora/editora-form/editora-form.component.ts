@@ -10,8 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { EditoraService } from '../../../services/editora.service';
 import { Editora } from '../../../models/editora.model';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -30,7 +30,7 @@ export class EditoraFormComponent {
     private editoraService: EditoraService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog // Injeta MatDialog
+    private dialog: MatDialog
   ) {
 
     const editora: Editora = this.activatedRoute.snapshot.data['editora'];
@@ -77,7 +77,6 @@ export class EditoraFormComponent {
     if (this.formGroup.valid) {
       const editora = this.formGroup.value;
       if (editora.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir esta editora? Não será possível reverter.' }
         });
