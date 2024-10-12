@@ -23,13 +23,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-livro-form',
   standalone: true,
   imports: [NgFor, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
     MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule,MatDatepickerModule, 
-    MatNativeDateModule],
+    MatNativeDateModule, MatIconModule, MatMenuModule],
   templateUrl: './livro-form.component.html',
   styleUrls: ['./livro-form.component.css']
 })

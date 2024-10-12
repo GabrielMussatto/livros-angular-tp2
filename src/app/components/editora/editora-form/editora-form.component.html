@@ -1,4 +1,47 @@
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Editoras</mat-toolbar>
+<mat-toolbar color="primary">
+    <div class="flex-container">
+        <!-- Botão do menu -->
+        <button mat-fab color="accent" (click)="voltar()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <!-- Menu com as opções de rotas -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="livro()">
+                <mat-icon>menu_book</mat-icon>
+                <span>Livros</span>
+            </button>
+            <button mat-menu-item (click)="caixaLivros()">
+                <mat-icon>inventory_2</mat-icon>
+                <span>Caixa de Livros</span>
+            </button>
+            <button mat-menu-item (click)="autor()">
+                <mat-icon>person</mat-icon>
+                <span>Autores</span>
+            </button>
+            <button mat-menu-item (click)="genero()">
+                <mat-icon>style</mat-icon>
+                <span>Gêneros</span>
+            </button>
+            <button mat-menu-item (click)="fornecedor()">
+                <mat-icon>local_shipping</mat-icon>
+                <span>Fornecedores</span>
+            </button>
+            <button mat-menu-item (click)="editora()">
+                <mat-icon>business</mat-icon>
+                <span>Editoras</span>
+            </button>
+        </mat-menu>
+
+        <!-- Título da toolbar -->
+        <span class="toolbar-title">Cadastro de Editoras</span>
+
+        <!-- Botão de adicionar -->
+        <button mat-fab color="accent" [matMenuTriggerFor]="menu">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
 <div class="form-container">
     <mat-card>
         <mat-card-content>
@@ -72,7 +115,7 @@
                 Salvar
             </button>
 
-            <button mat-raised-button routerLink="/editoras">
+            <button mat-raised-button (click)="voltar()">
                 Cancelar
             </button>
         </mat-card-actions>

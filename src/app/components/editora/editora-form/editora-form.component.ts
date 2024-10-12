@@ -12,12 +12,14 @@ import { EditoraService } from '../../../services/editora.service';
 import { Editora } from '../../../models/editora.model';
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-editora-form',
   standalone: true,
   imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule,
-    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule],
+    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatIconModule, MatMenuModule],
   templateUrl: './editora-form.component.html',
   styleUrl: './editora-form.component.css'
 })
@@ -134,4 +136,26 @@ export class EditoraFormComponent {
       minlength: 'O número de telefone deve ter no mínimo 8 caracteres',
     }
   };
+
+  editora() {
+    this.router.navigateByUrl('/editoras/new');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores/new');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros/new');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros/new');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos/new');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores/new');
+  }
+  voltar() {
+    this.router.navigateByUrl('/editoras');
+  }
 }

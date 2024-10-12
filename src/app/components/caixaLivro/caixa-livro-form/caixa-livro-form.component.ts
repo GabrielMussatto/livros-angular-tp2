@@ -62,7 +62,7 @@ export class CaixaLivroFormComponent implements OnInit {
       generos: [[], Validators.required],
       autores: [[], Validators.required],
       classificacao: ['', Validators.required]
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -157,10 +157,6 @@ export class CaixaLivroFormComponent implements OnInit {
     }
   }
 
-  cancelar() {
-    this.router.navigateByUrl('/caixaLivros');
-  }
-
   getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
     if (!errors) {
       return '';
@@ -207,5 +203,27 @@ export class CaixaLivroFormComponent implements OnInit {
     classificacao: {
       required: 'Classificação é obrigatório'
     }
+  }
+
+  editora() {
+    this.router.navigateByUrl('/editoras/new');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores/new');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros/new');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros/new');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos/new');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores/new');
+  }
+  voltar() {
+    this.router.navigateByUrl('/caixaLivros');
   }
 }

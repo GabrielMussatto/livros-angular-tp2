@@ -3,7 +3,10 @@
     flex: 1 1 auto;
 }
 
-.toolbar-title {
+.toolbar-title{
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
     flex: 1;
     text-align: center;
 }

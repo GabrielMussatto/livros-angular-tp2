@@ -8,11 +8,12 @@ import { AutorService } from '../../../services/autor.service';
 import { Autor } from '../../../models/autor.model';
 import { MatDialog } from '@angular/material/dialog'; // Importar MatDialog
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importar o componente de dialogo
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-autor-list',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule],
+  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
   templateUrl: './autor-list.component.html',
   styleUrls: ['./autor-list.component.css']
 })

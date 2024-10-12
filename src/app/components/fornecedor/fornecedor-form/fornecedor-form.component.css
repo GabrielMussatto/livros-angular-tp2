@@ -1,7 +1,15 @@
-.toobar-title{
+.toolbar-title{
     display: flex;
     justify-content: center;
     font-size: x-large;
+    flex: 1;
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 .full-width-input{
