@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="titulo">
     <div class="flex-container">
         <!-- Botão para voltar -->
         <button mat-fab color="accent" (click)="voltar()">
@@ -53,7 +53,7 @@
                     <mat-error *ngIf="formGroup.get('nome')
                                     && formGroup.get('nome')?.invalid
                                     && formGroup.get('nome')?.touched">
-                        O nome é obrigatório.
+                        {{getErrorMessage('nome' , formGroup.get('nome')?.errors)}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width-input">
@@ -62,7 +62,7 @@
                     <mat-error *ngIf="formGroup.get('biografia')
                                     && formGroup.get('biografia')?.invalid
                                     && formGroup.get('biografia')?.touched">
-                        A biografia é obrigatória.
+                        {{getErrorMessage('biografia' , formGroup.get('biografia')?.errors)}} 
                     </mat-error>
                 </mat-form-field>
             </form>
@@ -71,7 +71,8 @@
             <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
                 Salvar
             </button>
-            <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+            <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
+                [disabled]="formGroup.invalid">
                 Excluir
             </button>
             <button mat-raised-button (click)="voltar()">
