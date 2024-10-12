@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Fornecedor } from '../models/fornecedor.model'; // Importa o modelo de Fornecedor
+import { Fornecedor } from '../models/fornecedor.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FornecedorService {
-  private baseUrl = 'http://localhost:8080/fornecedores'; // URL base da API de Fornecedores
+  private baseUrl = 'http://localhost:8080/fornecedores';
 
   constructor(private httpClient: HttpClient) {}
 

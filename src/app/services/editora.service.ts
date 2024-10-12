@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Editora } from '../models/editora.model'; // Importa o modelo de Editora
+import { Editora } from '../models/editora.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditoraService {
-  private baseUrl = 'http://localhost:8080/editoras'; // URL base da API de Editoras
+  private baseUrl = 'http://localhost:8080/editoras';
 
   constructor(private httpClient: HttpClient) {}
 
