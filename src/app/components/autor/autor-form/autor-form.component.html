@@ -36,39 +36,3 @@
         </mat-card-actions>
     </mat-card>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-
-    <mat-form-field appearance="fill">
-        <mat-label>Nome</mat-label>
-        <input matInput type="text" formControlName="nome"> 
-        <mat-error *ngIf="formGroup.get('nome') && formGroup.get('nome')?.invalid
-                        && formGroup.get('nome')?.touched">
-            O nome é obrigatório.
-        </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Sigla</mat-label>
-        <input matInput type="text" formControlName="sigla"> 
-        <mat-error *ngIf="formGroup.get('sigla') && formGroup.get('sigla')?.invalid
-                        && formGroup.get('sigla')?.touched">
-            A sigla é obrigatória.
-        </mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" 
-    [disabled]="formGroup.invalid" >Salvar</button>
-</form>
--->

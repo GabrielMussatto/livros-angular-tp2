@@ -1,8 +1,43 @@
 <mat-toolbar class="titulo">
     <div class="flex-container">
+        <!-- Botão do menu -->
+        <button mat-fab color="accent" [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <!-- Menu com as opções de rotas -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/livros']">
+                <mat-icon>menu_book</mat-icon>
+                <span>Livros</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/caixaLivros']">
+                <mat-icon>inventory_2</mat-icon>
+                <span>Caixa de Livros</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/autores']">
+                <mat-icon>person</mat-icon>
+                <span>Autores</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/generos']">
+                <mat-icon>style</mat-icon>
+                <span>Gêneros</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/fornecedores']">
+                <mat-icon>local_shipping</mat-icon>
+                <span>Fornecedores</span>
+            </button>
+            <button mat-menu-item [routerLink]="['/editoras']">
+                <mat-icon>business</mat-icon>
+                <span>Editoras</span>
+            </button>
+        </mat-menu>
+
+        <!-- Título da toolbar -->
         <span class="toolbar-title">Controle de Caixa de Livros</span>
+
+        <!-- Botão de adicionar -->
         <button mat-fab color="accent" routerLink="/caixaLivros/new">
-            <!--Router Link: Direcionar para outra rota (outro componente para adicionar)-->
             <mat-icon>add</mat-icon>
         </button>
     </div>

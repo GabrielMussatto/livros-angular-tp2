@@ -9,11 +9,12 @@ import { CaixaLivroService } from '../../../services/caixa-livro.service';
 import { CaixaLivro } from '../../../models/caixa-livro.model';
 import { MatDialog } from '@angular/material/dialog'; // Importar MatDialog
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importar o componente de dialogo
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-caixa-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
   templateUrl: './caixa-livro-list.component.html',
   styleUrls: ['./caixa-livro-list.component.css']
 })
