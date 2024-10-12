@@ -4,11 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CaixaLivroService } from '../../../services/caixa-livro.service';
 import { CaixaLivro } from '../../../models/caixa-livro.model';
-import { MatDialog } from '@angular/material/dialog'; // Importar MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importar o componente de dialogo
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
@@ -24,7 +24,8 @@ export class CaixaLivroListComponent implements OnInit {
 
   constructor(
     private caixaLivroService: CaixaLivroService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -53,5 +54,27 @@ export class CaixaLivroListComponent implements OnInit {
         });
       }
     });
+  }
+
+  editora() {
+    this.router.navigateByUrl('/editoras');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores');
+  }
+  caixaLivro() {
+    this.router.navigateByUrl('/caixaLivros');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores');
+  }
+  voltar() {
+    this.router.navigateByUrl('/caixaLivros');
   }
 }

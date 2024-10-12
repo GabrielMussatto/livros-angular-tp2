@@ -4,44 +4,44 @@
         <button mat-fab color="accent" [matMenuTriggerFor]="menu">
             <mat-icon>menu</mat-icon>
         </button>
-
+  
         <!-- Menu com as opções de rotas -->
         <mat-menu #menu="matMenu">
-            <button mat-menu-item routerLink='/livros'>
+            <button mat-menu-item (click)="livro()">
                 <mat-icon>menu_book</mat-icon>
                 <span>Livros</span>
             </button>
-            <button mat-menu-item routerLink='/caixaLivros'>
+            <button mat-menu-item (click)="caixaLivro()">
                 <mat-icon>inventory_2</mat-icon>
                 <span>Caixa de Livros</span>
             </button>
-            <button mat-menu-item routerLink='/autores'>
+            <button mat-menu-item (click)="autor()">
                 <mat-icon>person</mat-icon>
                 <span>Autores</span>
             </button>
-            <button mat-menu-item routerLink='/generos'>
+            <button mat-menu-item (click)="genero()">
                 <mat-icon>style</mat-icon>
                 <span>Gêneros</span>
             </button>
-            <button mat-menu-item routerLink='/fornecedores'>
+            <button mat-menu-item (click)="fornecedor()">
                 <mat-icon>local_shipping</mat-icon>
                 <span>Fornecedores</span>
             </button>
-            <button mat-menu-item routerLink='/editoras'>
+            <button mat-menu-item (click)="editora()">
                 <mat-icon>business</mat-icon>
                 <span>Editoras</span>
             </button>
         </mat-menu>
-
+  
         <!-- Título da toolbar -->
         <span class="toolbar-title">Controle de Caixa de Livros</span>
-
+  
         <!-- Botão de adicionar -->
         <button mat-fab color="accent" routerLink="/caixaLivros/new">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-</mat-toolbar>
+  </mat-toolbar>
 
 <table mat-table [dataSource]="caixaLivros" class="mat-elevation-z8">
 
