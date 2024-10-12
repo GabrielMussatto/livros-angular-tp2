@@ -7,12 +7,14 @@
     text-align: center;
 }
 
+.titulo{
+    background-color: #1A2E6D; /* Azul Marinho para a toolbar */
+}
+
 .flex-container {
     display: flex;
     align-items: center;
     width: 100%;
-    align-items: center;
-    background-color: #1A2E6D; /* Azul Marinho */
     font-size: 2rem;
     color: #ffffff; 
     padding: 16px;

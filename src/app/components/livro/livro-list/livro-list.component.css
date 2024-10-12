@@ -13,8 +13,9 @@
   .toolbar-title {
     flex: 1; /* Permite que o título ocupe o espaço disponível */
     text-align: center; /* Centraliza o texto do título */
-    font-size: 2rem; /* Aumenta o tamanho da fonte */
+    font-size: x-large; /* Aumenta o tamanho da fonte */
     color: #ffffff; 
+    font-weight: 500;
   }
   
   /* Estilo para o contêiner flexível */

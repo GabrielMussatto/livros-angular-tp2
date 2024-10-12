@@ -1,4 +1,5 @@
-.toolbar-title{
+/* Estilo para a toolbar */
+.toolbar-title {
     display: flex;
     justify-content: center;
     font-size: x-large;
@@ -6,17 +7,14 @@
     text-align: center;
 }
 
+.titulo{
+    background-color: #1A2E6D; /* Azul Marinho para a toolbar */
+}
+
 .flex-container {
     display: flex;
     align-items: center;
     width: 100%;
-}
-/* Estilo para a toolbar */
-.toolbar-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #1A2E6D; /* Azul Marinho */
     font-size: 2rem;
     color: #ffffff; 
     padding: 16px;
@@ -64,6 +62,11 @@ mat-form-field .mat-input-element {
     border-radius: 8px; /* Bordas arredondadas */
     padding: 0.75rem;
     border: 1px solid #ccc;
+}
+
+/* Aumenta o espaçamento entre o campo de Fornecedor e Editora */
+mat-form-field:nth-of-type(6) {
+    margin-bottom: 20px; /* Espaçamento após o campo Fornecedor */
 }
 
 /* Estilo dos campos de telefone */

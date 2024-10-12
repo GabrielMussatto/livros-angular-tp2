@@ -1,83 +1,70 @@
 /* Estilo para o espaçador */
 .example-spacer {
-    /* Pegando do componente */
-    flex: 1 1 auto;
+  flex: 1 1 auto; /* Permite que o espaçador ocupe espaço disponível */
 }
 
-.toolbar-title{
-    display: flex;
-    justify-content: center;
-    font-size: x-large;
-    flex: 1;
-    text-align: center;
+.titulo{
+  display: flex;
+  background-color: #1A2E6D; /* Azul Marinho para a toolbar */
+
 }
 
+/* Estilo para a toolbar */
+.toolbar-title {
+  flex: 1; /* Permite que o título ocupe o espaço disponível */
+  text-align: center; /* Centraliza o texto do título */
+  font-size: x-large; /* Aumenta o tamanho da fonte */
+  color: #ffffff; 
+  font-weight: 500;
+}
+
+/* Estilo para o contêiner flexível */
 .flex-container {
-    flex: 1 1 auto; /* Permite que o espaçador ocupe espaço disponível */
-  }
-  
-  .titulo{
-    display: flex;
-    background-color: #1A2E6D; /* Azul Marinho para a toolbar */
-  
-  }
-  
-  /* Estilo para a toolbar */
-  .toolbar-title {
-    flex: 1; /* Permite que o título ocupe o espaço disponível */
-    text-align: center; /* Centraliza o texto do título */
-    font-size: 2rem; /* Aumenta o tamanho da fonte */
-    color: #ffffff; 
-  }
-  
-  /* Estilo para o contêiner flexível */
-  .flex-container {
-    display: flex; /* Habilita o layout flexível */
-    align-items: center; /* Alinha os itens ao centro verticalmente */
-    width: 100%; /* Largura total */
-    padding: 0.5rem; /* Adiciona espaçamento interno */
-    border-radius: 8px; /* Bordas arredondadas */
-  }
-  
-  /* Estilo para a tabela */
-  table {
-    width: 100%; /* Largura total da tabela */
-    border-collapse: collapse; /* Remove espaços entre as células */
-    background-color: #D9D9D9; /* Cinza Claro para a tabela */
-  }
-  
-  /* Estilo para cabeçalhos da tabela */
-  th.mat-header-cell {
-    background-color: #2D6A4F; /* Verde Floresta para cabeçalhos */
-    color: #FFFFFF; /* Branco para o texto dos cabeçalhos */
-    padding: 12px; /* Espaçamento interno dos cabeçalhos */
-    text-align: left; /* Alinhamento do texto à esquerda */
-  }
-  
-  /* Estilo para as células da tabela */
-  td.mat-cell {
-    padding: 12px; /* Espaçamento interno das células */
-    border-bottom: 1px solid #E96A2A; /* Laranja Queimado para a linha divisória */
-    color: #1A2E6D; /* Azul Marinho para o texto */
-  }
-  
-  /* Estilo para botões na tabela */
-  button.mat-icon-button {
-    color: #E96A2A; /* Laranja Queimado para os botões */
-  }
-  
-  button.mat-icon-button:hover {
-    background-color: #F9D56B; /* Amarelo Dourado ao passar o mouse */
-  }
-  
-  /* Estilo para os botões da toolbar */
-  button[mat-fab] {
-    background-color: #ffffff; /* Amarelo Dourado para o botão de adicionar */
-    color: #1A2E6D; /* Azul Marinho para o ícone do botão */
-  }
-  
-  /* Efeito de sombra nos botões */
-  button[mat-fab]:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra leve ao passar o mouse */
-  }
-  
+  display: flex; /* Habilita o layout flexível */
+  align-items: center; /* Alinha os itens ao centro verticalmente */
+  width: 100%; /* Largura total */
+  padding: 0.5rem; /* Adiciona espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+}
+
+/* Estilo para a tabela */
+table {
+  width: 100%; /* Largura total da tabela */
+  border-collapse: collapse; /* Remove espaços entre as células */
+  background-color: #D9D9D9; /* Cinza Claro para a tabela */
+}
+
+/* Estilo para cabeçalhos da tabela */
+th.mat-header-cell {
+  background-color: #2D6A4F; /* Verde Floresta para cabeçalhos */
+  color: #FFFFFF; /* Branco para o texto dos cabeçalhos */
+  padding: 12px; /* Espaçamento interno dos cabeçalhos */
+  text-align: left; /* Alinhamento do texto à esquerda */
+}
+
+/* Estilo para as células da tabela */
+td.mat-cell {
+  padding: 12px; /* Espaçamento interno das células */
+  border-bottom: 1px solid #E96A2A; /* Laranja Queimado para a linha divisória */
+  color: #1A2E6D; /* Azul Marinho para o texto */
+}
+
+/* Estilo para botões na tabela */
+button.mat-icon-button {
+  color: #E96A2A; /* Laranja Queimado para os botões */
+}
+
+button.mat-icon-button:hover {
+  background-color: #F9D56B; /* Amarelo Dourado ao passar o mouse */
+}
+
+/* Estilo para os botões da toolbar */
+button[mat-fab] {
+  background-color: #ffffff; /* Amarelo Dourado para o botão de adicionar */
+  color: #1A2E6D; /* Azul Marinho para o ícone do botão */
+}
+
+/* Efeito de sombra nos botões */
+button[mat-fab]:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra leve ao passar o mouse */
+}
