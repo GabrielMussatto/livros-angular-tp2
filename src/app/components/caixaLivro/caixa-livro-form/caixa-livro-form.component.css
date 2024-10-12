@@ -2,18 +2,21 @@
 .toolbar-title {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     align-items: center;
     background-color: #1A2E6D; /* Azul Marinho */
     font-size: 2rem;
     color: #ffffff; 
     padding: 16px;
     font-weight: 500;
-=======
     font-size: x-large;
     flex: 1;
     text-align: center;
->>>>>>> d35107a56d8fc28a9e29efc760768cb7862d7295
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
 /* Estilo do contêiner do formulário */
@@ -72,10 +75,6 @@ mat-card-actions {
     gap: 1rem;
 }
 
-<<<<<<< HEAD
-/* Estilo dos botões */
-button[mat-raised-button] {
-=======
 /*para a div*/
 .form-container{
     padding: 2rem;
@@ -88,7 +87,6 @@ button[mat-raised-button] {
 }
 
 button[mat-raised-button]{
->>>>>>> d35107a56d8fc28a9e29efc760768cb7862d7295
     width: 120px;
     font-size: 1rem;
     border-radius: 4px;

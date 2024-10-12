@@ -19,8 +19,8 @@ import { GeneroService } from '../../../services/genero.service';
 import { AutorService } from '../../../services/autor.service';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { EditoraService } from '../../../services/editora.service';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -136,7 +136,6 @@ export class CaixaLivroFormComponent implements OnInit {
     if (this.formGroup.valid) {
       const caixaLivro = this.formGroup.value;
       if (caixaLivro.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir esta Caixa de Livros? Não será possível reverter.' }
         });
