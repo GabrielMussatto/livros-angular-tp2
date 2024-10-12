@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Livro } from '../../../models/livro.model';
 import { LivroService } from '../../../services/livro.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,7 +25,8 @@ export class LivroListComponent implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -55,4 +56,25 @@ export class LivroListComponent implements OnInit {
     });
   }
 
+  editora() {
+    this.router.navigateByUrl('/editoras');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores');
+  }
+  voltar() {
+    this.router.navigateByUrl('/livros');
+  }
 }
