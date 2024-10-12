@@ -21,8 +21,8 @@ import { GeneroService } from '../../../services/genero.service';
 import { AutorService } from '../../../services/autor.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -70,8 +70,6 @@ export class LivroFormComponent implements OnInit {
       datalancamento: ['', Validators.required]
     })
   }
-
-
 
   ngOnInit(): void {
     this.generoService.findAll().subscribe(data => {
@@ -146,7 +144,6 @@ export class LivroFormComponent implements OnInit {
     if (this.formGroup.valid) {
       const livro = this.formGroup.value;
       if (livro.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir este Livro? Não será possível reverter.' }
         });
@@ -165,10 +162,6 @@ export class LivroFormComponent implements OnInit {
         });
       }
     }
-  }
-
-  cancelar() {
-    this.router.navigateByUrl('/livros');
   }
 
   getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
@@ -225,5 +218,27 @@ export class LivroFormComponent implements OnInit {
     datalancamento: {
       required: 'A data é obrigatória'
     }
+  }
+
+  editora() {
+    this.router.navigateByUrl('/editoras/new');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores/new');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros/new');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros/new');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos/new');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores/new');
+  }
+  voltar() {
+    this.router.navigateByUrl('/livros');
   }
 }
