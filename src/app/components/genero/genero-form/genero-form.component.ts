@@ -10,8 +10,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { GeneroService } from '../../../services/genero.service';
 import { Genero } from '../../../models/genero.model';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-genero-form',
@@ -25,10 +27,12 @@ import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/co
     MatInputModule, 
     RouterModule, 
     MatTableModule, 
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule
   ],
   templateUrl: './genero-form.component.html',
-  styleUrls: ['./genero-form.component.css'] // Corrigido para 'styleUrls'
+  styleUrls: ['./genero-form.component.css']
 })
 export class GeneroFormComponent {
   formGroup: FormGroup;
@@ -38,7 +42,7 @@ export class GeneroFormComponent {
     private generoService: GeneroService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog // Injeta o MatDialog
+    private dialog: MatDialog
   ) {
     const genero: Genero = this.activatedRoute.snapshot.data['genero'];
 
@@ -78,7 +82,6 @@ export class GeneroFormComponent {
     if (this.formGroup.valid) {
       const genero = this.formGroup.value;
       if (genero.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir este Gênero? Não será possível reverter.' }
         });
@@ -99,7 +102,25 @@ export class GeneroFormComponent {
     }
   }
 
-  cancelar() {
+  editora() {
+    this.router.navigateByUrl('/editoras/new');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores/new');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros/new');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros/new');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos/new');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores/new');
+  }
+  voltar() {
     this.router.navigateByUrl('/generos');
   }
 }
