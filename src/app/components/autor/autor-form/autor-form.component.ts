@@ -8,8 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AutorService } from '../../../services/autor.service';
 import { Autor } from '../../../models/autor.model';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatIconModule, MatMenuModule],
   templateUrl: './autor-form.component.html',
-  styleUrls: ['./autor-form.component.css'] // Corrige styleUrl para styleUrls
+  styleUrls: ['./autor-form.component.css']
 })
 export class AutorFormComponent {
   formGroup: FormGroup;
@@ -29,7 +29,7 @@ export class AutorFormComponent {
     private autorService: AutorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog // Injeta o MatDialog
+    private dialog: MatDialog
   ) {
     const autor: Autor = this.activatedRoute.snapshot.data['autor'];
 
@@ -69,7 +69,6 @@ export class AutorFormComponent {
     if (this.formGroup.valid) {
       const autor = this.formGroup.value;
       if (autor.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir este Autor? Não será possível reverter.' }
         });
