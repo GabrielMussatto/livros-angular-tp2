@@ -10,8 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { Fornecedor } from '../../../models/fornecedor.model';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importa o componente de diálogo de confirmação
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -30,7 +30,7 @@ export class FornecedorFormComponent {
     private fornecedorService: FornecedorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog // Injeta MatDialog
+    private dialog: MatDialog
   ) {
 
     const fornecedor: Fornecedor = this.activatedRoute.snapshot.data['fornecedor'];
@@ -82,7 +82,6 @@ export class FornecedorFormComponent {
     if (this.formGroup.valid) {
       const fornecedor = this.formGroup.value;
       if (fornecedor.id != null) {
-        // Abre o diálogo de confirmação
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           data: { message: 'Deseja realmente excluir este fornecedor? Não será possível reverter.' }
         });
