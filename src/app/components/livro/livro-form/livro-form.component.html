@@ -97,7 +97,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Fornecedor</mat-label>
                     <mat-select formControlName="fornecedor">
                         @for (fornecedor of fornecedores; track fornecedor.id) {
@@ -106,6 +106,7 @@
                         </mat-option>
                         }
                     </mat-select>
+
                     <mat-error *ngIf="formGroup.get('fornecedor')
                                 && formGroup.get('fornecedor')?.invalid
                                 && formGroup.get('fornecedor')?.touched">
@@ -113,7 +114,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"class="full-width-input">
                     <mat-label>Editora</mat-label>
                     <mat-select formControlName="editora">
                         @for (editora of editoras; track editora.id) {
@@ -142,7 +143,7 @@
                         {{getErrorMessage('generos', formGroup.get('generos')?.errors)}}
                     </mat-error>
                 </mat-form-field>
-                
+
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label>Autores</mat-label>
                     <mat-select formControlName="autores" name="autores" multiple>
@@ -156,7 +157,7 @@
                         {{getErrorMessage('autores', formGroup.get('autores')?.errors)}}
                     </mat-error>
                 </mat-form-field>
-            
+
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label> Classificação </mat-label>
                     <mat-select formControlName="classificacao" name="classificacao">
@@ -176,8 +177,8 @@
 
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Data de Lançamento</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="datalancamento">
                     <mat-hint>DD/MM/YYYY</mat-hint>
+                    <input matInput [matDatepicker]="picker" formControlName="datalancamento">
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error *ngIf="formGroup.get('datalancamento')
@@ -185,7 +186,7 @@
                                 && formGroup.get('datalancamento')?.touched">
                         {{getErrorMessage('datalancamento', formGroup.get('datalancamento')?.errors)}}
                     </mat-error>
-                  </mat-form-field>
+                </mat-form-field>
 
             </form>
         </mat-card-content>
