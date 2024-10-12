@@ -3,17 +3,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Genero } from '../../../models/genero.model';
 import { GeneroService } from '../../../services/genero.service';
-import { MatDialog } from '@angular/material/dialog'; // Importar MatDialog
-import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component'; // Importar o componente de diálogo
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-genero-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
   templateUrl: './genero-list.component.html',
   styleUrls: ['./genero-list.component.css']
 })
@@ -23,7 +25,8 @@ export class GeneroListComponent implements OnInit {
 
   constructor(
     private generoService: GeneroService,
-    private dialog: MatDialog // Injeção do MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -52,5 +55,26 @@ export class GeneroListComponent implements OnInit {
         });
       }
     });
+  }
+  editora() {
+    this.router.navigateByUrl('/editoras');
+  }
+  autor() {
+    this.router.navigateByUrl('/autores');
+  }
+  caixaLivros() {
+    this.router.navigateByUrl('/caixaLivros');
+  }
+  livro() {
+    this.router.navigateByUrl('/livros');
+  }
+  genero() {
+    this.router.navigateByUrl('/generos');
+  }
+  fornecedor() {
+    this.router.navigateByUrl('/fornecedores');
+  }
+  voltar() {
+    this.router.navigateByUrl('/generos');
   }
 }
