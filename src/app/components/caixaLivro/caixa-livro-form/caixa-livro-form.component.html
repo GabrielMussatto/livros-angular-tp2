@@ -168,7 +168,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()">
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
                 Salvar
             </button>
 
