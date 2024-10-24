@@ -30,7 +30,7 @@ import { MatMenuModule } from '@angular/material/menu';
   selector: 'app-livro-form',
   standalone: true,
   imports: [NgFor, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
-    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule,MatDatepickerModule, 
+    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule, MatDatepickerModule,
     MatNativeDateModule, MatIconModule, MatMenuModule],
   templateUrl: './livro-form.component.html',
   styleUrls: ['./livro-form.component.css']
@@ -53,8 +53,6 @@ export class LivroFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog) {
 
-    const livro: Livro = this.activatedRoute.snapshot.data['livro'];
-
     this.formGroup = this.formBuilder.group({
       id: [null],
       titulo: ['', Validators.required],
@@ -76,14 +74,14 @@ export class LivroFormComponent implements OnInit {
       this.generos = data;
       this.initializeForm();
     }),
-      this.fornecedorService.findAll().subscribe(data => {
-        this.fornecedores = data;
-        this.initializeForm();
-      }),
-      this.editoraService.findAll().subscribe(data => {
-        this.editoras = data;
-        this.initializeForm();
-      })
+    this.fornecedorService.findAll().subscribe(data => {
+      this.fornecedores = data;
+      this.initializeForm();
+    }),
+    this.editoraService.findAll().subscribe(data => {
+      this.editoras = data;
+      this.initializeForm();
+    }),
     this.autorService.findAll().subscribe(data => {
       this.autores = data;
       this.initializeForm();

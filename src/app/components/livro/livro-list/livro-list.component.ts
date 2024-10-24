@@ -11,17 +11,23 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMenuModule } from '@angular/material/menu';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule, MatPaginatorModule],
   templateUrl: './livro-list.component.html',
   styleUrl: './livro-list.component.css'
 })
 export class LivroListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'titulo', 'descricao', 'quantidadeEstoque', 'isbn', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'datalancamento', 'acao'];
   livros: Livro[] = [];
+
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
 
   constructor(
     private livroService: LivroService,
@@ -30,9 +36,19 @@ export class LivroListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.livroService.findAll().subscribe(
-      data => { this.livros = data; }
+    this.livroService.findAll(this.page, this.pageSize).subscribe(
+      data => { this.livros = data }
     );
+
+    this.livroService.count().subscribe(
+      data => { this.totalRecords = data }
+    );
+  }
+
+  paginar(event: PageEvent): void{
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 
   excluir(livro: Livro): void {
