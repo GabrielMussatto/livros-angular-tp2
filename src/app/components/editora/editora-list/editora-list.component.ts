@@ -1,20 +1,21 @@
+import { NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, RouterModule } from '@angular/router';
 import { Editora } from '../../../models/editora.model';
 import { EditoraService } from '../../../services/editora.service';
-import { NgFor } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { Router, RouterModule } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
-import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-editora-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
   templateUrl: './editora-list.component.html',
   styleUrls: ['./editora-list.component.css']
 })
@@ -22,15 +23,29 @@ export class EditoraListComponent implements OnInit {
   editoras: Editora[] = [];
   displayedColumns: string[] = ['id', 'nome', 'email', 'endereco', 'telefone', 'acao'];
 
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
+
   constructor(
     private editoraService: EditoraService, 
     private dialog: MatDialog,
     private router: Router) { } 
 
   ngOnInit(): void {
-    this.editoraService.findAll().subscribe(
-      data => { this.editoras = data; }
+    this.editoraService.findAll(this.page, this.pageSize).subscribe(
+      data => { this.editoras = data }
     );
+
+    this.editoraService.count().subscribe(
+      data => { this.totalRecords = data }
+    );
+  }
+
+  paginar(event: PageEvent): void{
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 
   excluir(editora: Editora): void {
