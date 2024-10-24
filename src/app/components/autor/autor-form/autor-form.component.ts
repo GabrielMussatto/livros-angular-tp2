@@ -32,7 +32,8 @@ export class AutorFormComponent {
     private dialog: MatDialog
   ) {
     const autor: Autor = this.activatedRoute.snapshot.data['autor'];
-
+    console.log(autor);
+    
     this.formGroup = formBuilder.group({
       id: [(autor && autor.id) ? autor.id : null],
       nome: [(autor && autor.nome) ? autor.nome : '', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],

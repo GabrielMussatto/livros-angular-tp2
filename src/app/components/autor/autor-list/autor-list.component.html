@@ -80,3 +80,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>
+
+<mat-paginator
+    [pageSizeOptions]="[5, 10, 15]"
+    [pageSize]="pageSize"
+    [length]="totalRecords"
+    (page)="paginar($event)">
+</mat-paginator>
