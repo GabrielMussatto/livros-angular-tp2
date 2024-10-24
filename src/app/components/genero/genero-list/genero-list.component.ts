@@ -10,18 +10,23 @@ import { GeneroService } from '../../../services/genero.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 
 @Component({
   selector: 'app-genero-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
   templateUrl: './genero-list.component.html',
   styleUrls: ['./genero-list.component.css']
 })
 export class GeneroListComponent implements OnInit {
   generos: Genero[] = [];
   displayedColumns: string[] = ['id', 'nome', 'descricao', 'acao'];
+
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
 
   constructor(
     private generoService: GeneroService,
@@ -30,9 +35,19 @@ export class GeneroListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.generoService.findAll().subscribe(
-      data => { this.generos = data; }
+    this.generoService.findAll(this.page, this.pageSize).subscribe(
+      data => { this.generos = data }
     );
+
+    this.generoService.count().subscribe(
+      data => { this.totalRecords = data }
+    );
+  }
+
+  paginar(event: PageEvent): void{
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 
   excluir(genero: Genero): void {
