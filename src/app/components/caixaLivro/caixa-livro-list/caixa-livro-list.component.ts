@@ -10,17 +10,23 @@ import { CaixaLivro } from '../../../models/caixa-livro.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-caixa-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
   templateUrl: './caixa-livro-list.component.html',
   styleUrls: ['./caixa-livro-list.component.css']
 })
 export class CaixaLivroListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
   caixaLivros: CaixaLivro[] = [];
+
+  totalRecords = 0;
+  pageSize = 5;
+  page = 0;
 
   constructor(
     private caixaLivroService: CaixaLivroService,
@@ -29,9 +35,19 @@ export class CaixaLivroListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.caixaLivroService.findAll().subscribe(
-      data => { this.caixaLivros = data; }
+    this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
+      data => { this.caixaLivros = data }
     );
+
+    this.caixaLivroService.count().subscribe(
+      data => { this.totalRecords = data }
+    );
+  }
+
+  paginar(event: PageEvent): void{
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.ngOnInit();
   }
 
   excluir(caixaLivro: CaixaLivro): void {
