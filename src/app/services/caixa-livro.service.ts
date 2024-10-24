@@ -11,8 +11,21 @@ export class CaixaLivroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  findAll(): Observable<CaixaLivro[]>{
-    return this.httpClient.get<CaixaLivro[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<CaixaLivro[]>{
+    let params = {};
+  
+    if(page !== undefined && pageSize !== undefined){
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    
+    return this.httpClient.get<CaixaLivro[]>(this.baseUrl, {params});
+  }
+
+  count(): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   findById(id: string): Observable<CaixaLivro>{
