@@ -11,9 +11,21 @@ export class EditoraService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Método para buscar todas as editoras
-  findAll(): Observable<Editora[]> {
-    return this.httpClient.get<Editora[]>(this.baseUrl);
+  findAll(page?: number, pageSize?: number): Observable<Editora[]>{
+    let params = {};
+  
+    if(page !== undefined && pageSize !== undefined){
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    
+    return this.httpClient.get<Editora[]>(this.baseUrl, {params});
+  }
+
+  count(): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   // Método para buscar uma editora pelo ID
