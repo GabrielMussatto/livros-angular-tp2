@@ -68,3 +68,22 @@ button[mat-fab] {
 button[mat-fab]:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra leve ao passar o mouse */
 }
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza os itens h orizontalmente */
+  margin: 20px auto; /* Adiciona margem superior e centraliza horizontalmente */
+  width: 80%; /* Define a largura máxima da caixa de pesquisa */
+}
+
+.input-field {
+  width: 100%; /* Faz com que a caixa de pesquisa ocupe toda a largura disponível */
+}
+
+#meuBotaoPesquisar { 
+  margin-left: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transform: scale(1.4);
+}
