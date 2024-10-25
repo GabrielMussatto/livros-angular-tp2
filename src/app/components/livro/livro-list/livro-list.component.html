@@ -49,7 +49,7 @@
             <mat-label>Pesquisar pelo Titulo do Livro</mat-label>
             <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()">
         </mat-form-field>
-        <button mat-icon-button color="primary" class="search-buttor" (click)="filtrar()">
+        <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
             <mat-icon>search</mat-icon>
         </button>
     </div>
