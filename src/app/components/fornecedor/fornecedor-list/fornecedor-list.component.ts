@@ -11,11 +11,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-fornecedor-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
@@ -26,6 +29,7 @@ export class FornecedorListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private fornecedorService: FornecedorService,
@@ -47,6 +51,35 @@ export class FornecedorListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarFornecedores(){
+    if(this.filtro){
+      this.fornecedorService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.fornecedores = data; }
+      );
+    } else {
+      this.fornecedorService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.fornecedores = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.fornecedorService.countBynome(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.fornecedorService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarFornecedores();
+    this.buscarTodos();
   }
 
   excluir(fornecedor: Fornecedor): void {
