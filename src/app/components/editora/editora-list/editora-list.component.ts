@@ -11,11 +11,14 @@ import { Router, RouterModule } from '@angular/router';
 import { Editora } from '../../../models/editora.model';
 import { EditoraService } from '../../../services/editora.service';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-editora-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './editora-list.component.html',
   styleUrls: ['./editora-list.component.css']
 })
@@ -26,6 +29,7 @@ export class EditoraListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private editoraService: EditoraService, 
@@ -46,6 +50,35 @@ export class EditoraListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarEditoras(){
+    if(this.filtro){
+      this.editoraService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.editoras = data; }
+      );
+    } else {
+      this.editoraService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.editoras = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.editoraService.countBynome(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.editoraService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarEditoras();
+    this.buscarTodos();
   }
 
   excluir(editora: Editora): void {
