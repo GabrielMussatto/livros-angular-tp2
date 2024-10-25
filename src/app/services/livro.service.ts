@@ -28,6 +28,21 @@ export class LivroService {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
+  countByTitulo(titulo: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${titulo}`);
+  }
+
+  findByNome(titulo: string, page?: number, pageSize?: number): Observable<Livro[]> {
+    let params = {};
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    return this.httpClient.get<Livro[]>(`${this.baseUrl}/search/titulo/${titulo}`, { params });
+  }
+
   findById(id: string): Observable<Livro>{
     return this.httpClient.get<Livro>(`${this.baseUrl}/${id}`);
   }

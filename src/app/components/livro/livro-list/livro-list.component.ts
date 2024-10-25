@@ -13,11 +13,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMenuModule } from '@angular/material/menu';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule, MatPaginatorModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './livro-list.component.html',
   styleUrl: './livro-list.component.css'
 })
@@ -28,6 +31,7 @@ export class LivroListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private livroService: LivroService,
@@ -49,6 +53,35 @@ export class LivroListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarLivros(){
+    if(this.filtro){
+      this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.livros = data; }
+      );
+    } else {
+      this.livroService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.livros = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.livroService.countByTitulo(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.livroService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarLivros();
+    this.buscarTodos();
   }
 
   excluir(livro: Livro): void {

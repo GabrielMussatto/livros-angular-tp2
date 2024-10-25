@@ -43,6 +43,18 @@
     </div>
   </mat-toolbar>
 
+  <div class="container">
+    <div class="input-container">
+        <mat-form-field appearance="outline" class="input-field">
+            <mat-label>Pesquisar pelo Titulo do Livro</mat-label>
+            <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()">
+        </mat-form-field>
+        <button mat-icon-button color="primary" class="search-buttor" (click)="filtrar()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+</div>
+
 <table mat-table [dataSource]="livros" class="mat-elevation-z8">
 
     <!-- Id Column -->
