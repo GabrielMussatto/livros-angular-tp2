@@ -12,11 +12,14 @@ import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/co
 import { MatMenuModule } from '@angular/material/menu';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-caixa-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './caixa-livro-list.component.html',
   styleUrls: ['./caixa-livro-list.component.css']
 })
@@ -27,6 +30,7 @@ export class CaixaLivroListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private caixaLivroService: CaixaLivroService,
@@ -48,6 +52,35 @@ export class CaixaLivroListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarCaixaLivro(){
+    if(this.filtro){
+      this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.caixaLivros = data; }
+      );
+    } else {
+      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.caixaLivros = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.caixaLivroService.countBynome(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.caixaLivroService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarCaixaLivro();
+    this.buscarTodos();
   }
 
   excluir(caixaLivro: CaixaLivro): void {

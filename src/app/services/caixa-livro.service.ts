@@ -28,6 +28,21 @@ export class CaixaLivroService {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
+  countBynome(nome: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${nome}`);
+  }
+
+  findByNome(nome: string, page?: number, pageSize?: number): Observable<CaixaLivro[]> {
+    let params = {};
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    return this.httpClient.get<CaixaLivro[]>(`${this.baseUrl}/search/nome/${nome}`, { params });
+  }
+
   findById(id: string): Observable<CaixaLivro>{
     return this.httpClient.get<CaixaLivro>(`${this.baseUrl}/${id}`);
   }
