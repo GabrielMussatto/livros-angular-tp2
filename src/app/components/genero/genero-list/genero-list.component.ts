@@ -11,12 +11,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
   selector: 'app-genero-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './genero-list.component.html',
   styleUrls: ['./genero-list.component.css']
 })
@@ -27,6 +30,7 @@ export class GeneroListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private generoService: GeneroService,
@@ -48,6 +52,35 @@ export class GeneroListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarGeneros(){
+    if(this.filtro){
+      this.generoService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.generos = data; }
+      );
+    } else {
+      this.generoService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.generos = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.generoService.countBynome(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.generoService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarGeneros();
+    this.buscarTodos();
   }
 
   excluir(genero: Genero): void {

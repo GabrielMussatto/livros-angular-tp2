@@ -42,6 +42,18 @@
       </button>
   </div>
 </mat-toolbar>
+
+<div class="container">
+  <div class="input-container">
+      <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Pesquisar pelo Nome do Gênero</mat-label>
+          <input [(ngModel)]="filtro" matInput placeholder="Ex: Romance" #input (keyup.enter)="filtrar()">
+      </mat-form-field>
+      <button mat-icon-button color="primary" class="search-buttor" (click)="filtrar()">
+          <mat-icon>search</mat-icon>
+      </button>
+  </div>
+</div>
   
   <table mat-table [dataSource]="generos" class="mat-elevation-z8">
     <!--O dataSource é o generos, muda dependendo do que vc quer listar-->

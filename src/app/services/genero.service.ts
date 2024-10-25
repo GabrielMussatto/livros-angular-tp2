@@ -29,6 +29,21 @@ export class GeneroService {
   count(): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
+
+  countBynome(nome: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${nome}`);
+  }
+
+  findByNome(nome: string, page?: number, pageSize?: number): Observable<Genero[]> {
+    let params = {};
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    return this.httpClient.get<Genero[]>(`${this.baseUrl}/search/nome/${nome}`, { params });
+  }
   
   findById(id: string): Observable<Genero> {
     return this.httpClient.get<Genero>(`${this.baseUrl}/${id}`); 
