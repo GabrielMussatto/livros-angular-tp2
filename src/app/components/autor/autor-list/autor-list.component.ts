@@ -11,11 +11,14 @@ import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/co
 import { MatMenuModule } from '@angular/material/menu';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-autor-list',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule],
+  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './autor-list.component.html',
   styleUrls: ['./autor-list.component.css']
 })
@@ -26,6 +29,7 @@ export class AutorListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 5;
   page = 0;
+  filtro: string = "";
 
   constructor(
     private autorService: AutorService, 
@@ -47,6 +51,35 @@ export class AutorListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.ngOnInit();
+  }
+
+  buscarAutores(){
+    if(this.filtro){
+      this.autorService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        data => { this.autores = data; }
+      );
+    } else {
+      this.autorService.findAll(this.page, this.pageSize).subscribe(
+        data => { this.autores = data;}
+      );
+    }
+  }
+
+  buscarTodos(){
+    if(this.filtro){
+      this.autorService.countBynome(this.filtro).subscribe(
+        data => { this.totalRecords = data; }
+      );
+    } else {
+      this.autorService.count().subscribe(
+        data => { this.totalRecords = data; }
+      );
+    }
+  }
+
+  filtrar(){
+    this.buscarAutores();
+    this.buscarTodos();
   }
 
   excluir(autor: Autor): void {

@@ -4,7 +4,7 @@
         <button mat-fab color="accent" [matMenuTriggerFor]="menu">
             <mat-icon>menu</mat-icon>
         </button>
-  
+
         <!-- Menu com as opções de rotas -->
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="livro()">
@@ -32,16 +32,28 @@
                 <span>Editoras</span>
             </button>
         </mat-menu>
-  
+
         <!-- Título da toolbar -->
         <span class="toolbar-title">Controle de Autores</span>
-  
+
         <!-- Botão de adicionar -->
         <button mat-fab color="accent" routerLink="/autores/new">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-  </mat-toolbar>
+</mat-toolbar>
+
+<div class="container">
+    <div class="input-container">
+        <mat-form-field appearance="outline" class="input-field">
+            <mat-label>Pesquisar pelo Nome do Autor</mat-label>
+            <input [(ngModel)]="filtro" matInput placeholder="Ex: J.K. Rowling" #input (keyup.enter)="filtrar()">
+        </mat-form-field>
+        <button mat-icon-button color="primary" class="search-buttor" (click)="filtrar()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+</div>
 
 <table mat-table [dataSource]="autores" class="mat-elevation-z8">
 
