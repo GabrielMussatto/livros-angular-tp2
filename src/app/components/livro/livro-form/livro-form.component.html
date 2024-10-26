@@ -1,211 +1,300 @@
 <mat-toolbar class="titulo">
-    <div class="flex-container">
-        
-        <!-- Botão de voltar -->
-        <button mat-fab color="accent" (click)="voltar()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        
-        <!-- Título da toolbar -->
-        <span class="toolbar-title">Cadastro de Livros</span>
-        
-        <!-- Menu com as opções de rotas -->
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="livro()">
-                <mat-icon>menu_book</mat-icon>
-                <span>Livros</span>
-            </button>
-            <button mat-menu-item (click)="caixaLivros()">
-                <mat-icon>inventory_2</mat-icon>
-                <span>Caixa de Livros</span>
-            </button>
-            <button mat-menu-item (click)="autor()">
-                <mat-icon>person</mat-icon>
-                <span>Autores</span>
-            </button>
-            <button mat-menu-item (click)="genero()">
-                <mat-icon>style</mat-icon>
-                <span>Gêneros</span>
-            </button>
-            <button mat-menu-item (click)="fornecedor()">
-                <mat-icon>local_shipping</mat-icon>
-                <span>Fornecedores</span>
-            </button>
-            <button mat-menu-item (click)="editora()">
-                <mat-icon>business</mat-icon>
-                <span>Editoras</span>
-            </button>
-        </mat-menu>
+  <div class="flex-container">
+    <!-- Botão de voltar -->
+    <button mat-fab color="accent" (click)="voltar()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
 
+    <!-- Título da toolbar -->
+    <span class="toolbar-title">Cadastro de Livros</span>
 
-        <!-- Botão de adicionar -->
-        <button mat-fab color="accent" [matMenuTriggerFor]="menu">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
+    <!-- Menu com as opções de rotas -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="livro()">
+        <mat-icon>menu_book</mat-icon>
+        <span>Livros</span>
+      </button>
+      <button mat-menu-item (click)="caixaLivros()">
+        <mat-icon>inventory_2</mat-icon>
+        <span>Caixa de Livros</span>
+      </button>
+      <button mat-menu-item (click)="autor()">
+        <mat-icon>person</mat-icon>
+        <span>Autores</span>
+      </button>
+      <button mat-menu-item (click)="genero()">
+        <mat-icon>style</mat-icon>
+        <span>Gêneros</span>
+      </button>
+      <button mat-menu-item (click)="fornecedor()">
+        <mat-icon>local_shipping</mat-icon>
+        <span>Fornecedores</span>
+      </button>
+      <button mat-menu-item (click)="editora()">
+        <mat-icon>business</mat-icon>
+        <span>Editoras</span>
+      </button>
+    </mat-menu>
+
+    <!-- Botão de adicionar -->
+    <button mat-fab color="accent" [matMenuTriggerFor]="menu">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <div class="form-container">
-    <mat-card>
-        <mat-card-content>
-            <form [formGroup]="formGroup">
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Titulo</mat-label>
-                    <input matInput type="text" formControlName="titulo">
-                    <mat-error *ngIf="formGroup.get('titulo')
-                               && formGroup.get('titulo')?.invalid
-                               && formGroup.get('titulo')?.touched">
-                        {{getErrorMessage('titulo' , formGroup.get('titulo')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Titulo</mat-label>
+          <input matInput type="text" formControlName="titulo" />
+          <mat-error
+            *ngIf="
+              formGroup.get('titulo') &&
+              formGroup.get('titulo')?.invalid &&
+              formGroup.get('titulo')?.touched
+            "
+          >
+            {{ getErrorMessage("titulo", formGroup.get("titulo")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Descrição</mat-label>
-                    <input matInput type="text" formControlName="descricao">
-                    <mat-error *ngIf="formGroup.get('descricao')
-                               && formGroup.get('descricao')?.invalid
-                               && formGroup.get('descricao')?.touched">
-                        {{getErrorMessage('descricao' , formGroup.get('descricao')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Descrição</mat-label>
+          <input matInput type="text" formControlName="descricao" />
+          <mat-error
+            *ngIf="
+              formGroup.get('descricao') &&
+              formGroup.get('descricao')?.invalid &&
+              formGroup.get('descricao')?.touched
+            "
+          >
+            {{
+              getErrorMessage("descricao", formGroup.get("descricao")?.errors)
+            }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Quantidade Estoque</mat-label>
-                    <input matInput type="number" formControlName="quantidadeEstoque">
-                    <mat-error *ngIf="formGroup.get('quantidadeEstoque')
-                               && formGroup.get('quantidadeEstoque')?.invalid
-                               && formGroup.get('quantidadeEstoque')?.touched">
-                        {{getErrorMessage('quantidadeEstoque' , formGroup.get('quantidadeEstoque')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Quantidade Estoque</mat-label>
+          <input matInput type="number" formControlName="quantidadeEstoque" />
+          <mat-error
+            *ngIf="
+              formGroup.get('quantidadeEstoque') &&
+              formGroup.get('quantidadeEstoque')?.invalid &&
+              formGroup.get('quantidadeEstoque')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "quantidadeEstoque",
+                formGroup.get("quantidadeEstoque")?.errors
+              )
+            }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>ISBN</mat-label>
-                    <input matInput type="text" formControlName="isbn">
-                    <mat-error *ngIf="formGroup.get('isbn')
-                               && formGroup.get('isbn')?.invalid
-                               && formGroup.get('isbn')?.touched">
-                        {{getErrorMessage('isbn' , formGroup.get('isbn')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>ISBN</mat-label>
+          <input matInput type="text" formControlName="isbn" />
+          <mat-error
+            *ngIf="
+              formGroup.get('isbn') &&
+              formGroup.get('isbn')?.invalid &&
+              formGroup.get('isbn')?.touched
+            "
+          >
+            {{ getErrorMessage("isbn", formGroup.get("isbn")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Preço</mat-label>
-                    <input matInput type="number" formControlName="preco">
-                    <mat-error *ngIf="formGroup.get('preco')
-                               && formGroup.get('preco')?.invalid
-                               && formGroup.get('preco')?.touched">
-                        {{getErrorMessage('preco' , formGroup.get('preco')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Preço</mat-label>
+          <input matInput type="number" formControlName="preco" />
+          <mat-error
+            *ngIf="
+              formGroup.get('preco') &&
+              formGroup.get('preco')?.invalid &&
+              formGroup.get('preco')?.touched
+            "
+          >
+            {{ getErrorMessage("preco", formGroup.get("preco")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Fornecedor</mat-label>
-                    <mat-select formControlName="fornecedor">
-                        @for (fornecedor of fornecedores; track fornecedor.id) {
-                        <mat-option [value]="fornecedor">
-                            {{fornecedor.nome}}
-                        </mat-option>
-                        }
-                    </mat-select>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Fornecedor</mat-label>
+          <mat-select formControlName="fornecedor">
+            @for (fornecedor of fornecedores; track fornecedor.id) {
+            <mat-option [value]="fornecedor">
+              {{ fornecedor.nome }}
+            </mat-option>
+            }
+          </mat-select>
 
-                    <mat-error *ngIf="formGroup.get('fornecedor')
-                                && formGroup.get('fornecedor')?.invalid
-                                && formGroup.get('fornecedor')?.touched">
-                        {{getErrorMessage('fornecedor', formGroup.get('fornecedor')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+          <mat-error
+            *ngIf="
+              formGroup.get('fornecedor') &&
+              formGroup.get('fornecedor')?.invalid &&
+              formGroup.get('fornecedor')?.touched
+            "
+          >
+            {{
+              getErrorMessage("fornecedor", formGroup.get("fornecedor")?.errors)
+            }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill"class="full-width-input">
-                    <mat-label>Editora</mat-label>
-                    <mat-select formControlName="editora">
-                        @for (editora of editoras; track editora.id) {
-                        <mat-option [value]="editora">
-                            {{editora.nome}}
-                        </mat-option>
-                        }
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('editora')
-                                && formGroup.get('editora')?.invalid
-                                && formGroup.get('editora')?.touched">
-                        {{getErrorMessage('editora', formGroup.get('editora')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Editora</mat-label>
+          <mat-select formControlName="editora">
+            @for (editora of editoras; track editora.id) {
+            <mat-option [value]="editora">
+              {{ editora.nome }}
+            </mat-option>
+            }
+          </mat-select>
+          <mat-error
+            *ngIf="
+              formGroup.get('editora') &&
+              formGroup.get('editora')?.invalid &&
+              formGroup.get('editora')?.touched
+            "
+          >
+            {{ getErrorMessage("editora", formGroup.get("editora")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input" color="accent">
-                    <mat-label>Gêneros</mat-label>
-                    <mat-select formControlName="generos" name="generos" multiple>
-                        <mat-option *ngFor="let genero of generos" [value]="genero">
-                            {{genero.nome}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('generos')
-                                && formGroup.get('generos')?.invalid
-                                && formGroup.get('generos')?.touched">
-                        {{getErrorMessage('generos', formGroup.get('generos')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          class="full-width-input"
+          color="accent"
+        >
+          <mat-label>Gêneros</mat-label>
+          <mat-select formControlName="generos" name="generos" multiple>
+            <mat-option *ngFor="let genero of generos" [value]="genero">
+              {{ genero.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              formGroup.get('generos') &&
+              formGroup.get('generos')?.invalid &&
+              formGroup.get('generos')?.touched
+            "
+          >
+            {{ getErrorMessage("generos", formGroup.get("generos")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input" color="accent">
-                    <mat-label>Autores</mat-label>
-                    <mat-select formControlName="autores" name="autores" multiple>
-                        <mat-option *ngFor="let autor of autores" [value]="autor">
-                            {{autor.nome}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('autores')
-                                && formGroup.get('autores')?.invalid
-                                && formGroup.get('autores')?.touched">
-                        {{getErrorMessage('autores', formGroup.get('autores')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          class="full-width-input"
+          color="accent"
+        >
+          <mat-label>Autores</mat-label>
+          <mat-select formControlName="autores" name="autores" multiple>
+            <mat-option *ngFor="let autor of autores" [value]="autor">
+              {{ autor.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              formGroup.get('autores') &&
+              formGroup.get('autores')?.invalid &&
+              formGroup.get('autores')?.touched
+            "
+          >
+            {{ getErrorMessage("autores", formGroup.get("autores")?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input" color="accent">
-                    <mat-label> Classificação </mat-label>
-                    <mat-select formControlName="classificacao" name="classificacao">
-                        <mat-option value="1">Livre</mat-option>
-                        <mat-option value="2">10 Anos</mat-option>
-                        <mat-option value="3">12 Anos</mat-option>
-                        <mat-option value="4">14 Anos</mat-option>
-                        <mat-option value="5">16 Anos</mat-option>
-                        <mat-option value="6">18 Anos</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('classificacao')
-                                && formGroup.get('classificacao')?.invalid
-                                && formGroup.get('classificacao')?.touched">
-                        {{getErrorMessage('classificacao', formGroup.get('classificacao')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field
+          appearance="fill"
+          class="full-width-input"
+          color="accent"
+        >
+          <mat-label> Classificação </mat-label>
+          <mat-select formControlName="classificacao" name="classificacao">
+            <mat-option value="1">Livre</mat-option>
+            <mat-option value="2">10 Anos</mat-option>
+            <mat-option value="3">12 Anos</mat-option>
+            <mat-option value="4">14 Anos</mat-option>
+            <mat-option value="5">16 Anos</mat-option>
+            <mat-option value="6">18 Anos</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              formGroup.get('classificacao') &&
+              formGroup.get('classificacao')?.invalid &&
+              formGroup.get('classificacao')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "classificacao",
+                formGroup.get("classificacao")?.errors
+              )
+            }}
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Data de Lançamento</mat-label>
-                    <mat-hint>DD/MM/YYYY</mat-hint>
-                    <input matInput [matDatepicker]="picker" formControlName="datalancamento">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="formGroup.get('datalancamento')
-                                && formGroup.get('datalancamento')?.invalid
-                                && formGroup.get('datalancamento')?.touched">
-                        {{getErrorMessage('datalancamento', formGroup.get('datalancamento')?.errors)}}
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Data de Lançamento</mat-label>
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="datalancamento"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              formGroup.get('datalancamento') &&
+              formGroup.get('datalancamento')?.invalid &&
+              formGroup.get('datalancamento')?.touched
+            "
+          >
+            {{
+              getErrorMessage(
+                "datalancamento",
+                formGroup.get("datalancamento")?.errors
+              )
+            }}
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
 
-            </form>
-        </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="salvar()"
+        [disabled]="formGroup.invalid"
+      >
+        Salvar
+      </button>
 
-        <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
-                Salvar
-            </button>
+      <button
+        mat-raised-button
+        *ngIf="formGroup?.get('id')?.value"
+        color="warn"
+        (click)="excluir()"
+        [disabled]="formGroup.invalid"
+      >
+        Excluir
+      </button>
 
-            <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
-                [disabled]="formGroup.invalid">
-                Excluir
-            </button>
-
-            <button mat-raised-button routerLink="/livros" (click)="voltar()">
-                Cancelar
-            </button>
-        </mat-card-actions>
-    </mat-card>
+      <button mat-raised-button routerLink="/livros" (click)="voltar()">
+        Cancelar
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>

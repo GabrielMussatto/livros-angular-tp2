@@ -18,8 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-editora-form',
   standalone: true,
-  imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule,
-    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatIconModule, MatMenuModule],
+  imports: [ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatButtonModule,
+            NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatIconModule, MatMenuModule],
   templateUrl: './editora-form.component.html',
   styleUrl: './editora-form.component.css'
 })
