@@ -14,12 +14,12 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-genero-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './genero-list.component.html',
   styleUrls: ['./genero-list.component.css']
 })
@@ -35,7 +35,8 @@ export class GeneroListComponent implements OnInit {
   constructor(
     private generoService: GeneroService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -81,6 +82,7 @@ export class GeneroListComponent implements OnInit {
   filtrar(){
     this.buscarGeneros();
     this.buscarTodos();
+    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar',  {duration: 3000});
   }
 
   excluir(genero: Genero): void {
@@ -96,9 +98,11 @@ export class GeneroListComponent implements OnInit {
         this.generoService.delete(genero).subscribe({
           next: () => {
             this.generos = this.generos.filter(e => e.id !== genero.id);
+            this.snackBar.open('O Gênero foi excluído com sucesso!!', 'Fechar', {duration: 3000});
           },
           error: (err) => {
             console.error('Erro ao tentar excluir o gênero', err);
+            this.snackBar.open('Erro ao tentar excluir o gênero', 'Fechar', {duration: 3000});
           }
         });
       }

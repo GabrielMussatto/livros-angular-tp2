@@ -23,12 +23,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-caixa-livro-form',
   standalone: true,
   imports: [NgFor, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
-    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule, MatIconModule, MatMenuModule],
+    MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule, MatIconModule, MatMenuModule, MatSelectModule, MatSnackBarModule],
   templateUrl: './caixa-livro-form.component.html',
   styleUrls: ['./caixa-livro-form.component.css']
 })
@@ -47,9 +49,9 @@ export class CaixaLivroFormComponent implements OnInit {
     private editoraService: EditoraService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog) { 
-
-    const caixaLivro: CaixaLivro = this.activatedRoute.snapshot.data['caixaLivro'];
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar  
+  ) { 
 
     this.formGroup = this.formBuilder.group({
       id: [null],
@@ -77,7 +79,7 @@ export class CaixaLivroFormComponent implements OnInit {
     this.editoraService.findAll().subscribe(data => {
       this.editoras = data;
       this.initializeForm();
-    })
+    }),
     this.autorService.findAll().subscribe(data => {
       this.autores = data;
       this.initializeForm();
@@ -101,34 +103,45 @@ export class CaixaLivroFormComponent implements OnInit {
       generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : [], Validators.required],
       autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : [], Validators.required],
       classificacao: [(caixaLivro && caixaLivro.classificacao) ? caixaLivro.classificacao : null, Validators.required]
-    })
+    });
+  }
+
+  tratarErros(errorResponse: HttpErrorResponse){
+    if(errorResponse.status === 400){
+      if(errorResponse.error?.errors){
+        errorResponse.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.fieldName);
+          if(formControl){
+            formControl.setErrors({apiError: validationError.message})
+          }
+        });
+      }
+    } else if (errorResponse.status < 400){
+      alert(errorResponse.error?.message || 'Erro genérico do envio do formulário.');
+    } else if (errorResponse.status >= 500) {
+      alert('Erro do servidor.');
+    }
   }
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const caixaLivros = this.formGroup.value;
-      if (caixaLivros.id == null) {
-        this.caixaLivroService.insert(caixaLivros).subscribe({
-          next: (caixaLivroCadastrado) => {
-            this.router.navigateByUrl('/caixaLivros');
-          },
-          error: (err) => {
-            console.log('Erro ao Cadastrar' + JSON.stringify(err));
-          }
-        });
-      } else {
-        this.caixaLivroService.update(caixaLivros).subscribe({
-          next: (caixaLivroAtualizado) => {
-            this.router.navigateByUrl('/caixaLivros');
-          },
-          error: (err) => {
-            console.log('Erro ao Atualizar' + JSON.stringify(err));
-          }
-        });
-      }
-    } else {
-      console.log('Formulário Inválido');
+      const caixaLivro = this.formGroup.value;
+      const operacao = caixaLivro.id == null
+      ? this.caixaLivroService.insert(caixaLivro)
+      : this.caixaLivroService.update(caixaLivro);
+
+      operacao.subscribe({
+        next: () => {
+          this.router.navigateByUrl('/caixaLivros');
+          this.snackBar.open('A Caixa de Livro foi salva com Sucesso!!', 'Fechar', {duration: 3000});
+        },
+        error: (error) => {
+          console.log('Erro ao Salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+          this.snackBar.open('Erro ao tentar salvar a Caixa de Livro', 'Fechar', {duration: 3000});
+        }
+      });
     }
   }
 
@@ -145,9 +158,11 @@ export class CaixaLivroFormComponent implements OnInit {
             this.caixaLivroService.delete(caixaLivro).subscribe({
               next: () => {
                 this.router.navigateByUrl('/caixaLivros');
+                this.snackBar.open('A Caixa de Livro foi excluída com Sucesso!!', 'Fechar', {duration: 3000});
               },
               error: (err) => {
                 console.log('Erro ao excluir' + JSON.stringify(err));
+                this.snackBar.open('Erro ao tentar excluir a Caixa de Livro', 'Fechar', {duration: 3000});
               }
             });
           }
@@ -161,46 +176,55 @@ export class CaixaLivroFormComponent implements OnInit {
       return '';
     }
     for (const errorName in errors) {
-      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
-        return this.errorMessages[controlName][errorName];
+      if (errors.hasOwnProperty(errorName) && this.errorMessage[controlName][errorName]) {
+        return this.errorMessage[controlName][errorName];
       }
     }
 
-    return 'invalid field';
+    return 'Campo inválido';
   }
 
-  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+  errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'Nome é obrigatório',
       minlength: 'Nome deve ter no mínimo 2 caracteres',
-      maxlength: 'Nome deve ter no máximo 60 caracteres'
+      maxlength: 'Nome deve ter no máximo 60 caracteres',
+      apiError: ''
     },
     descricao: {
       required: 'Descrição é obrigatório',
       minlength: 'Descrição deve ter no mínimo 2 caracteres',
-      maxlength: 'Descrição deve ter no máximo 20000 caracteres'
+      maxlength: 'Descrição deve ter no máximo 20000 caracteres',
+      apiError: ''
     },
     quantidadeEstoque: {
       required: 'Quantidade Estoque é obrigatório',
-      minlength: 'Quantidade Estoque deve ser maior que zero'
+      minlength: 'Quantidade Estoque deve ser maior que zero',
+      apiError: ''
     },
     preco: {
       required: 'Preço é obrigatório',
+      apiError: ''
     },
     fornecedor: {
-      required: 'Fornecedor é obrigatório'
+      required: 'Fornecedor é obrigatório',
+      apiError: ''
     },
     editora: {
-      required: 'Editora é obrigatório'
+      required: 'Editora é obrigatório',
+      apiError: ''
     },
     generos: {
-      required: 'Gênero é obrigatório'
+      required: 'Gênero é obrigatório',
+      apiError: ''
     },
     autores: {
-      required: 'Autor é obrigatório'
+      required: 'Autor é obrigatório',
+      apiError: ''
     },
     classificacao: {
-      required: 'Classificação é obrigatório'
+      required: 'Classificação é obrigatório',
+      apiError: ''
     }
   }
 

@@ -25,13 +25,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-livro-form',
   standalone: true,
   imports: [NgFor, ReactiveFormsModule, MatCardModule, MatFormFieldModule,
     MatButtonModule, NgIf, MatInputModule, RouterModule, MatTableModule, MatToolbarModule, MatSelectModule, MatDatepickerModule,
-    MatNativeDateModule, MatIconModule, MatMenuModule],
+    MatNativeDateModule, MatIconModule, MatMenuModule, MatSnackBarModule],
   templateUrl: './livro-form.component.html',
   styleUrls: ['./livro-form.component.css']
 })
@@ -51,7 +53,9 @@ export class LivroFormComponent implements OnInit {
     private autorService: AutorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
 
     this.formGroup = this.formBuilder.group({
       id: [null],
@@ -66,7 +70,7 @@ export class LivroFormComponent implements OnInit {
       autores: [[], Validators.required],
       classificacao: ['', Validators.required],
       datalancamento: ['', Validators.required]
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -90,9 +94,14 @@ export class LivroFormComponent implements OnInit {
 
   initializeForm(): void {
     const livro: Livro = this.activatedRoute.snapshot.data['livro'];
+    // console.log("Inicialize form");
+    // console.log(livro);
 
     const fornecedor = this.fornecedores.find(fornecedor => fornecedor.id === (livro?.fornecedor?.id || null));
     const editora = this.editoras.find(editora => editora.id === (livro?.editora?.id || null));
+
+    // console.log("Inicialize form - genero");
+    // console.log(livro.generos);
 
     this.formGroup = this.formBuilder.group({
       id: [(livro && livro.id) ? livro.id : null],
@@ -107,34 +116,45 @@ export class LivroFormComponent implements OnInit {
       autores: [(livro && livro.autores) ? livro.autores.map((autor) => autor.id) : [], Validators.required],
       classificacao: [(livro && livro.classificacao) ? livro.classificacao : null, Validators.required],
       datalancamento: [(livro && livro.datalancamento) ? livro.datalancamento : null, Validators.required]
-    })
+    });
+  }
+
+  tratarErros(errorResponse: HttpErrorResponse){
+    if(errorResponse.status === 400){
+      if(errorResponse.error?.errors){
+        errorResponse.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.fieldName);
+          if(formControl){
+            formControl.setErrors({apiError: validationError.message})
+          }
+        });
+      }
+    } else if (errorResponse.status < 400){
+      alert(errorResponse.error?.message || 'Erro genérico do envio do formulário.');
+    } else if (errorResponse.status >= 500) {
+      alert('Erro do servidor.');
+    }
   }
 
   salvar() {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const livros = this.formGroup.value;
-      if (livros.id == null) {
-        this.livroService.insert(livros).subscribe({
-          next: (livroCadastrado) => {
-            this.router.navigateByUrl('/livros');
-          },
-          error: (err) => {
-            console.log('Erro ao Cadastrar' + JSON.stringify(err));
-          }
-        });
-      } else {
-        this.livroService.update(livros).subscribe({
-          next: (livroAtualizado) => {
-            this.router.navigateByUrl('/livros');
-          },
-          error: (err) => {
-            console.log('Erro ao Atualizar' + JSON.stringify(err));
-          }
-        });
-      }
-    } else {
-      console.log('Formulário Inválido');
+      const livro = this.formGroup.value;
+      const operacao = livro.id == null
+      ? this.livroService.insert(livro)
+      : this.livroService.update(livro);
+
+      operacao.subscribe({
+        next: () => {
+          this.router.navigateByUrl('/livros');
+          this.snackBar.open('O Livro foi salvo com Sucesso!!', 'Fechar', {duration: 3000});
+        },
+        error: (error) => {
+          console.error('Erro ao Salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+          this.snackBar.open('Erro ao tentar salvar o Livro', 'Fechar', {duration: 3000});
+        }
+      });
     }
   }
 
@@ -151,9 +171,11 @@ export class LivroFormComponent implements OnInit {
             this.livroService.delete(livro).subscribe({
               next: () => {
                 this.router.navigateByUrl('/livros');
+                this.snackBar.open('O Livro foi excluído com Sucesso!!', 'Fechar', {duration: 3000});
               },
               error: (err) => {
                 console.log('Erro ao excluir' + JSON.stringify(err));
+                this.snackBar.open('Erro ao tentar excluir o Livro', 'Fechar', {duration: 3000});
               }
             });
           }
@@ -167,54 +189,65 @@ export class LivroFormComponent implements OnInit {
       return '';
     }
     for (const errorName in errors) {
-      if (errors.hasOwnProperty(errorName) && this.errorMessages[controlName][errorName]) {
-        return this.errorMessages[controlName][errorName];
+      if (errors.hasOwnProperty(errorName) && this.errorMessage[controlName][errorName]) {
+        return this.errorMessage[controlName][errorName];
       }
     }
 
     return 'invalid field';
   }
 
-  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+  errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
     titulo: {
       required: 'Titulo é obrigatório',
       minlength: 'Titulo deve ter no mínimo 2 caracteres',
-      maxlength: 'Titulo deve ter no máximo 60 caracteres'
+      maxlength: 'Titulo deve ter no máximo 60 caracteres',
+      apiError: ''
     },
     descricao: {
       required: 'Descrição é obrigatório',
       minlength: 'Descrição deve ter no mínimo 2 caracteres',
-      maxlength: 'Descrição deve ter no máximo 20000 caracteres'
+      maxlength: 'Descrição deve ter no máximo 20000 caracteres',
+      apiError: ''
     },
     quantidadeEstoque: {
       required: 'Quantidade Estoque é obrigatório',
-      minlength: 'Quantidade Estoque deve ser maior que zero'
+      minlength: 'Quantidade Estoque deve ser maior que zero',
+      apiError: ''
     },
     isbn: {
       required: 'ISBN é obrigatório',
       minlength: 'ISBN deve ter no mínimo 13 caracteres',
-      maxlength: 'ISBN deve ter no máximo 13 caracteres'
+      maxlength: 'ISBN deve ter no máximo 13 caracteres',
+      apiError: ''
     },
     preco: {
       required: 'Preço é obrigatório',
+      apiError: ''
     },
     fornecedor: {
-      required: 'Fornecedor é obrigatório'
+      required: 'Fornecedor é obrigatório',
+      apiError: ''
     },
     editora: {
-      required: 'Editora é obrigatório'
+      required: 'Editora é obrigatório',
+      apiError: ''
     },
     generos: {
-      required: 'Gênero é obrigatório'
+      required: 'Gênero é obrigatório',
+      apiError: ''
     },
     autores: {
-      required: 'Autor é obrigatório'
+      required: 'Autor é obrigatório',
+      apiError: ''
     },
     classificacao: {
-      required: 'Classificação é obrigatório'
+      required: 'Classificação é obrigatório',
+      apiError: ''
     },
     datalancamento: {
-      required: 'A data é obrigatória'
+      required: 'A data é obrigatória',
+      apiError: ''
     }
   }
 

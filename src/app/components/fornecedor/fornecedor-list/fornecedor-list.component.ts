@@ -14,11 +14,12 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-fornecedor-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
@@ -34,7 +35,8 @@ export class FornecedorListComponent implements OnInit {
   constructor(
     private fornecedorService: FornecedorService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class FornecedorListComponent implements OnInit {
   filtrar(){
     this.buscarFornecedores();
     this.buscarTodos();
+    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar',  {duration: 3000});
   }
 
   excluir(fornecedor: Fornecedor): void {
@@ -92,9 +95,11 @@ export class FornecedorListComponent implements OnInit {
         this.fornecedorService.delete(fornecedor).subscribe({
           next: () => {
             this.fornecedores = this.fornecedores.filter(f => f.id !== fornecedor.id);
+            this.snackBar.open('O Fornecedor foi excluído com sucesso!', 'Fechar', {duration:3000});
           },
           error: (err) => {
             console.error("Erro ao tentar excluir o fornecedor", err);
+            this.snackBar.open('Erro ao tentar excluir o fornecedor', 'Fechar', {duration:3000});
           }
         });
       }

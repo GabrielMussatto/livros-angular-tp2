@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../dialog/confirmation-dialog/confirmation-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-genero-form',
@@ -29,12 +31,13 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTableModule, 
     MatToolbarModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
   ],
   templateUrl: './genero-form.component.html',
   styleUrls: ['./genero-form.component.css']
 })
-export class GeneroFormComponent {
+export class GeneroFormComponent implements OnInit{
   formGroup: FormGroup;
 
   constructor(
@@ -42,8 +45,22 @@ export class GeneroFormComponent {
     private generoService: GeneroService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
+
+    this.formGroup = this.formBuilder.group({
+      id: [null],
+      nome: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],
+      descricao: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(500)])]
+    });
+  }
+
+  ngOnInit(): void {
+      this.initializeForm();
+  }
+
+  initializeForm(): void {
     const genero: Genero = this.activatedRoute.snapshot.data['genero'];
 
     this.formGroup = this.formBuilder.group({
@@ -53,28 +70,42 @@ export class GeneroFormComponent {
     });
   }
 
-  salvar() {
-    if (this.formGroup.valid) {
-      const genero = this.formGroup.value;
-      if (genero.id == null) {
-        this.generoService.insert(genero).subscribe({
-          next: (generoCadastrado) => {
-            this.router.navigateByUrl('/generos');
-          },
-          error: (errorResponse) => {
-            console.log('Erro ao salvar' + JSON.stringify(errorResponse));
-          }
-        });
-      } else {
-        this.generoService.update(genero).subscribe({
-          next: (generoAlterado) => {
-            this.router.navigateByUrl('/generos');
-          },
-          error: (err) => {
-            console.log('Erro ao alterar' + JSON.stringify(err));
+  tratarErros(errorResponse: HttpErrorResponse){
+    if(errorResponse.status === 400){
+      if(errorResponse.error?.errors){
+        errorResponse.error.errors.forEach((validationError: any) => {
+          const formControl = this.formGroup.get(validationError.fieldName);
+          if(formControl){
+            formControl.setErrors({apiError: validationError.message})
           }
         });
       }
+    } else if (errorResponse.status < 400){
+      alert(errorResponse.error?.message || 'Erro genérico do envio do formulário.');
+    } else if (errorResponse.status >= 500) {
+      alert('Erro do servidor.');
+    }
+  }
+
+  salvar() {
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      const genero = this.formGroup.value;
+      const operacao = genero.id == null
+      ? this.generoService.insert(genero)
+      : this.generoService.update(genero);
+
+      operacao.subscribe({
+        next: () => {
+          this.router.navigateByUrl('/generos');
+          this.snackBar.open('O Gênero foi salvo com Sucesso!!', 'Fechar', {duration: 3000});
+        },
+        error: (error) => {
+          console.error('Erro ao Salvar' + JSON.stringify(error));
+          this.tratarErros(error);
+          this.snackBar.open('Erro ao tentar salvar o Gênero', 'Fechar', {duration: 3000});
+        }
+      });
     }
   }
 
@@ -91,9 +122,11 @@ export class GeneroFormComponent {
             this.generoService.delete(genero).subscribe({
               next: () => {
                 this.router.navigateByUrl('/generos');
+                this.snackBar.open('O Gênero foi excluído com Sucesso!!', 'Fechar', {duration: 3000});
               },
               error: (err) => {
                 console.log('Erro ao excluir' + JSON.stringify(err));
+                this.snackBar.open('Erro ao tentar excluir o Gênero', 'Fechar', {duration: 3000});
               }
             });
           }
@@ -118,13 +151,15 @@ export class GeneroFormComponent {
   errorMessage: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'O nome deve ser informado',
-      minlength: 'O nome deve ter no mínimo 3 caracteres',
-      maxlength: 'O nome de ter no maxímo 60 caracteres'
+      minlength: 'O nome deve ter no mínimo 2 caracteres',
+      maxlength: 'O nome de ter no maxímo 60 caracteres',
+      apiError: ''
     },
     descricao: {
       required: 'A descrição deve ser informada',
       minlength: 'A descrição deve ter no mínimo 2 caracteres',
-      maxlength: 'A descrição deve ter no maximo 500 caracteres'
+      maxlength: 'A descrição deve ter no maximo 500 caracteres',
+      apiError: ''
     }
   }
 

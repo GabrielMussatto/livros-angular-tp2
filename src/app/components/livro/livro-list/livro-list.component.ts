@@ -16,11 +16,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatDatepickerModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './livro-list.component.html',
   styleUrl: './livro-list.component.css'
 })
@@ -36,7 +37,8 @@ export class LivroListComponent implements OnInit {
   constructor(
     private livroService: LivroService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +84,7 @@ export class LivroListComponent implements OnInit {
   filtrar(){
     this.buscarLivros();
     this.buscarTodos();
+    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar',  {duration: 3000});
   }
 
   excluir(livro: Livro): void {
@@ -96,9 +99,11 @@ export class LivroListComponent implements OnInit {
         this.livroService.delete(livro).subscribe({
           next: () => {
             this.livros = this.livros.filter(e => e.id !== livro.id);
+            this.snackBar.open('O Livro foi excluido com sucesso!!', 'Fechar',  {duration: 3000});
           },
           error: (err) => {
             console.error('Erro ao tentar excluir o Livro', err);
+            this.snackBar.open('Erro ao tentar excluir o Livro', 'Fechar', {duration: 3000});
           }
         });
       }

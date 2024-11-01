@@ -14,11 +14,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-autor-list',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './autor-list.component.html',
   styleUrls: ['./autor-list.component.css']
 })
@@ -34,7 +35,8 @@ export class AutorListComponent implements OnInit {
   constructor(
     private autorService: AutorService, 
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +82,7 @@ export class AutorListComponent implements OnInit {
   filtrar(){
     this.buscarAutores();
     this.buscarTodos();
+    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar',  {duration: 3000});
   }
 
   excluir(autor: Autor): void {
@@ -95,9 +98,11 @@ export class AutorListComponent implements OnInit {
         this.autorService.delete(autor).subscribe({
           next: () => {
             this.autores = this.autores.filter(e => e.id !== autor.id);
+            this.snackBar.open('O Autor foi excluído com Sucesso!!', 'Fechar', {duration: 3000});
           },
           error: (err) => {
             console.error('Erro ao tentar excluir o Autor', err);
+            this.snackBar.open('Erro ao tentar excluir o Autor', 'Fechar', {duration: 3000});
           }
         });
       }

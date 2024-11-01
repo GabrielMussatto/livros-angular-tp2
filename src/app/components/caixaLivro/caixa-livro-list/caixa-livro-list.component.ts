@@ -15,11 +15,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-caixa-livro-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule],
+  imports: [NgFor, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './caixa-livro-list.component.html',
   styleUrls: ['./caixa-livro-list.component.css']
 })
@@ -35,7 +36,8 @@ export class CaixaLivroListComponent implements OnInit {
   constructor(
     private caixaLivroService: CaixaLivroService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -81,6 +83,7 @@ export class CaixaLivroListComponent implements OnInit {
   filtrar(){
     this.buscarCaixaLivro();
     this.buscarTodos();
+    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar',  {duration: 3000});
   }
 
   excluir(caixaLivro: CaixaLivro): void {
@@ -96,9 +99,11 @@ export class CaixaLivroListComponent implements OnInit {
         this.caixaLivroService.delete(caixaLivro).subscribe({
           next: () => {
             this.caixaLivros = this.caixaLivros.filter(e => e.id !== caixaLivro.id);
+            this.snackBar.open('A Caixa de Livro foi excluída com Sucesso!!', 'Fechar', {duration: 3000});
           },
           error: (err) => {
             console.error('Erro ao tentar excluir a Caixa de Livros', err);
+            this.snackBar.open('Erro ao tentar excluir a Caixa de Livro', 'Fechar', {duration: 3000});
           }
         });
       }
