@@ -1,52 +1,90 @@
-/* Estilo para o espaçador */
-.example-spacer {
-  flex: 1 1 auto; /* Permite que o espaçador ocupe espaço disponível */
+.sidenav-container {
+  height: 100%;
 }
 
-.titulo{
-  display: flex;
+.sidenav {
+  width: 250px;
+  background-color: #1A2E6D; /* Azul Marinho */
+  color: #FFFFFF;
+  border-radius: 0%;
+}
+
+.sidenav-header {
+  background-color: #1A2E6D;
+  color: #FFFFFF;
+}
+
+.mat-nav-list button {
+  color: #FFFFFF;
+}
+
+.mat-nav-list button:hover {
+  background-color: #2D6A4F; /* Verde Floresta */
+}
+
+.titulo {
+  display: fixed;
   background-color: #1A2E6D; /* Azul Marinho para a toolbar */
-
 }
 
-/* Estilo para a toolbar */
 .toolbar-title {
-  flex: 1; /* Permite que o título ocupe o espaço disponível */
-  text-align: center; /* Centraliza o texto do título */
-  font-size: x-large; /* Aumenta o tamanho da fonte */
-  color: #ffffff; 
+  flex: 1;
+  text-align: center;
+  font-size: x-large;
+  color: #ffffff;
   font-weight: 500;
 }
 
-/* Estilo para o contêiner flexível */
-.flex-container {
-  display: flex; /* Habilita o layout flexível */
-  align-items: center; /* Alinha os itens ao centro verticalmente */
-  width: 100%; /* Largura total */
-  padding: 0.5rem; /* Adiciona espaçamento interno */
-  border-radius: 8px; /* Bordas arredondadas */
+.container {
+  padding: 1rem;
 }
 
-/* Estilo para a tabela */
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.input-field {
+  width: 100%;
+}
+
 table {
-  width: 100%; /* Largura total da tabela */
-  border-collapse: collapse; /* Remove espaços entre as células */
-  background-color: #D9D9D9; /* Cinza Claro para a tabela */
+  width: 100%;
+  background-color: #D9D9D9;
 }
 
-/* Estilo para cabeçalhos da tabela */
 th.mat-header-cell {
-  background-color: #2D6A4F; /* Verde Floresta para cabeçalhos */
-  color: #FFFFFF; /* Branco para o texto dos cabeçalhos */
-  padding: 12px; /* Espaçamento interno dos cabeçalhos */
-  text-align: left; /* Alinhamento do texto à esquerda */
+  background-color: #2D6A4F;
+  color: #FFFFFF;
+  padding: 12px;
+  text-align: left;
 }
 
-/* Estilo para as células da tabela */
 td.mat-cell {
-  padding: 12px; /* Espaçamento interno das células */
-  border-bottom: 1px solid #E96A2A; /* Laranja Queimado para a linha divisória */
-  color: #1A2E6D; /* Azul Marinho para o texto */
+  padding: 12px;
+  border-bottom: 1px solid #E96A2A;
+  color: #1A2E6D;
+}
+
+button[mat-button] {
+  color: #ffffff; /* Cor do texto */
+  background-color: transparent;
+  padding: 10px 20px; /* Espaçamento interno */
+  border-radius: 0%; /* Bordas levemente arredondadas */
+  transition: none; /* Transição suave */
+  border: none; 
+  display: block; /* Faz com que os botões fiquem um abaixo do outro */
+  width: 100%; /* O botão ocupa toda a largura disponível */
+  text-align: left; /* Alinha o texto à esquerda */
+}
+
+button[mat-button]:hover {
+  background-color: #ffffff; /* Fundo amarelo dourado com mais opacidade */
+  color: #1A2E6D; /* Azul Marinho para o texto ao passar o mouse */
+  border-radius: 15px;
 }
 
 /* Estilo para botões na tabela */
@@ -86,4 +124,52 @@ button[mat-fab]:hover {
   margin-bottom: 15px;
   cursor: pointer;
   transform: scale(1.4);
+}
+
+footer {
+  background-color: #1A2E6D; /* Use your navy blue color */
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer-content p {
+  color: #ffffff; /* Use your golden yellow for contrast */
+  margin-bottom: 10px;
+  font-size: 14px; /* Adjust font size as needed */
+}
+
+.button {
+  text-decoration: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #2D2E32;
+  border: 2px solid #2D2E32;
+  transition: all 0.45s;
+  
+}
+
+.button:hover {
+  transform: rotate(360deg);
+  transform-origin: center center;
+  background-color: #F9D56B; /* Change background on hover */
+  color: #2D2E32; /* Change text color on hover */
+}
+
+.button-container{
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gitErick, .gitMussatto{
+  padding: 15px;
+  justify-content: center;
+}
+
+
+.button:hover .btn-svg {
+  filter: invert(0); /* Optional: Adjust filter for hover effect */
 }
