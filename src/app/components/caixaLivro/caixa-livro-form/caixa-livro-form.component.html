@@ -54,6 +54,11 @@
                                && formGroup.get('nome')?.invalid
                                && formGroup.get('nome')?.touched">
                         {{getErrorMessage('nome' , formGroup.get('nome')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('nome')?.hasError('apiError')){
+                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -64,6 +69,11 @@
                                && formGroup.get('descricao')?.invalid
                                && formGroup.get('descricao')?.touched">
                         {{getErrorMessage('descricao' , formGroup.get('descricao')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('descricao')?.hasError('apiError')){
+                            <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -74,6 +84,11 @@
                                && formGroup.get('quantidadeEstoque')?.invalid
                                && formGroup.get('quantidadeEstoque')?.touched">
                         {{getErrorMessage('quantidadeEstoque' , formGroup.get('quantidadeEstoque')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('quantidadeEstoque')?.hasError('apiError')){
+                            <span>{{formGroup.get('quantidadeEstoque')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -84,6 +99,11 @@
                                && formGroup.get('preco')?.invalid
                                && formGroup.get('preco')?.touched">
                         {{getErrorMessage('preco' , formGroup.get('preco')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('preco')?.hasError('apiError')){
+                            <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -100,6 +120,11 @@
                                 && formGroup.get('fornecedor')?.invalid
                                 && formGroup.get('fornecedor')?.touched">
                         {{getErrorMessage('fornecedor', formGroup.get('fornecedor')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('fornecedor')?.hasError('apiError')){
+                            <span>{{formGroup.get('fornecedor')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -116,6 +141,11 @@
                                 && formGroup.get('editora')?.invalid
                                 && formGroup.get('editora')?.touched">
                         {{getErrorMessage('editora', formGroup.get('editora')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('editora')?.hasError('apiError')){
+                            <span>{{formGroup.get('editora')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -130,6 +160,11 @@
                                 && formGroup.get('generos')?.invalid
                                 && formGroup.get('generos')?.touched">
                         {{getErrorMessage('generos', formGroup.get('generos')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('generos')?.hasError('apiError')){
+                            <span>{{formGroup.get('generos')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
                 
@@ -144,6 +179,11 @@
                                 && formGroup.get('autores')?.invalid
                                 && formGroup.get('autores')?.touched">
                         {{getErrorMessage('autores', formGroup.get('autores')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('autores')?.hasError('apiError')){
+                            <span>{{formGroup.get('autores')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
             
@@ -161,6 +201,11 @@
                                 && formGroup.get('classificacao')?.invalid
                                 && formGroup.get('classificacao')?.touched">
                         {{getErrorMessage('classificacao', formGroup.get('classificacao')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('classificacao')?.hasError('apiError')){
+                            <span>{{formGroup.get('classificacao')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -168,7 +213,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
             </button>
 
@@ -177,7 +222,7 @@
                 Excluir
             </button>
 
-            <button mat-raised-button routerLink="/caixaLivros" (click)="voltar()">
+            <button mat-raised-button (click)="voltar()">
                 Cancelar
             </button>
         </mat-card-actions>

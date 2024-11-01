@@ -54,6 +54,11 @@
                                     && formGroup.get('nome')?.invalid
                                     && formGroup.get('nome')?.touched">
                         {{getErrorMessage('nome' , formGroup.get('nome')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('nome')?.hasError('apiError')){
+                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width-input">
@@ -63,12 +68,17 @@
                                     && formGroup.get('biografia')?.invalid
                                     && formGroup.get('biografia')?.touched">
                         {{getErrorMessage('biografia' , formGroup.get('biografia')?.errors)}} 
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('biografia')?.hasError('apiError')){
+                            <span>{{formGroup.get('biografia')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="primary" (click)="salvar()" >
                 Salvar
             </button>
             <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"

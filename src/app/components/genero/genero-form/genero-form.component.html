@@ -53,6 +53,11 @@
                                     && formGroup.get('nome')?.invalid
                                     && formGroup.get('nome')?.touched">
                         {{getErrorMessage('nome' , formGroup.get('nome')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('nome')?.hasError('apiError')){
+                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field apearance="fill" class="full-width-input">
@@ -62,6 +67,11 @@
                                     && formGroup.get('descricao')?.invalid
                                     && formGroup.get('descricao')?.touched">
                         {{getErrorMessage('descricao' , formGroup.get('descricao')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('descricao')?.hasError('apiError')){
+                            <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
             </form>
@@ -69,7 +79,7 @@
 
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
             </button>
 

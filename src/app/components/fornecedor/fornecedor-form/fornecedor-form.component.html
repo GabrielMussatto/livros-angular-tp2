@@ -54,6 +54,11 @@
                                     && formGroup.get('nome')?.invalid
                                     && formGroup.get('nome')?.touched">
                         {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('nome')?.hasError('apiError')){
+                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -64,6 +69,11 @@
                                     && formGroup.get('cnpj')?.invalid
                                     && formGroup.get('cnpj')?.touched">
                         {{getErrorMessage('cnpj', formGroup.get('cnpj')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('cnpj')?.hasError('apiError')){
+                            <span>{{formGroup.get('cnpj')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -74,6 +84,11 @@
                                     && formGroup.get('inscricaoEstadual')?.invalid
                                     && formGroup.get('inscricaoEstadual')?.touched">
                         {{getErrorMessage('inscricaoEstadual', formGroup.get('inscricaoEstadual')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('inscricaoEstadual')?.hasError('apiError')){
+                            <span>{{formGroup.get('inscricaoEstadual')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -84,6 +99,11 @@
                                     && formGroup.get('email')?.invalid
                                     && formGroup.get('email')?.touched">
                         {{getErrorMessage('email', formGroup.get('email')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('email')?.hasError('apiError')){
+                            <span>{{formGroup.get('email')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -94,6 +114,11 @@
                                     && formGroup.get('endereco')?.invalid
                                     && formGroup.get('endereco')?.touched">
                         {{getErrorMessage('endereco', formGroup.get('endereco')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('endereco')?.hasError('apiError')){
+                            <span>{{formGroup.get('endereco')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -104,6 +129,11 @@
                                     && formGroup.get('cep')?.invalid
                                     && formGroup.get('cep')?.touched">
                         {{getErrorMessage('cep', formGroup.get('cep')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('cep')?.hasError('apiError')){
+                            <span>{{formGroup.get('cep')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -114,6 +144,11 @@
                                     && formGroup.get('estado')?.invalid
                                     && formGroup.get('estado')?.touched">
                         {{getErrorMessage('estado', formGroup.get('estado')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('estado')?.hasError('apiError')){
+                            <span>{{formGroup.get('estado')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -124,6 +159,11 @@
                                     && formGroup.get('cidade')?.invalid
                                     && formGroup.get('cidade')?.touched">
                         {{getErrorMessage('cidade', formGroup.get('cidade')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('cidade')?.hasError('apiError')){
+                            <span>{{formGroup.get('cidade')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -134,6 +174,11 @@
                                     && formGroup.get('quantLivrosFornecido')?.invalid
                                     && formGroup.get('quantLivrosFornecido')?.touched">
                         {{getErrorMessage('quantLivrosFornecido', formGroup.get('quantLivrosFornecido')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('quantLivrosFornecido')?.hasError('apiError')){
+                            <span>{{formGroup.get('quantLivrosFornecido')?.getError('apiError')}}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
 
@@ -145,6 +190,11 @@
                                         && formGroup.get('telefone')?.get('codigoArea')?.invalid
                                         && formGroup.get('telefone')?.get('codigoArea')?.touched">
                             {{getErrorMessage('telefone.codigoArea', formGroup.get('telefone')?.get('codigoArea')?.errors)}}
+
+                            <!--erros do back-end-->
+                        @if(formGroup.get('telefone.codigoArea')?.hasError('apiError')){
+                            <span>{{formGroup.get('telefone.codigoArea')?.getError('apiError')}}</span>
+                        }
                         </mat-error>
                     </mat-form-field>
 
@@ -155,6 +205,11 @@
                                         && formGroup.get('telefone')?.get('numero')?.invalid
                                         && formGroup.get('telefone')?.get('numero')?.touched">
                             {{getErrorMessage('telefone.numero', formGroup.get('telefone')?.get('numero')?.errors)}}
+
+                            <!--erros do back-end-->
+                        @if(formGroup.get('telefone.numero')?.hasError('apiError')){
+                            <span>{{formGroup.get('telefone.numero')?.getError('apiError')}}</span>
+                        }
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -162,7 +217,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
             </button>
 
