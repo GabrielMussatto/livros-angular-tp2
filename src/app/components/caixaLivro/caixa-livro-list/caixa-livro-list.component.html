@@ -1,302 +1,122 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav mode="side" class="sidenav">
-    <mat-toolbar color="accent" class="sidenav-header">Menu</mat-toolbar>
+<!-- Barra superior -->
+<mat-toolbar color="primary" class="titulo">
+  <span class="toolbar-title">Controle de Caixa de Livros</span>
+  <button mat-fab color="accent" routerLink="./new">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
 
-    <button mat-button (click)="livro(); sidenav.close()">
-      <mat-icon matListItemIcon>menu_book</mat-icon>
-      <span matlistitemTitle>Livros</span>
+<div class="container">
+  <div class="input-container">
+    <mat-form-field appearance="outline" class="input-field">
+      <mat-label>Pesquisar pelo Nome da Caixa</mat-label>
+      <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()" />
+    </mat-form-field>
+    <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
+      <mat-icon>search</mat-icon>
     </button>
+  </div>
+</div>
 
-    <button mat-button (click)="caixaLivro(); sidenav.close()">
-      <mat-icon matListItemIcon>inventory_2</mat-icon>
-      <span matlistitemTitle>Caixa de Livros</span>
-    </button>
+<table mat-table [dataSource]="caixaLivros" class="mat-elevation-z8">
+  <!-- Id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let caixaLivro">{{ caixaLivro.id }}</td>
+  </ng-container>
 
-    <button mat-button (click)="autor(); sidenav.close()">
-      <mat-icon matListItemIcon>person</mat-icon>
-      <span matlistitemTitle>Autores</span>
-    </button>
+  <!-- Nome Column -->
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let caixaLivro">{{ caixaLivro.nome }}</td>
+  </ng-container>
 
-    <button mat-button (click)="genero(); sidenav.close()">
-      <mat-icon matListItemIcon>style</mat-icon>
-      <span matlistitemTitle>Gêneros</span>
-    </button>
+  <!-- Descrição Column -->
+  <ng-container matColumnDef="descricao">
+    <th mat-header-cell *matHeaderCellDef>Descrição</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      {{ caixaLivro.descricao }}
+    </td>
+  </ng-container>
 
-    <button mat-button (click)="fornecedor(); sidenav.close()">
-      <mat-icon matListItemIcon>local_shipping</mat-icon>
-      <span matlistitemTitle>Fornecedores</span>
-    </button>
+  <!-- Quantidade Em Estoque Column -->
+  <ng-container matColumnDef="quantidadeEstoque">
+    <th mat-header-cell *matHeaderCellDef>Quantidade em Estoque</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      {{ caixaLivro.quantidadeEstoque }}
+    </td>
+  </ng-container>
 
-    <button mat-button (click)="editora(); sidenav.close()">
-      <mat-icon matListItemIcon>business</mat-icon>
-      <span matlistitemTitle>Editoras</span>
-    </button>
-  </mat-sidenav>
+  <!-- Preco Column -->
+  <ng-container matColumnDef="preco">
+    <th mat-header-cell *matHeaderCellDef>Preço</th>
+    <td mat-cell *matCellDef="let caixaLivro">R${{ caixaLivro.preco }}</td>
+  </ng-container>
 
-  <mat-sidenav-content>
-    <!-- Barra superior -->
-    <mat-toolbar color="primary" class="titulo">
-      <button mat-fab (click)="sidenav.toggle()" class="menu-button">
-        <mat-icon>menu</mat-icon>
+  <!-- Fornecedor Column -->
+  <ng-container matColumnDef="fornecedor">
+    <th mat-header-cell *matHeaderCellDef>Fornecedor</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      {{ caixaLivro.fornecedor.nome }}
+    </td>
+  </ng-container>
+
+  <!-- Editora Column -->
+  <ng-container matColumnDef="editora">
+    <th mat-header-cell *matHeaderCellDef>Editora</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      {{ caixaLivro.editora.nome }}
+    </td>
+  </ng-container>
+
+  <!-- Gênero Column -->
+  <ng-container matColumnDef="genero">
+    <th mat-header-cell *matHeaderCellDef>Gênero</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      <span *ngFor="let genero of caixaLivro.generos">
+        {{ genero.nome }} -
+      </span>
+    </td>
+  </ng-container>
+
+  <!-- Autor Column -->
+  <ng-container matColumnDef="autor">
+    <th mat-header-cell *matHeaderCellDef>Autor</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      <span *ngFor="let autor of caixaLivro.autores">{{ autor.nome }} -
+      </span>
+    </td>
+  </ng-container>
+
+  <!-- Classificação Column -->
+  <ng-container matColumnDef="classificacao">
+    <th mat-header-cell *matHeaderCellDef>Classificação</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      {{ caixaLivro.classificacao.descricao }}
+    </td>
+  </ng-container>
+
+  <!-- acao Column -->
+  <ng-container matColumnDef="acao">
+    <th mat-header-cell *matHeaderCellDef>Ação</th>
+    <td mat-cell *matCellDef="let caixaLivro">
+      <button mat-icon-button color="primary" routerLink="/admin/caixaLivros/edit/{{ caixaLivro.id }}">
+        <mat-icon>edit</mat-icon>
       </button>
-      <span class="toolbar-title">Controle de Caixa de Livros</span>
-      <button mat-fab color="accent" routerLink="/caixaLivros/new">
-        <mat-icon>add</mat-icon>
+
+      <button mat-icon-button color="warn" (click)="excluir(caixaLivro)">
+        <mat-icon>delete</mat-icon>
       </button>
-    </mat-toolbar>
-    <div class="container">
-      <div class="input-container">
-        <mat-form-field appearance="outline" class="input-field">
-          <mat-label>Pesquisar pelo Nome da Caixa</mat-label>
-          <input
-            [(ngModel)]="filtro"
-            matInput
-            placeholder="Ex: Harry Potter"
-            #input
-            (keyup.enter)="filtrar()"
-          />
-        </mat-form-field>
-        <button
-          mat-icon-button
-          color="primary"
-          class="search-button"
-          id="meuBotaoPesquisar"
-          (click)="filtrar()"
-        >
-          <mat-icon>search</mat-icon>
-        </button>
-      </div>
-    </div>
+    </td>
+  </ng-container>
 
-    <table mat-table [dataSource]="caixaLivros" class="mat-elevation-z8">
-      <!-- Id Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>No.</th>
-        <td mat-cell *matCellDef="let caixaLivro">{{ caixaLivro.id }}</td>
-      </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr><!--Colunas que serao exibidas-->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
 
-      <!-- Nome Column -->
-      <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef>Nome</th>
-        <td mat-cell *matCellDef="let caixaLivro">{{ caixaLivro.nome }}</td>
-      </ng-container>
-
-      <!-- Descrição Column -->
-      <ng-container matColumnDef="descricao">
-        <th mat-header-cell *matHeaderCellDef>Descrição</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          {{ caixaLivro.descricao }}
-        </td>
-      </ng-container>
-
-      <!-- Quantidade Em Estoque Column -->
-      <ng-container matColumnDef="quantidadeEstoque">
-        <th mat-header-cell *matHeaderCellDef>Quantidade em Estoque</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          {{ caixaLivro.quantidadeEstoque }}
-        </td>
-      </ng-container>
-
-      <!-- Preco Column -->
-      <ng-container matColumnDef="preco">
-        <th mat-header-cell *matHeaderCellDef>Preço</th>
-        <td mat-cell *matCellDef="let caixaLivro">R${{ caixaLivro.preco }}</td>
-      </ng-container>
-
-      <!-- Fornecedor Column -->
-      <ng-container matColumnDef="fornecedor">
-        <th mat-header-cell *matHeaderCellDef>Fornecedor</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          {{ caixaLivro.fornecedor.nome }}
-        </td>
-      </ng-container>
-
-      <!-- Editora Column -->
-      <ng-container matColumnDef="editora">
-        <th mat-header-cell *matHeaderCellDef>Editora</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          {{ caixaLivro.editora.nome }}
-        </td>
-      </ng-container>
-
-      <!-- Gênero Column -->
-      <ng-container matColumnDef="genero">
-        <th mat-header-cell *matHeaderCellDef>Gênero</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          <span *ngFor="let genero of caixaLivro.generos">
-            {{ genero.nome }} -
-          </span>
-        </td>
-      </ng-container>
-
-      <!-- Autor Column -->
-      <ng-container matColumnDef="autor">
-        <th mat-header-cell *matHeaderCellDef>Autor</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          <span *ngFor="let autor of caixaLivro.autores"
-            >{{ autor.nome }} -
-          </span>
-        </td>
-      </ng-container>
-
-      <!-- Classificação Column -->
-      <ng-container matColumnDef="classificacao">
-        <th mat-header-cell *matHeaderCellDef>Classificação</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          {{ caixaLivro.classificacao.descricao }}
-        </td>
-      </ng-container>
-
-      <!-- acao Column -->
-      <ng-container matColumnDef="acao">
-        <th mat-header-cell *matHeaderCellDef>Ação</th>
-        <td mat-cell *matCellDef="let caixaLivro">
-          <button
-            mat-icon-button
-            color="primary"
-            routerLink="/caixaLivros/edit/{{ caixaLivro.id }}"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-
-          <button mat-icon-button color="warn" (click)="excluir(caixaLivro)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <!--Colunas que serao exibidas-->
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 15]"
-      [pageSize]="pageSize"
-      [length]="totalRecords"
-      (page)="paginar($event)"
-    >
-    </mat-paginator>
-
-    <footer>
-      <div class="footer-content">
-        <p>E-COMMERCE DE LIVROS</p>
-        <div class="button-container">
-          <div class="gitErick">
-            <button class="button flex-center">
-              <svg
-                stroke="#fff"
-                fill="#fff"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns="http://www.w3.org/2000/svg"
-                version="1.1"
-                class="btn-svg"
-                width="22px"
-                viewBox="0 0 20 20"
-              >
-                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                <g
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  id="SVGRepo_tracerCarrier"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <title>github [#fff142]</title>
-                  <desc>Created with Sketch.</desc>
-                  <defs></defs>
-                  <g
-                    fill-rule="evenodd"
-                    fill="none"
-                    stroke-width="1"
-                    stroke="none"
-                    id="Page-1"
-                  >
-                    <g
-                      fill="#fff"
-                      transform="translate(-140.000000, -7559.000000)"
-                      id="Dribbble-Light-Preview"
-                    >
-                      <g
-                        transform="translate(56.000000, 160.000000)"
-                        id="icons"
-                      >
-                        <path
-                          id="github-[#fff142]"
-                          d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
-                        ></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </button>
-
-            <a
-              style="color: white; text-decoration: none"
-              href="https://github.com/MenesesErick"
-            >
-              Erick Meneses
-            </a>
-          </div>
-
-          <div class="gitMussatto">
-            <button class="button flex-center">
-              <svg
-                stroke="#fff"
-                fill="#fff"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns="http://www.w3.org/2000/svg"
-                version="1.1"
-                class="btn-svg"
-                width="22px"
-                viewBox="0 0 20 20"
-              >
-                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                <g
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  id="SVGRepo_tracerCarrier"
-                ></g>
-                <g id="SVGRepo_iconCarrier">
-                  <title>github [#fff142]</title>
-                  <desc>Created with Sketch.</desc>
-                  <defs></defs>
-                  <g
-                    fill-rule="evenodd"
-                    fill="none"
-                    stroke-width="1"
-                    stroke="none"
-                    id="Page-1"
-                  >
-                    <g
-                      fill="#fff"
-                      transform="translate(-140.000000, -7559.000000)"
-                      id="Dribbble-Light-Preview"
-                    >
-                      <g
-                        transform="translate(56.000000, 160.000000)"
-                        id="icons"
-                      >
-                        <path
-                          id="github-[#fff142]"
-                          d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
-                        ></path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </svg>
-            </button>
-
-            <a
-              style="color: white; text-decoration: none"
-              href="https://github.com/GabrielMussatto"
-            >
-              Gabriel Mussatto
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-paginator 
+  [pageSizeOptions]="[5, 10, 15]" 
+  [pageSize]="pageSize" 
+  [length]="totalRecords" 
+  (page)="paginar($event)">
+</mat-paginator>
