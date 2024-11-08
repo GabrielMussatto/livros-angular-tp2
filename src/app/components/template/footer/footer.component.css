@@ -1,5 +1,91 @@
-.footer-title{
+/* Estilo para a barra de ferramentas */
+mat-toolbar {
+    background-color: #1A2E6D;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #1A2E6D; /* Cor de fundo do rodapé */
+    align-items: center;
+    padding: 20px !important; /* Adiciona espaçamento interno */
+    min-height: 60px; /* Define uma altura mínima */
+    flex-wrap: wrap; /* Permite que os elementos quebrem linha se necessário */
+    box-sizing: border-box; /* Inclui o padding dentro da altura do footer */
+    width: 100%;
+}
+
+/* Container geral para centralizar todos os itens */
+.all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+footer {
+    background-color: #1A2E6D; /* Cor de fundo do rodapé */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px; /* Espaçamento interno */
+    min-height: auto; /* Altura mínima ajustável */
+    height: auto; /* Altura dinâmica conforme o conteúdo */
+    width: 100%; /* Largura total */
+    box-sizing: border-box; /* Inclui o padding na largura */
+    flex-direction: column; /* Coloca os elementos em coluna */
+}
+
+/* Estilo do título do rodapé */
+.footer-title {
     flex: 1;
-    text-align: center;
     font-size: small;
+    color: white;
+    text-align: center;
+}
+
+/* Estilo básico dos botões circulares */
+.button {
+    text-decoration: none;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2D2E32;
+    border: 2px solid #2D2E32;
+    transition: all 0.45s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Efeito de rotação e mudança de cor no hover do botão */
+.button:hover {
+    transform: rotate(360deg);
+    background-color: #F9D56B;
+    color: #2D2E32;
+}
+
+/* Container dos botões, mantendo a centralização e espaçamento */
+.button-container {
+    margin-top: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Espaçamento entre os botões individuais e centralização */
+.gitErick, .gitMussatto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Efeito no ícone SVG do botão ao passar o mouse */
+.button:hover .btn-svg {
+    filter: invert(0);
 }
