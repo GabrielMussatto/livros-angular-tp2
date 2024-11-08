@@ -1,27 +1,3 @@
-.sidenav-container {
-  height: 100%;
-}
-
-.sidenav {
-  width: 250px;
-  background-color: #1A2E6D; /* Azul Marinho */
-  color: #FFFFFF;
-  border-radius: 0%;
-}
-
-.sidenav-header {
-  background-color: #1A2E6D;
-  color: #FFFFFF;
-}
-
-.mat-nav-list button {
-  color: #FFFFFF;
-}
-
-.mat-nav-list button:hover {
-  background-color: #2D6A4F; /* Verde Floresta */
-}
-
 .titulo {
   display: fixed;
   background-color: #1A2E6D; /* Azul Marinho para a toolbar */
@@ -124,52 +100,4 @@ button[mat-fab]:hover {
   margin-bottom: 15px;
   cursor: pointer;
   transform: scale(1.4);
-}
-
-footer {
-  background-color: #1A2E6D; /* Use your navy blue color */
-  padding: 20px 0;
-  text-align: center;
-}
-
-.footer-content p {
-  color: #ffffff; /* Use your golden yellow for contrast */
-  margin-bottom: 10px;
-  font-size: 14px; /* Adjust font size as needed */
-}
-
-.button {
-  text-decoration: none;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #2D2E32;
-  border: 2px solid #2D2E32;
-  transition: all 0.45s;
-  
-}
-
-.button:hover {
-  transform: rotate(360deg);
-  transform-origin: center center;
-  background-color: #F9D56B; /* Change background on hover */
-  color: #2D2E32; /* Change text color on hover */
-}
-
-.button-container{
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gitErick, .gitMussatto{
-  padding: 15px;
-  justify-content: center;
-}
-
-
-.button:hover .btn-svg {
-  filter: invert(0); /* Optional: Adjust filter for hover effect */
 }
