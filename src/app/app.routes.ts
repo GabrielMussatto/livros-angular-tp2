@@ -17,35 +17,45 @@ import { caixaLivroResolver } from './components/caixaLivro/resolver/caixa-livro
 import { livroResolver } from './components/livro/resolver/livro.resolver';
 import { LivroFormComponent } from './components/livro/livro-form/livro-form.component';
 import { LivroListComponent } from './components/livro/livro-list/livro-list.component';
+import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 
 export const routes: Routes = [
-    // Rotas para Autores
-    { path: 'autores', component: AutorListComponent, title: 'Lista de Autores' },
-    { path: 'autores/new', component: AutorFormComponent, title: 'Novo Autor' },
-    { path: 'autores/edit/:id', component: AutorFormComponent, resolve: { autor: autorResolver } },
+    {
+        path: 'admin',
+        component: AdminTemplateComponent,
+        title: 'e-commerce',
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'autores' },
 
-    // Rotas para Caixa de Livros
-    { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros' },
-    { path: 'caixaLivros/new', component: CaixaLivroFormComponent, title: 'Nova Caixa de Livro' },
-    { path: 'caixaLivros/edit/:id', component: CaixaLivroFormComponent, resolve: { caixaLivro: caixaLivroResolver } },
+            // Rotas para Autores
+            { path: 'autores', component: AutorListComponent, title: 'Lista de Autores' },
+            { path: 'autores/new', component: AutorFormComponent, title: 'Novo Autor' },
+            { path: 'autores/edit/:id', component: AutorFormComponent, resolve: { autor: autorResolver } },
 
-    // Rotas para Livros
-    { path: 'livros', component: LivroListComponent, title: 'Lista de Livros' },
-    { path: 'livros/new', component: LivroFormComponent, title: 'Novo Livro' },
-    { path: 'livros/edit/:id', component: LivroFormComponent, resolve: { livro: livroResolver } },
+            // Rotas para Caixa de Livros
+            { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros' },
+            { path: 'caixaLivros/new', component: CaixaLivroFormComponent, title: 'Nova Caixa de Livro' },
+            { path: 'caixaLivros/edit/:id', component: CaixaLivroFormComponent, resolve: { caixaLivro: caixaLivroResolver } },
 
-    // Rotas para Generos
-    { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' },
-    { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
-    { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver } },
+            // Rotas para Livros
+            { path: 'livros', component: LivroListComponent, title: 'Lista de Livros' },
+            { path: 'livros/new', component: LivroFormComponent, title: 'Novo Livro' },
+            { path: 'livros/edit/:id', component: LivroFormComponent, resolve: { livro: livroResolver } },
 
-    // Rotas para Editoras
-    { path: 'editoras', component: EditoraListComponent, title: 'Lista de Editoras' },
-    { path: 'editoras/new', component: EditoraFormComponent, title: 'Nova Editora' },
-    { path: 'editoras/edit/:id', component: EditoraFormComponent, resolve: { editora: editoraResolver } },
+            // Rotas para Generos
+            { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' },
+            { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
+            { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver } },
 
-    // Rotas para Fornecedores
-    { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
-    { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
-    { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, resolve: { fornecedor: fornecedorResolver } }
+            // Rotas para Editoras
+            { path: 'editoras', component: EditoraListComponent, title: 'Lista de Editoras' },
+            { path: 'editoras/new', component: EditoraFormComponent, title: 'Nova Editora' },
+            { path: 'editoras/edit/:id', component: EditoraFormComponent, resolve: { editora: editoraResolver } },
+
+            // Rotas para Fornecedores
+            { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
+            { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
+            { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, resolve: { fornecedor: fornecedorResolver } },
+        ]
+    }
 ];
