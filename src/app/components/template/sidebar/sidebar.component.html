@@ -4,15 +4,18 @@
         <mat-toolbar>
             <span>Menu</span>
         </mat-toolbar>
-        <mat-nav-list>
-            <mat-list-item>Home</mat-list-item>
-            <mat-list-item routerLink="/admin/autores">Controle de Autores</mat-list-item>
-            <mat-list-item routerLink="/admin/livros">Controle de Livros</mat-list-item>
-            <mat-list-item routerLink="/admin/caixaLivros">Controle de Caixa de Livros</mat-list-item>
-            <mat-list-item routerLink="/admin/generos">Controle de Generos</mat-list-item>
-            <mat-list-item routerLink="/admin/editoras">Controle de Editoras</mat-list-item>
-            <mat-list-item routerLink="/admin/fornecedores">Controle de Fornecedores</mat-list-item>
+        <mat-nav-list class="elementos-nav-list">
+            
+                <mat-list-item class="botao-item" routerLink="/"> <span class="text-botao-item">Home</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/autores"> <span class="text-botao-item">Controle de Autores</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/livros"> <span class="text-botao-item">Controle de Livros</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/caixaLivros"> <span class="text-botao-item">Controle de Caixa de Livros</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/generos"> <span class="text-botao-item">Controle de Generos</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/editoras"> <span class="text-botao-item">Controle de Editoras</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/fornecedores"> <span class="text-botao-item">Controle de Fornecedores</span></mat-list-item>
+            
         </mat-nav-list>
+
     </mat-drawer>
 
     <mat-drawer-content>

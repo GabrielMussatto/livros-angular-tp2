@@ -1,0 +1,48 @@
+/* Estilo para a barra de ferramentas do drawer */
+mat-toolbar {
+    background-color: #1A2E6D; /* Azul Marinho para o topo do menu */
+    color: #FFFFFF; /* Texto branco */
+    text-align: center;
+}
+
+/* Estilo para os itens do menu de navegação */
+mat-nav-list {
+    padding: 0; /* Remove o padding para alinhar os itens */
+}
+
+.botao-item {
+    padding: 12px 20px; /* Espaçamento para conforto de leitura */
+    font-size: 16px;
+    cursor: pointer;
+    color: #FFFFFF; /* Cor inicial do texto branco */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para hover */
+}
+
+
+
+/* Cor de fundo e texto dos itens do menu ao passar o mouse */
+.botao-item:hover {
+    background-color: #ffffff; /* Fundo branco ao passar o mouse */
+    color: #1A2E6D; /* Texto azul marinho no hover */
+
+    .text-botao-item{
+        color: #1A2E6D;
+    }
+}
+
+/* Link ativo com destaque visual */
+.botao-item {
+    color: #ffffff; /* Azul marinho para o texto do item ativo */
+}
+
+.text-botao-item{
+    color:#FFFFFF
+}
+
+
+
+/* Estilo para o drawer */
+mat-drawer {
+    border-radius: 1px;
+    background-color: #3f58ab;
+}
