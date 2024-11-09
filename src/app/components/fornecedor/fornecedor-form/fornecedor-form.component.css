@@ -1,103 +1,102 @@
-.titulo {
-    display: fixed;
-    background-color: #1A2E6D; /* Azul Marinho para a toolbar */
-  }
-  
-  .toolbar-title {
-    flex: 1;
-    text-align: center;
-    font-size: x-large;
-    color: #ffffff;
-    font-weight: 500;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px auto;
-    width: 80%;
-  }
-  
-  .input-field {
-    width: 100%;
-  }
-  
-  table {
-    width: 100%;
-    background-color: #D9D9D9;
-  }
-  
-  th.mat-header-cell {
-    background-color: #2D6A4F;
-    color: #FFFFFF;
-    padding: 12px;
-    text-align: left;
-  }
-  
-  td.mat-cell {
-    padding: 12px;
-    border-bottom: 1px solid #E96A2A;
-    color: #1A2E6D;
-  }
-  
-  button[mat-button] {
-    color: #ffffff; /* Cor do texto */
-    background-color: transparent;
-    padding: 10px 20px; /* Espaçamento interno */
-    border-radius: 0%; /* Bordas levemente arredondadas */
-    transition: none; /* Transição suave */
-    border: none; 
-    display: block; /* Faz com que os botões fiquem um abaixo do outro */
-    width: 100%; /* O botão ocupa toda a largura disponível */
-    text-align: left; /* Alinha o texto à esquerda */
-  }
-  
-  button[mat-button]:hover {
-    background-color: #ffffff; /* Fundo amarelo dourado com mais opacidade */
-    color: #1A2E6D; /* Azul Marinho para o texto ao passar o mouse */
-    border-radius: 15px;
-  }
-  
-  /* Estilo para botões na tabela */
-  button.mat-icon-button {
-    color: #E96A2A; /* Laranja Queimado para os botões */
-  }
-  
-  button.mat-icon-button:hover {
-    background-color: #F9D56B; /* Amarelo Dourado ao passar o mouse */
-  }
-  
-  /* Estilo para os botões da toolbar */
-  button[mat-fab] {
-    background-color: #ffffff; /* Amarelo Dourado para o botão de adicionar */
-    color: #1A2E6D; /* Azul Marinho para o ícone do botão */
-  }
-  
-  /* Efeito de sombra nos botões */
-  button[mat-fab]:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Sombra leve ao passar o mouse */
-  }
-  
-  .input-container {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza os itens h orizontalmente */
-    margin: 20px auto; /* Adiciona margem superior e centraliza horizontalmente */
-    width: 80%; /* Define a largura máxima da caixa de pesquisa */
-  }
-  
-  .input-field {
-    width: 100%; /* Faz com que a caixa de pesquisa ocupe toda a largura disponível */
-  }
-  
-  #meuBotaoPesquisar { 
-    margin-left: 10px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transform: scale(1.4);
-  }
+/* Estilo para a toolbar */
+.toolbar-title {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  flex: 1;
+  text-align: center;
+}
+
+.titulo{
+  background-color: #1A2E6D; /* Azul Marinho para a toolbar */
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 2rem;
+  color: #ffffff; 
+  padding: 16px;
+  font-weight: 500;
+}
+
+/* Estilo do contêiner do formulário */
+.form-container {
+  padding: 2rem;
+  background-color: #FFFACD; /* Amarelo Claro */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+  overflow: hidden; /* Para garantir que o arredondamento seja aplicado */
+}
+
+/* Estilo do cartão */
+mat-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5DC; /* Bege */
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Estilo dos campos de input */
+.full-width-input {
+  width: 100%;
+  margin-bottom: 1.5rem; /* Espaçamento entre os campos */
+}
+
+.half-width-input {
+  width: 49%;
+  margin-bottom: 1.5rem;
+}
+
+mat-form-field {
+  background-color: #D9D9D9; /* Cinza Claro */
+  border-radius: 15px; /* Bordas arredondadas completas */
+  overflow: hidden; /* Garante que o conteúdo interno não quebre o arredondamento */
+}
+
+mat-form-field .mat-input-element {
+  border-radius: 8px; /* Bordas arredondadas */
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+}
+
+/* Aumenta o espaçamento entre o campo de Fornecedor e Editora */
+mat-form-field:nth-of-type(6) {
+  margin-bottom: 20px; /* Espaçamento após o campo Fornecedor */
+}
+
+/* Estilo dos campos de telefone */
+.telefone-fields {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Estilo para ações do cartão */
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Estilo dos botões */
+button[mat-raised-button] {
+  width: 120px;
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #E96A2A; /* Laranja Queimado */
+  color: white;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #F9D56B; /* Amarelo Dourado */
+}
+
+/* Estilo para erros */
+mat-error {
+  font-size: 0.875rem;
+  color: #D2B48C; /* Marrom Claro */
+}

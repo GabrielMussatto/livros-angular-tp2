@@ -83,7 +83,7 @@ export class AutorFormComponent implements OnInit {
       operacao.subscribe({
         next: () => {
           this.snackBar.open('O Autor foi salvo com Sucesso!!', 'Fechar', {duration: 3000});
-          this.router.navigateByUrl('/autores');
+          this.router.navigateByUrl('/admin/autores');
         },
         error: (error) => {
           console.error('Erro ao Salvar' + JSON.stringify(error));
@@ -106,7 +106,7 @@ export class AutorFormComponent implements OnInit {
           if (result) {
             this.autorService.delete(autor).subscribe({
               next: () => {
-                this.router.navigateByUrl('/autores');
+                this.router.navigateByUrl('/admin/autores');
                 this.snackBar.open('O Autor foi excluído com Sucesso!!', 'Fechar', {duration: 3000});
               },
               error: (err) => {
@@ -149,24 +149,24 @@ export class AutorFormComponent implements OnInit {
   };
 
   editora() {
-    this.router.navigateByUrl('/editoras/new');
+    this.router.navigateByUrl('/admin/editoras/new');
   }
   autor() {
-    this.router.navigateByUrl('/autores/new');
+    this.router.navigateByUrl('/admin/autores/new');
   }
   caixaLivros() {
-    this.router.navigateByUrl('/caixaLivros/new');
+    this.router.navigateByUrl('/admin/caixaLivros/new');
   }
   livro() {
-    this.router.navigateByUrl('/livros/new');
+    this.router.navigateByUrl('/admin/livros/new');
   }
   genero() {
-    this.router.navigateByUrl('/generos/new');
+    this.router.navigateByUrl('/admin/generos/new');
   }
   fornecedor() {
-    this.router.navigateByUrl('/fornecedores/new');
+    this.router.navigateByUrl('/admin/fornecedores/new');
   }
   voltar() {
-    this.router.navigateByUrl('/autores');
+    this.router.navigateByUrl('/admin/autores');
   }
 }

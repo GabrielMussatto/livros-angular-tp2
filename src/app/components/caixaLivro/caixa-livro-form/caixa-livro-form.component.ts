@@ -133,7 +133,7 @@ export class CaixaLivroFormComponent implements OnInit {
 
       operacao.subscribe({
         next: () => {
-          this.router.navigateByUrl('/caixaLivros');
+          this.router.navigateByUrl('/admin/caixaLivros');
           this.snackBar.open('A Caixa de Livro foi salva com Sucesso!!', 'Fechar', {duration: 3000});
         },
         error: (error) => {
@@ -157,7 +157,7 @@ export class CaixaLivroFormComponent implements OnInit {
           if (result) {
             this.caixaLivroService.delete(caixaLivro).subscribe({
               next: () => {
-                this.router.navigateByUrl('/caixaLivros');
+                this.router.navigateByUrl('/admin/caixaLivros');
                 this.snackBar.open('A Caixa de Livro foi excluída com Sucesso!!', 'Fechar', {duration: 3000});
               },
               error: (err) => {
@@ -229,24 +229,24 @@ export class CaixaLivroFormComponent implements OnInit {
   }
 
   editora() {
-    this.router.navigateByUrl('/editoras/new');
+    this.router.navigateByUrl('/admin/editoras/new');
   }
   autor() {
-    this.router.navigateByUrl('/autores/new');
+    this.router.navigateByUrl('/admin/autores/new');
   }
   caixaLivros() {
-    this.router.navigateByUrl('/caixaLivros/new');
+    this.router.navigateByUrl('/admin/caixaLivros/new');
   }
   livro() {
-    this.router.navigateByUrl('/livros/new');
+    this.router.navigateByUrl('/admin/livros/new');
   }
   genero() {
-    this.router.navigateByUrl('/generos/new');
+    this.router.navigateByUrl('/admin/generos/new');
   }
   fornecedor() {
-    this.router.navigateByUrl('/fornecedores/new');
+    this.router.navigateByUrl('/admin/fornecedores/new');
   }
   voltar() {
-    this.router.navigateByUrl('/caixaLivros');
+    this.router.navigateByUrl('/admin/caixaLivros');
   }
 }

@@ -110,24 +110,24 @@ export class GeneroListComponent implements OnInit {
     });
   }
   editora() {
-    this.router.navigateByUrl('/editoras');
+    this.router.navigateByUrl('/admin/editoras');
   }
   autor() {
-    this.router.navigateByUrl('/autores');
+    this.router.navigateByUrl('/admin/autores');
   }
   caixaLivros() {
-    this.router.navigateByUrl('/caixaLivros');
+    this.router.navigateByUrl('/admin/caixaLivros');
   }
   livro() {
-    this.router.navigateByUrl('/livros');
+    this.router.navigateByUrl('/admin/livros');
   }
   genero() {
-    this.router.navigateByUrl('/generos');
+    this.router.navigateByUrl('/admin/generos');
   }
   fornecedor() {
-    this.router.navigateByUrl('/fornecedores');
+    this.router.navigateByUrl('/admin/fornecedores');
   }
   voltar() {
-    this.router.navigateByUrl('/generos');
+    this.router.navigateByUrl('/admin/generos');
   }
 }
