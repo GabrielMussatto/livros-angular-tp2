@@ -1,1 +1,99 @@
-<router-outlet />
+<div class="card-container">
+    <!-- Card for /admin/livros -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Livros</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Livros
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="livro()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Card for /admin/caixaLivros -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Caixa de Livros</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Caixa de Livros
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="caixaLivros()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Card for /admin/autores -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Autores</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Autores
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="autor()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Card for /admin/generos -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Gêneros</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Gêneros
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="genero()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Card for /admin/editoras -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Editoras</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Editoras
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="editora()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- Card for /admin/fornecedores -->
+    <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Fornecedores</mat-card-title>
+                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            Descrição de Fornecedores
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="fornecedor()">Ver Mais</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<router-outlet></router-outlet>
