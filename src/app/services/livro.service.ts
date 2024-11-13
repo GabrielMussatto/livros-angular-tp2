@@ -11,6 +11,10 @@ export class LivroService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getUrlImage(nomeImagem: string): string{
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
   findAll(page?: number, pageSize?: number): Observable<Livro[]> {
     let params = {};
 
@@ -32,6 +36,10 @@ export class LivroService {
     return this.httpClient.get<number>(`${this.baseUrl}/count/search/${titulo}`);
   }
 
+  countByAutor(autor: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${autor}`);
+  }
+
   findByNome(titulo: string, page?: number, pageSize?: number): Observable<Livro[]> {
     let params = {};
     if (page !== undefined && pageSize !== undefined) {
@@ -41,6 +49,17 @@ export class LivroService {
       }
     }
     return this.httpClient.get<Livro[]>(`${this.baseUrl}/search/titulo/${titulo}`, { params });
+  }
+
+  findByAutor(autor: string, page?: number, pageSize?:number): Observable<Livro[]>{
+    let params = {};
+    if(page !== undefined && pageSize !== undefined){
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+    return this.httpClient.get<Livro[]>(`${this.baseUrl}/search/autor/${autor}`, {params});
   }
 
   findById(id: string): Observable<Livro>{
