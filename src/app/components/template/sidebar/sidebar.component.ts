@@ -24,4 +24,8 @@ export class SidebarComponent implements OnInit{
       }
     )
   }
+
+  fecharBarraLateral(){
+    this.drawer.close();
+  }
 }

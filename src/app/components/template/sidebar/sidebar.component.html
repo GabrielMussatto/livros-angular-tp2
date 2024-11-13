@@ -1,23 +1,18 @@
 <mat-drawer-container class="container">
-
-    <mat-drawer #drawer  mode="side" opened>
+    <mat-drawer #drawer  mode="over">
         <mat-toolbar>
             <span>Menu</span>
         </mat-toolbar>
         <mat-nav-list class="elementos-nav-list">
-            
-                <mat-list-item class="botao-item" routerLink="/"> <span class="text-botao-item">Home</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/autores"> <span class="text-botao-item">Controle de Autores</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/livros"> <span class="text-botao-item">Controle de Livros</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/caixaLivros"> <span class="text-botao-item">Controle de Caixa de Livros</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/generos"> <span class="text-botao-item">Controle de Generos</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/editoras"> <span class="text-botao-item">Controle de Editoras</span></mat-list-item>
-                <mat-list-item class="botao-item" routerLink="/admin/fornecedores"> <span class="text-botao-item">Controle de Fornecedores</span></mat-list-item>
-            
+                <mat-list-item class="botao-item" routerLink="/" (click)="fecharBarraLateral()"> <span class="text-botao-item">Home</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/autores" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Autores</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/livros" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Livros</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/caixaLivros" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Caixa de Livros</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/generos" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Generos</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/editoras" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Editoras</span></mat-list-item>
+                <mat-list-item class="botao-item" routerLink="/admin/fornecedores" (click)="fecharBarraLateral()"> <span class="text-botao-item">Controle de Fornecedores</span></mat-list-item>
         </mat-nav-list>
-
     </mat-drawer>
-
     <mat-drawer-content>
         <router-outlet></router-outlet>
     </mat-drawer-content>
