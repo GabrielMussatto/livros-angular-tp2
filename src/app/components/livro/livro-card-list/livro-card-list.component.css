@@ -1,0 +1,103 @@
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Borda preta clara */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas para um efeito mais suave */
+    transition: box-shadow 0.3s ease; /* Adiciona uma transição suave para a sombra */
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais forte quando o card for hover */
+}
+
+.card-content {
+    flex-grow: 1; /* Permite que o conteúdo cresça e ocupe o espaço disponível */
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Distanciamento entre os botões */
+}
+
+.card-button {
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+    border-radius: 8px; /* Adiciona bordas arredondadas para os botões */
+    transition: background-color 0.3s ease; /* Transição suave na cor de fundo */
+}
+
+/* Hover: Quando o mouse passar sobre o botão */
+.card-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Altera a cor de fundo do botão */
+}
+
+/* Efeito de hover específico para o botão com a cor primary */
+.primary-button:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Cor suave de fundo quando hover em primary */
+}
+
+/* Efeito de hover específico para o botão com a cor accent */
+.accent-button:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Cor suave de fundo quando hover em accent */
+}
+
+
+img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+mat-card-title {
+    margin-top: 8px;
+    font-size: 1rem;
+}
+
+mat-card-subtitle {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.container {
+    padding: 20px;
+}
+
+.centered-text {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;/* Centraliza os itens h orizontalmente */
+    margin: 20px auto;/* Adiciona margem superior e centraliza horizontalmente */
+    width: 80%;/* Define a largura máxima da caixa de pesquisa */
+}
+
+.input-field {
+    width: 100%;/* Faz com que a caixa de pesquisa ocupe toda a largura disponível */
+}
+
+#meuBotaoPesquisar {
+    margin-left: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transform: scale(1.4);
+}
