@@ -1,0 +1,83 @@
+.livro-detalhado-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .livro-card {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .livro-detalhado-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .livro-imagem {
+    flex: 1;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .livro-imagem-img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  .livro-info {
+    flex: 2;
+    padding-left: 20px;
+  }
+  
+  mat-card-header {
+    margin-bottom: 15px;
+  }
+  
+  mat-card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  mat-card-subtitle {
+    font-size: 1.2em;
+    color: gray;
+  }
+  
+  mat-card-content {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+  
+  mat-card-actions {
+    margin-top: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    .livro-detalhado-content {
+      flex-direction: column;
+    }
+  
+    .livro-imagem {
+      padding-right: 0;
+      margin-bottom: 20px;
+    }
+  
+    .livro-info {
+      padding-left: 0;
+    }
+  
+    .livro-imagem-img {
+      max-width: 100%;
+    }
+  }
+  
