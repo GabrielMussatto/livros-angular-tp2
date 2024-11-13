@@ -26,10 +26,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class EditoraListComponent implements OnInit {
   editoras: Editora[] = [];
-  displayedColumns: string[] = ['id', 'nome', 'email', 'endereco', 'telefone', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'email', 'endereco', 'telefone', 'acao'];
 
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   filtro: string = "";
 
@@ -47,6 +47,10 @@ export class EditoraListComponent implements OnInit {
     this.editoraService.count().subscribe(
       data => { this.totalRecords = data }
     );
+  }
+
+  obterNumeroLinha(index: number): number {
+    return this.page * this.pageSize + index + 1;
   }
 
   paginar(event: PageEvent): void{
