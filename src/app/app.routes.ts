@@ -18,12 +18,15 @@ import { livroResolver } from './components/livro/resolver/livro.resolver';
 import { LivroFormComponent } from './components/livro/livro-form/livro-form.component';
 import { LivroListComponent } from './components/livro/livro-list/livro-list.component';
 import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
+import { UserTemplateComponent } from './components/template/user-template/user-template.component';
+import { LivroCardListComponent } from './components/livro/livro-card-list/livro-card-list.component';
+import { LivroDetalhadoListComponent } from './components/livro/livro-detalhado-list/livro-detalhado-list.component';
 
 export const routes: Routes = [
     {
         path: 'admin',
         component: AdminTemplateComponent,
-        title: 'e-commerce',
+        title: 'administração',
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'autores' },
 
@@ -56,6 +59,16 @@ export const routes: Routes = [
             { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
             { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
             { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, resolve: { fornecedor: fornecedorResolver } },
+        ]
+    },
+    {
+        path: '',
+        component: UserTemplateComponent,
+        title: 'e-commerce',
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'livros' },
+            { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
+            { path: 'livros/:id', component: LivroDetalhadoListComponent, title: 'Detalhes do Livro' },
         ]
     }
 ];
