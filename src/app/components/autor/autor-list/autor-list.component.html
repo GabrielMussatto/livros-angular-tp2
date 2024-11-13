@@ -18,9 +18,14 @@
 </div>
 
 <table mat-table [dataSource]="autores" class="mat-elevation-z8">
+  <ng-container matColumnDef="linha">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let livro; let i = index">{{obterNumeroLinha(i)}}</td>
+  </ng-container>
+  
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <th mat-header-cell *matHeaderCellDef>Id</th>
     <td mat-cell *matCellDef="let autor">{{ autor.id }}</td>
   </ng-container>
 
@@ -54,7 +59,7 @@
 </table>
 
 <mat-paginator 
-  [pageSizeOptions]="[5, 10, 15]" 
+  [pageSizeOptions]="[10, 25, 50, 100]" 
   [pageSize]="pageSize" 
   [length]="totalRecords" 
   (page)="paginar($event)">

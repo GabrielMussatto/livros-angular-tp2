@@ -25,11 +25,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   styleUrls: ['./autor-list.component.css']
 })
 export class AutorListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'biografia', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'biografia', 'acao'];
   autores: Autor[] = [];
 
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   filtro: string = "";
 
@@ -50,6 +50,10 @@ export class AutorListComponent implements OnInit {
     );
   }
 
+  obterNumeroLinha(index: number): number {
+    return this.page * this.pageSize + index + 1;
+  }
+  
   paginar(event: PageEvent): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
