@@ -16,4 +16,5 @@ export class Livro {
     datalancamento!: Date;
     generos!: Genero[];
     autores!: Autor[];
+    nomeImagem!: string;
 }
