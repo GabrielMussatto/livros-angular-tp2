@@ -26,10 +26,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class FornecedorListComponent implements OnInit {
   fornecedores: Fornecedor[] = [];
-  displayedColumns: string[] = ['id', 'nome', 'cnpj', 'email', 'endereco', 'telefone', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'cnpj', 'email', 'endereco', 'telefone', 'acao'];
 
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   filtro: string = "";
 
@@ -48,6 +48,10 @@ export class FornecedorListComponent implements OnInit {
     this.fornecedorService.count().subscribe(
       data => { this.totalRecords = data }
     );
+  }
+
+  obterNumeroLinha(index: number): number {
+    return this.page * this.pageSize + index + 1;
   }
 
   paginar(event: PageEvent): void{
