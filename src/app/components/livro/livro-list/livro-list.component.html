@@ -8,6 +8,14 @@
 
 <div class="container">
   <div class="input-container">
+    <mat-form-field appearance="outline" class="select-field">
+      <mat-label>Pesquisar por</mat-label>
+      <mat-select [(ngModel)]="tipoFiltro">
+          <mat-option value="titulo">Título</mat-option>
+          <mat-option value="autor">Autor</mat-option>
+      </mat-select>
+  </mat-form-field>
+
     <mat-form-field appearance="outline" class="input-field">
       <mat-label>Pesquisar pelo Titulo do Livro</mat-label>
       <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()" />
@@ -19,9 +27,14 @@
 </div>
 
 <table mat-table [dataSource]="livros" class="mat-elevation-z8">
+  <ng-container matColumnDef="linha">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let livro; let i = index">{{obterNumeroLinha(i)}}</td>
+  </ng-container>
+
   <!-- Id Column -->
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <th mat-header-cell *matHeaderCellDef>Id</th>
     <td mat-cell *matCellDef="let livro">{{ livro.id }}</td>
   </ng-container>
 
@@ -68,22 +81,24 @@
   </ng-container>
 
   <!-- Gênero Column -->
-  <ng-container matColumnDef="genero">
-    <th mat-header-cell *matHeaderCellDef>Gênero</th>
-    <td mat-cell *matCellDef="let livro">
-      <span *ngFor="let genero of livro.generos">
-        {{ genero.nome }} -
-      </span>
-    </td>
-  </ng-container>
+<ng-container matColumnDef="genero">
+  <th mat-header-cell *matHeaderCellDef>Gênero</th>
+  <td mat-cell *matCellDef="let livro">
+    <span *ngFor="let genero, let last = last of livro.generos">
+      {{ genero.nome }}<span *ngIf="!last">, </span>
+    </span>
+  </td>
+</ng-container>
 
-  <!-- Autor Column -->
-  <ng-container matColumnDef="autor">
-    <th mat-header-cell *matHeaderCellDef>Autor</th>
-    <td mat-cell *matCellDef="let livro">
-      <span *ngFor="let autor of livro.autores">{{ autor.nome }} -</span>
-    </td>
-  </ng-container>
+<!-- Autor Column -->
+<ng-container matColumnDef="autor">
+  <th mat-header-cell *matHeaderCellDef>Autor</th>
+  <td mat-cell *matCellDef="let livro">
+    <span *ngFor="let autor, let last = last of livro.autores">
+      {{ autor.nome }}<span *ngIf="!last">, </span>
+    </span>
+  </td>
+</ng-container>
 
   <!-- Classificação Column -->
   <ng-container matColumnDef="classificacao">
@@ -117,7 +132,7 @@
 </table>
 
 <mat-paginator 
-  [pageSizeOptions]="[5, 10, 15]" 
+  [pageSizeOptions]="[10, 25, 50, 100]" 
   [pageSize]="pageSize" 
   [length]="totalRecords" 
   (page)="paginar($event)">
