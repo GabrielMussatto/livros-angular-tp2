@@ -26,10 +26,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 export class GeneroListComponent implements OnInit {
   generos: Genero[] = [];
-  displayedColumns: string[] = ['id', 'nome', 'descricao', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'descricao', 'acao'];
 
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   filtro: string = "";
 
@@ -48,6 +48,10 @@ export class GeneroListComponent implements OnInit {
     this.generoService.count().subscribe(
       data => { this.totalRecords = data }
     );
+  }
+
+  obterNumeroLinha(index: number): number {
+    return this.page * this.pageSize + index + 1;
   }
 
   paginar(event: PageEvent): void{
