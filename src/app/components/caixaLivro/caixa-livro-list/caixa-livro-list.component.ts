@@ -26,11 +26,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   styleUrls: ['./caixa-livro-list.component.css']
 })
 export class CaixaLivroListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'nome', 'descricao', 'quantidadeEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'descricao', 'quantidadeEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
   caixaLivros: CaixaLivro[] = [];
 
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   filtro: string = "";
 
@@ -49,6 +49,10 @@ export class CaixaLivroListComponent implements OnInit {
     this.caixaLivroService.count().subscribe(
       data => { this.totalRecords = data }
     );
+  }
+
+  obterNumeroLinha(index: number): number {
+    return this.page * this.pageSize + index + 1;
   }
 
   paginar(event: PageEvent): void{
