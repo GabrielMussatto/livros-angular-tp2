@@ -14,4 +14,5 @@ export class CaixaLivro {
     autores!: Autor[];
     classificacao!: string;
     preco!: number;
+    nomeImagem!: string;
 }
