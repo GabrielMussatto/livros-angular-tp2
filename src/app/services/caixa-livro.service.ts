@@ -11,6 +11,10 @@ export class CaixaLivroService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getUrlImage(nomeImagem: string): string{
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
   findAll(page?: number, pageSize?: number): Observable<CaixaLivro[]>{
     let params = {};
   
@@ -28,8 +32,12 @@ export class CaixaLivroService {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
-  countBynome(nome: string): Observable<number>{
+  countByNome(nome: string): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count/search/${nome}`);
+  }
+
+  countByGenero(genero: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${genero}`);
   }
 
   findByNome(nome: string, page?: number, pageSize?: number): Observable<CaixaLivro[]> {
