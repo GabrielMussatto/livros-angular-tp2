@@ -1,0 +1,37 @@
+<div *ngIf="caixaLivro; else loading" class="caixa-livro-detalhado-container">
+    <mat-card class="caixa-livro-card">
+      <div class="caixa-livro-detalhado-content">
+        <div class="caixa-livro-imagem">
+          <img mat-card-image [src]="caixaLivroService.getUrlImage(caixaLivro.nomeImagem)" alt="Imagem da caixa de livros" class="caixa-livro-imagem-img" />
+        </div>
+        <div class="caixa-livro-info">
+          <mat-card-header>
+            <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
+            <mat-card-subtitle>{{ generosString }}</mat-card-subtitle> <!-- Usando a propriedade computada -->
+          </mat-card-header>
+  
+          <mat-card-content>
+            <p><strong>Descrição:</strong> {{ caixaLivro.descricao }}</p>
+            <p><strong>Classificação:</strong> {{ caixaLivro.classificacao }}</p>
+            <p><strong>Editora:</strong> {{ caixaLivro.editora.nome }}</p>
+            <p><strong>Preço:</strong> R${{ caixaLivro.preco }}</p>
+            <p><strong>Gêneros:</strong> {{ generosString }}</p>
+            
+          </mat-card-content>
+  
+          <mat-card-actions>
+            <button mat-button color="primary">Adicionar ao Carrinho</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container">
+      <div class="loading-content">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Carregando detalhes da Caixa de livros...</p>
+      </div>
+    </div>
+  </ng-template>
