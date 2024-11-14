@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardContent, MatCardModule, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
@@ -22,6 +22,7 @@ type Card = {
   descricao: string;
   preco: number;
   imageUrl: string;
+  verDescricao: boolean;
 }
 
 @Component({
@@ -30,7 +31,7 @@ type Card = {
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
     MatCardTitle, MatCardSubtitle, MatIcon, FormsModule,
-    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule
+    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
   ],
   templateUrl: './livro-card-list.component.html',
   styleUrl: './livro-card-list.component.css'
@@ -43,6 +44,7 @@ export class LivroCardListComponent implements OnInit {
   page = 0;
   filtro: string = "";
   tipoFiltro: string = "titulo";
+  ordenacao: string = 'maisRelevantes';
 
   constructor(
     private livroService: LivroService,
@@ -62,6 +64,7 @@ export class LivroCardListComponent implements OnInit {
           data => {
             this.livros = data;
             this.carregarCards();
+            this.ordenar();
           }
         );
       } else {
@@ -69,6 +72,7 @@ export class LivroCardListComponent implements OnInit {
           data => {
             this.livros = data;
             this.carregarCards();
+            this.ordenar();
           }
         );
       }
@@ -77,6 +81,7 @@ export class LivroCardListComponent implements OnInit {
         data => {
           this.livros = data;
           this.carregarCards();
+          this.ordenar();
         }
       );
     }
@@ -92,7 +97,8 @@ export class LivroCardListComponent implements OnInit {
         autores: livro.autores.map(autor => autor.nome).join(', '),
         generos: livro.generos.map(genero => genero.nome).join(', '),
         preco: livro.preco,
-        imageUrl: this.livroService.getUrlImage(livro.nomeImagem)
+        imageUrl: this.livroService.getUrlImage(livro.nomeImagem),
+        verDescricao: false
       });
     });
     this.cards.set(cards);
@@ -102,6 +108,7 @@ export class LivroCardListComponent implements OnInit {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     this.carregarLivros();
+    this.ordenar();
   }
 
   buscarTodos(): void {
@@ -130,5 +137,22 @@ export class LivroCardListComponent implements OnInit {
 
   verMais(id: number): void{
     this.router.navigate(['/livros', id]);
+  }
+
+  toogleDescricao(card: Card): void{
+    card.verDescricao = !card.verDescricao;
+  }
+
+  ordenar(): void{
+    const ordenarCards = this.cards().slice();
+    if(this.ordenacao === 'asc'){
+      ordenarCards.sort((a, b) => a.preco - b.preco);
+    }else if(this.ordenacao === 'desc'){
+      ordenarCards.sort((a, b) => b.preco - a.preco);
+    } else if(this.ordenacao === 'maisRelevantes'){
+      this.carregarCards();
+      return;
+    }
+    this.cards.set(ordenarCards);
   }
 }

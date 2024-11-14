@@ -18,6 +18,15 @@
         <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
             <mat-icon>search</mat-icon>
         </button>
+
+        <mat-form-field appearance="outline" class="select-field">
+            <mat-label>Ordenar por</mat-label>
+            <mat-select [(ngModel)]="ordenacao" (selectionChange)="ordenar()">
+                <mat-option value="maisRelevantes">Mais Relevantes</mat-option>
+                <mat-option value="asc">Menor Preço</mat-option>
+                <mat-option value="desc">Maior Preço</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
 
@@ -31,17 +40,13 @@
                 Autores: {{ card.autores }}
             </mat-card-subtitle>
 
-            <mat-card-content class="centered-text">
+            <mat-card-content *ngIf="card.verDescricao" class="centered-text">
                 {{card.descricao}}
             </mat-card-content>
-
-            <br />
 
             <mat-card-content class="centered-text">
                 Gênero: {{card.generos}}
             </mat-card-content>
-
-            <br />
 
             <mat-card-content class="centered-text">
                 R${{card.preco}}
@@ -49,6 +54,9 @@
         </div>
 
         <mat-card-footer class="card-footer">
+            <button mat-button color="primary" class="card-button primary-button" (click)="toogleDescricao(card)">
+                {{ card.verDescricao ? 'Ocultar Descrição' : 'Ver Descrição Breve' }}
+              </button>
             <button mat-button color="primary" class="card-button primary-button" (click)="verMais(card.id)">Ver Mais...</button>
             <button mat-button color="accent" class="card-button accent-button">Adicionar ao Carrinho</button>
         </mat-card-footer>
