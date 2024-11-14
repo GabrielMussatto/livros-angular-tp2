@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="input-container">
+        <!-- Select para o tipo de pesquisa -->
+        <mat-form-field appearance="outline" class="select-field">
+            <mat-label>Pesquisar por</mat-label>
+            <mat-select [(ngModel)]="tipoFiltro">
+                <mat-option value="titulo">Nome</mat-option>
+                <mat-option value="autor">Gênero</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Campo de entrada para o valor da pesquisa -->
+        <mat-form-field appearance="outline" class="input-field">
+            <mat-label>Digite para pesquisar</mat-label>
+            <input [(ngModel)]="filtro" matInput placeholder="Ex: Box of the Good Good" (keyup.enter)="filtrar()" />
+        </mat-form-field>
+
+        <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
+            <mat-icon>search</mat-icon>
+        </button>
+
+        <mat-form-field appearance="outline" class="select-field">
+            <mat-label>Ordenar por</mat-label>
+            <mat-select [(ngModel)]="ordenacao" (selectionChange)="ordenar()">
+                <mat-option value="maisRelevantes">Mais Relevantes</mat-option>
+                <mat-option value="asc">Menor Preço</mat-option>
+                <mat-option value="desc">Maior Preço</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="container responsive-grid">
+    <mat-card *ngFor="let card of cards()" class="card">
+        <img mat-card-image [src]="card.imageUrl" />
+
+        <div class="card-content">
+            <mat-card-title class="centered-text">{{card.nome}}</mat-card-title>
+            <mat-card-subtitle class="centered-text">
+                Autores: {{ card.autores }}
+            </mat-card-subtitle>
+
+            <mat-card-content *ngIf="card.verDescricao" class="centered-text">
+                {{card.descricao}}
+            </mat-card-content>
+
+            <mat-card-content class="centered-text">
+                Gênero: {{card.generos}}
+            </mat-card-content>
+
+            <mat-card-content class="centered-text">
+                R${{card.preco}}
+            </mat-card-content>
+        </div>
+
+        <mat-card-footer class="card-footer">
+            <button mat-button color="primary" class="card-button primary-button" (click)="toogleDescricao(card)">
+                {{ card.verDescricao ? 'Ocultar Descrição' : 'Ver Descrição Breve' }}
+              </button>
+            <button mat-button color="primary" class="card-button primary-button" (click)="verMais(card.id)">Ver Mais...</button>
+            <button mat-button color="accent" class="card-button accent-button">Adicionar ao Carrinho</button>
+        </mat-card-footer>
+    </mat-card>
+</div>
+
+
+<mat-paginator 
+    [pageSizeOptions]="[10, 25, 50, 100]" 
+    [pageSize]="pageSize" 
+    [length]="totalRecords"
+    (page)="paginar($event)">
+</mat-paginator>
