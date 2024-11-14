@@ -29,10 +29,11 @@
   </div>
   
   <ng-template #loading>
-    <mat-card>
-      <mat-card-content>
-        <p>Carregando detalhes do livro...</p>
-      </mat-card-content>
-    </mat-card>
+    <div class="loading-container">
+      <div class="loading-content">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          <p>Carregando detalhes do livro...</p>
+      </div>
+    </div>
   </ng-template>
   
