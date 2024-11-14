@@ -75,7 +75,7 @@ export class CaixaLivroListComponent implements OnInit {
 
   buscarTodos(){
     if(this.filtro){
-      this.caixaLivroService.countBynome(this.filtro).subscribe(
+      this.caixaLivroService.countByNome(this.filtro).subscribe(
         data => { this.totalRecords = data; }
       );
     } else {
