@@ -21,6 +21,8 @@ import { AdminTemplateComponent } from './components/template/admin-template/adm
 import { UserTemplateComponent } from './components/template/user-template/user-template.component';
 import { LivroCardListComponent } from './components/livro/livro-card-list/livro-card-list.component';
 import { LivroDetalhadoListComponent } from './components/livro/livro-detalhado-list/livro-detalhado-list.component';
+import { CaixaLivroCardListComponent } from './components/caixaLivro/caixa-livro-card-list/caixa-livro-card-list.component';
+import { CaixaLivroDetalhadoListComponent } from './components/caixaLivro/caixa-livro-detalhado-list/caixa-livro-detalhado-list.component';
 
 export const routes: Routes = [
     {
@@ -69,6 +71,10 @@ export const routes: Routes = [
             { path: '', pathMatch: 'full', redirectTo: 'livros' },
             { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
             { path: 'livros/:id', component: LivroDetalhadoListComponent, title: 'Detalhes do Livro' },
+
+            { path: '', pathMatch: 'full', redirectTo: 'caixaLivros' },
+            { path: 'caixaLivros', component: CaixaLivroCardListComponent, title: 'Lista de Caixa de Livros' },
+            { path: 'caixaLivros/:id', component: CaixaLivroDetalhadoListComponent, title: 'Detalhes das Caixas de Livro' },
         ]
     }
 ];
