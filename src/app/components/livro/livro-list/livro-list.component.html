@@ -65,7 +65,7 @@
   <!-- Preco Column -->
   <ng-container matColumnDef="preco">
     <th mat-header-cell *matHeaderCellDef>Preço</th>
-    <td mat-cell *matCellDef="let livro">R${{ livro.preco }}</td>
+    <td mat-cell *matCellDef="let livro">{{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</td>
   </ng-container>
 
   <!-- Fornecedor Column -->
