@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardActions, MatCardContent, MatCardModule, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
@@ -30,7 +30,7 @@ type Card = {
   standalone: true,
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
-    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule,
+    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule, 
     MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
   ],
   templateUrl: './livro-card-list.component.html',
