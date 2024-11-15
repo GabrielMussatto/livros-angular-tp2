@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CaixaLivro } from '../../../models/caixa-livro.model';
 import { ActivatedRoute } from '@angular/router';
 import { MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CaixaLivroService } from '../../../services/caixa-livro.service';
 
 @Component({
   selector: 'app-caixa-livro-detalhado-list',
   standalone: true,
-  imports: [MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner],
+  imports: [CommonModule, MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner],
   templateUrl: './caixa-livro-detalhado-list.component.html',
   styleUrl: './caixa-livro-detalhado-list.component.css'
 })

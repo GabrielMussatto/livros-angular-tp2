@@ -14,7 +14,7 @@
             <p><strong>Descrição:</strong> {{ caixaLivro.descricao }}</p>
             <p><strong>Classificação:</strong> {{ caixaLivro.classificacao }}</p>
             <p><strong>Editora:</strong> {{ caixaLivro.editora.nome }}</p>
-            <p><strong>Preço:</strong> R${{ caixaLivro.preco }}</p>
+            <p><strong>Preço:</strong> {{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
             <p><strong>Gêneros:</strong> {{ generosString }}</p>
             
           </mat-card-content>
