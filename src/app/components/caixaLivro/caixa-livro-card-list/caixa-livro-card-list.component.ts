@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,7 +29,7 @@ type Card = {
   standalone: true,
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
-    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule,
+    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule, 
     MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
   ],
   templateUrl: './caixa-livro-card-list.component.html',
