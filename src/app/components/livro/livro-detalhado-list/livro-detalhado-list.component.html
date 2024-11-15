@@ -14,7 +14,7 @@
             <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
             <p><strong>Classificação:</strong> {{ livro.classificacao }}</p>
             <p><strong>Editora:</strong> {{ livro.editora.nome }}</p>
-            <p><strong>Preço:</strong> R${{ livro.preco }}</p>
+            <p><strong>Preço:</strong> {{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</p>
             <p><strong>Gêneros:</strong> {{ generosString }}</p>
             <p><strong>Data de Lançamento:</strong> {{ livro.datalancamento }}</p>
             
