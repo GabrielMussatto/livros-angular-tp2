@@ -1,0 +1,68 @@
+<div *ngIf="carregando" class="loading-container">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div class="button-container">
+  <button mat-fab color="accent" class="voltar-button" (click)="voltar()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+</div>
+
+<div *ngIf="!carregando && autor" class="container autor-container">
+  <mat-card class="autor-card">
+    <mat-card-header class="autor-header">
+      <!-- Foto do Autor (circular) -->
+      <img *ngIf="autor?.nomeImagem" [src]="getAutorImageUrl(autor.nomeImagem)" alt="{{ autor.nome }}" class="autor-image">
+      
+      <!-- Informações do Autor -->
+      <div class="autor-info">
+        <mat-card-title>{{ autorNome }}</mat-card-title>
+        <mat-card-subtitle>{{ autorBiografia }}</mat-card-subtitle>
+      </div>
+    </mat-card-header>
+  </mat-card>
+</div>
+
+<!-- Carrossel de Livros -->
+<div class="container">
+  <h3 class="centralizado">Livros</h3>
+  <mat-card class="carrossel-card">
+    <div class="carousel-content">
+      <mat-card *ngFor="let livro of livros.slice(livrosCarouselIndex, livrosCarouselIndex + livrosPerPage)" class="livro-card" (click)="verMaisLivro(livro.titulo)">
+        <img *ngIf="livro?.nomeImagem" [src]="getLivroImageUrl(livro.nomeImagem)" alt="{{ livro.titulo }}" class="livro-image">
+        <mat-card-title>{{ livro.titulo }}</mat-card-title>
+        <mat-card-subtitle>{{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
+      </mat-card>
+    </div>
+
+    <!-- Botões de navegação -->
+    <button mat-icon-button (click)="moveCarouselLeft('livros')">
+      <mat-icon>arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="moveCarouselRight('livros')">
+      <mat-icon>arrow_right</mat-icon>
+    </button>
+  </mat-card>
+</div>
+
+<!-- Carrossel de Caixa de Livros -->
+<div class="container">
+  <h3 class="centralizado">Caixa de Livros</h3>
+  <mat-card class="carrossel-card">
+    <div class="carousel-content">
+      <mat-card *ngFor="let caixaLivro of caixaLivros.slice(caixaLivrosCarouselIndex, caixaLivrosCarouselIndex + livrosPerPage)" class="caixa-livro-card" (click)="verMaisCaixaLivro(caixaLivro.nome)">
+        <img *ngIf="caixaLivro?.nomeImagem" [src]="getCaixaLivroImageUrl(caixaLivro.nomeImagem)" alt="{{ caixaLivro.nome }}" class="caixa-livro-image">
+        <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
+        <mat-card-subtitle>{{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
+      </mat-card>
+    </div>
+
+    <!-- Botões de navegação -->
+    <button mat-icon-button (click)="moveCarouselLeft('caixaLivros')">
+      <mat-icon>arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="moveCarouselRight('caixaLivros')">
+      <mat-icon>arrow_right</mat-icon>
+    </button>
+  </mat-card>
+</div>

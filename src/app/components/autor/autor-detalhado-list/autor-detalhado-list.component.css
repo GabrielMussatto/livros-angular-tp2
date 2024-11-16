@@ -1,0 +1,276 @@
+/* Estilo do card do autor */
+.autor-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para o card */
+  border-radius: 8px;
+  height: auto; /* A altura do card é ajustada ao conteúdo */
+  margin-bottom: 20px;
+}
+
+/* Header do card do autor (alinha imagem e informações) */
+.autor-header {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento entre a imagem e as informações */
+}
+
+/* Estilo da imagem do autor (círculo) */
+.autor-image {
+  width: 100px;  /* Tamanho da foto */
+  height: 100px; /* Tamanho da foto */
+  border-radius: 50%; /* Torna a imagem circular */
+  object-fit: cover; /* Cobre todo o espaço sem distorcer a imagem */
+  border: 3px solid #ddd; /* Borda ao redor da foto */
+}
+
+/* Estilo das informações do autor */
+.autor-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Estilo do nome do autor */
+.autor-info mat-card-title {
+  font-size: 1.5em;  /* Tamanho do nome */
+  font-weight: bold; /* Deixa o nome mais destacado */
+}
+
+/* Estilo da biografia do autor */
+.autor-info mat-card-subtitle {
+  font-size: 1em; /* Tamanho da biografia */
+  color: #555;  /* Cor mais suave para a biografia */
+  margin-top: 10px; /* Espaçamento entre nome e biografia */
+  text-align: justify; /* Justifica o texto */
+}
+
+/* Estilo do carrossel */
+.carrossel-card {
+  position: relative;
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo dentro do card */
+  align-items: center;
+  overflow: hidden;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para o card */
+  height: 400px; /* Aumentando a altura do container */
+}
+
+/* Conteúdo do carrossel (livros ou caixas de livros) */
+.carousel-content {
+  display: flex;
+  gap: 20px; /* Adiciona espaçamento entre os cards */
+  transition: transform 0.5s ease-in-out; /* Transição suave ao mover os cards */
+  will-change: transform; /* Indica que a propriedade transform será alterada */
+}
+
+/* Card individual */
+.carousel-content mat-card {
+  width: 250px; /* Ajusta o tamanho dos cards */
+  height: 350px; /* Aumenta a altura para acomodar a imagem */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Imagens dentro dos cards */
+.livro-image, .caixa-livro-image {
+  width: 100%;
+  height: 200px; /* Ajuste o tamanho da imagem */
+  object-fit: contain; /* Ajusta a imagem para caber sem cortar */
+  border-radius: 8px;
+}
+
+/* Botões de navegação */
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 50%; /* Botões redondos */
+  padding: 10px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave nos botões */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efeitos ao passar o mouse nos botões */
+button:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+button mat-icon {
+  color: #333; /* Cor dos ícones dentro dos botões */
+  font-size: 24px; /* Ajusta o tamanho do ícone */
+}
+
+/* Posicionamento dos botões */
+button:nth-of-type(1) {
+  left: 10px; /* Distância da borda esquerda */
+}
+
+button:nth-of-type(2) {
+  right: 10px; /* Distância da borda direita */
+}
+
+/* Desabilita o botão quando necessário */
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Centralizar o conteúdo da tag h3 */
+.centralizado {
+  text-align: center;
+  width: 100%; /* Garante que o texto ocupe toda a largura disponível */
+  margin-bottom: 20px; /* Adiciona um espaçamento inferior */
+}
+
+/* Estilo do card do livro */
+.livro-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;     /* Centraliza horizontalmente */
+  height: 100%;            /* Garante que o card ocupe toda a altura */
+  text-align: center;      /* Centraliza o texto */
+  padding: 10px;
+  box-sizing: border-box;  /* Inclui o padding no cálculo do tamanho */
+}
+
+/* Estilo do título do livro */
+.livro-card mat-card-title {
+  font-size: 1.2em;  /* Tamanho do título */
+  font-weight: bold; /* Deixa o título mais destacado */
+  margin-top: 10px;   /* Espaçamento entre a imagem e o título */
+}
+
+/* Estilo do preço do livro */
+.livro-card mat-card-subtitle {
+  font-size: 1em;     /* Tamanho do preço */
+  color: #333;        /* Cor do preço */
+  margin-top: 10px;   /* Espaçamento entre o título e o preço */
+}
+
+/* Estilo do card de livro individual */
+.carousel-content mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; /* Centraliza o conteúdo */
+  height: 100%;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box; /* Garantir que o padding seja considerado no tamanho */
+}
+
+/* Estilo do card da caixa de livro */
+.caixa-livro-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;     /* Centraliza horizontalmente */
+  height: 100%;            /* Garante que o card ocupe toda a altura */
+  text-align: center;      /* Centraliza o texto */
+  padding: 10px;
+  box-sizing: border-box;  /* Inclui o padding no cálculo do tamanho */
+}
+
+/* Estilo do título da caixa de livro */
+.caixa-livro-card mat-card-title {
+  font-size: 1.2em;  /* Tamanho do título */
+  font-weight: bold; /* Deixa o título mais destacado */
+  margin-top: 10px;   /* Espaçamento entre a imagem e o título */
+}
+
+/* Estilo do preço da caixa de livro */
+.caixa-livro-card mat-card-subtitle {
+  font-size: 1em;     /* Tamanho do preço */
+  color: #333;        /* Cor do preço */
+  margin-top: 10px;   /* Espaçamento entre o título e o preço */
+}
+
+/* Estilo do card da caixa de livro individual */
+.carousel-content mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; /* Centraliza o conteúdo */
+  height: 100%;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-sizing: border-box; /* Garantir que o padding seja considerado no tamanho */
+}
+
+/* Estilo para o card de livro e caixa de livro */
+.livro-card, .caixa-livro-card {
+  cursor: pointer; /* Adiciona o estilo de cursor de mão, indicando que é clicável */
+  transition: transform 0.2s ease-in-out; /* Adiciona uma transição suave */
+}
+
+/* Estilo para quando o mouse está em cima do card */
+.livro-card:hover, .caixa-livro-card:hover {
+  transform: scale(1.05); /* Aumenta levemente o card para indicar interatividade */
+}
+
+/* Adiciona uma sombra ao card quando está sendo hoverizado */
+.livro-card:hover, .caixa-livro-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo do botão "Voltar" */
+.voltar-button {
+  background-color: #f0f0f0; /* Cor de fundo cinza claro */
+  color: #007bff; /* Cor do texto azul */
+  border: 1px solid #007bff; /* Borda azul */
+  border-radius: 30%; /* Bordas arredondadas para um formato circular */
+  cursor: pointer; /* Aparece o cursor de "mãozinha" para indicar que é clicável */
+  transition: background-color 0.3s, transform 0.2s; /* Transições suaves para mudanças de cor e tamanho */
+  display: inline-flex; /* Para alinhar o ícone (se houver) com o texto */
+  justify-content: center; /* Alinha horizontalmente o conteúdo */
+  align-items: center; /* Alinha verticalmente o conteúdo */
+  width: 45px; /* Define uma largura fixa pequena */
+  height: 45px; /* Define uma altura fixa para que o botão seja quase quadrado */
+  margin-top: 20px; /* Espaço do topo (aumente ou diminua conforme necessário) */
+  /*position: absolute; /* Alinha o botão na posição absoluta */
+  /*z-index: 10; /* Garante que o botão fique acima de outros elementos */
+  top: 10px; /* Ajuste a posição do botão para que ele fique mais perto do topo */
+  left: 20px; /* Distância da borda esquerda */
+}
+
+/* Container do botão (fica acima do autor) */
+.button-container {
+  position: relative; /* Para o botão ser posicionado dentro desse container */
+  z-index: 100; /* Garantir que o botão fique acima do conteúdo */
+  margin-bottom: 20px; /* Espaço abaixo do botão */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.voltar-button:hover {
+  background-color: #e6f2ff; /* Cor de fundo mais clara quando o mouse passa */
+  transform: translateY(-2px); /* Efeito de levantar o botão */
+}
+
+/* Efeito ao clicar no botão */
+.voltar-button:active {
+  background-color: #cce0ff; /* Cor de fundo ainda mais clara quando pressionado */
+  transform: translateY(2px); /* Efeito de pressionar o botão para baixo */
+}
+
+/* Efeito de foco no botão */
+.voltar-button:focus {
+  outline: none; /* Remove o contorno padrão */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra azul para indicar foco */
+}
