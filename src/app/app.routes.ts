@@ -23,6 +23,10 @@ import { LivroCardListComponent } from './components/livro/livro-card-list/livro
 import { LivroDetalhadoListComponent } from './components/livro/livro-detalhado-list/livro-detalhado-list.component';
 import { CaixaLivroCardListComponent } from './components/caixaLivro/caixa-livro-card-list/caixa-livro-card-list.component';
 import { CaixaLivroDetalhadoListComponent } from './components/caixaLivro/caixa-livro-detalhado-list/caixa-livro-detalhado-list.component';
+import { livroDetalhadoResolver } from './components/livro/resolver/livro-detalhado.resolver';
+import { caixaLivroDetalhadoResolver } from './components/caixaLivro/resolver/caixa-livro-detalhado.resolver';
+import { AutorDetalhadoListComponent } from './components/autor/autor-detalhado-list/autor-detalhado-list.component';
+import { autorDetalhadoResolver } from './components/autor/resolver/autor-detalhado.resolver';
 
 export const routes: Routes = [
     {
@@ -70,11 +74,15 @@ export const routes: Routes = [
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'livros' },
             { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
-            { path: 'livros/:id', component: LivroDetalhadoListComponent, title: 'Detalhes do Livro' },
+            { path: 'livros/:titulo', component: LivroDetalhadoListComponent, title: 'Detalhes do Livro', resolve: {livro : livroDetalhadoResolver} },
 
             { path: '', pathMatch: 'full', redirectTo: 'caixaLivros' },
             { path: 'caixaLivros', component: CaixaLivroCardListComponent, title: 'Lista de Caixa de Livros' },
-            { path: 'caixaLivros/:id', component: CaixaLivroDetalhadoListComponent, title: 'Detalhes das Caixas de Livro' },
+            { path: 'caixaLivros/:nome', component: CaixaLivroDetalhadoListComponent, title: 'Detalhes das Caixas de Livro', resolve: { caixaLivro: caixaLivroDetalhadoResolver} },
+
+            { path: '', pathMatch: 'full', redirectTo: 'autores' },
+            { path: 'autores/:nome', component: AutorDetalhadoListComponent, title: 'Detalhes dos Autores', resolve: { autor: autorDetalhadoResolver }},
+
         ]
     }
 ];
