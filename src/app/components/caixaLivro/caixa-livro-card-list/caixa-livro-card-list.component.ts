@@ -14,7 +14,6 @@ import { CaixaLivroService } from '../../../services/caixa-livro.service';
 import { Router } from '@angular/router';
 
 type Card = {
-  id: number;
   nome: string;
   autores: string;
   generos: string;
@@ -22,6 +21,7 @@ type Card = {
   preco: number;
   imageUrl: string;
   verDescricao: boolean;
+  favorito?: boolean;
 }
 
 @Component({
@@ -88,17 +88,19 @@ export class CaixaLivroCardListComponent implements OnInit{
   }
 
   carregarCards(): void {
+    const favoritos: Record<string, boolean> = JSON.parse(localStorage.getItem('favoritos') || '{}');
+
     const cards: Card[] = [];
     this.caixaLivros.forEach(caixaLivro => {
       cards.push({
-        id: caixaLivro.id,
         nome: caixaLivro.nome,
         descricao: caixaLivro.descricao,
         autores: caixaLivro.autores.map(autor => autor.nome).join(', '),
         generos: caixaLivro.generos.map(genero => genero.nome).join(', '),
         preco: caixaLivro.preco,
         imageUrl: this.caixaLivroService.getUrlImage(caixaLivro.nomeImagem),
-        verDescricao: false
+        verDescricao: false,
+        favorito: favoritos[caixaLivro.nome] || false
       });
     });
     this.cards.set(cards);
@@ -135,12 +137,43 @@ export class CaixaLivroCardListComponent implements OnInit{
     this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar', { duration: 3000 });
   }
 
-  verMais(id: number): void{
-    this.router.navigate(['/caixaLivros', id]);
+  formatarTitulo(nome: string): string {
+    return nome
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g,'-');
   }
 
-  toogleDescricao(card: Card): void{
+  verMais(nome: string): void{
+    this.router.navigate(['/caixaLivros', nome]);
+  }
+
+  verDescricao(card: Card): void{
     card.verDescricao = !card.verDescricao;
+  }
+
+  favoritar(card: Card, event: Event): void {
+    event.stopPropagation();
+    card.favorito = !card.favorito;
+
+    // Encontra o elemento do botão e adiciona a classe de rotação lateral
+    const button = (event.target as HTMLElement).closest('.favorite-button');
+    if (button) {
+      button.classList.add('spin');
+
+      // Remove a classe após a animação completar
+      setTimeout(() => button.classList.remove('spin'), 600);
+    }
+
+    // Atualiza os favoritos no localStorage
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '{}');
+    if (card.favorito) {
+      favoritos[card.nome] = true;
+    } else {
+      delete favoritos[card.nome];
+    }
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
   }
 
   ordenar(): void{
