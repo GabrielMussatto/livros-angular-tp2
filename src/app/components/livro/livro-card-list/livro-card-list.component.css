@@ -1,3 +1,23 @@
+.card-clickable {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-footer {
+    cursor: default; /* Garante que os botões não herdem o comportamento clicável */
+    z-index: 1;
+    background-color: white; /* Para sobrepor o fundo do card */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Distanciamento entre os botões */
+}
+
+.card-footer button {
+    cursor: pointer;
+}
+
 .responsive-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -11,10 +31,12 @@
     height: 100%;
     padding: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1); /* Borda preta clara */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave*/ 
     border-radius: 8px; /* Bordas arredondadas para um efeito mais suave */
     transition: box-shadow 0.3s ease; /* Adiciona uma transição suave para a sombra */
-}
+    cursor: pointer;
+    position: relative; /* Necessário para controle interno */
+} 
 
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais forte quando o card for hover */
@@ -22,12 +44,6 @@
 
 .card-content {
     flex-grow: 1; /* Permite que o conteúdo cresça e ocupe o espaço disponível */
-}
-
-.card-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Distanciamento entre os botões */
 }
 
 .card-button {
@@ -52,7 +68,6 @@
 .accent-button:hover {
     background-color: rgba(0, 123, 255, 0.1); /* Cor suave de fundo quando hover em accent */
 }
-
 
 img {
     width: auto;
@@ -100,4 +115,47 @@ mat-card-subtitle {
     margin-bottom: 15px;
     cursor: pointer;
     transform: scale(1.4);
+}
+
+@keyframes spin-lateral {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(360deg); /* Meio do giro */
+    }
+    100% {
+        transform: rotateY(720deg);
+    }
+}
+
+.favorite-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.788);
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra para destacá-lo */
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    display: none;
+}
+
+/* Classe que ativa a rotação */
+.favorite-button.spin {
+    animation: spin-lateral 0.6s ease; /* Tempo e suavidade da animação */
+}
+
+.favorite-button.active {
+    color: red; /* Cor do coração preenchido */
+}
+
+.favorite-button:hover {
+    transform: scale(1.1); /* Aumenta o tamanho ao passar o mouse */
+}
+
+/* Mostra o botão apenas quando o mouse está sobre o card */
+.card:hover .favorite-button {
+    display: block;
 }

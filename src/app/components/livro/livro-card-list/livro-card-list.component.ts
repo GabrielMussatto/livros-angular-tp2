@@ -15,7 +15,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 
 type Card = {
-  id: number;
   titulo: string;
   autores: string;
   generos: string;
@@ -23,6 +22,7 @@ type Card = {
   preco: number;
   imageUrl: string;
   verDescricao: boolean;
+  favorito?: boolean;
 }
 
 @Component({
@@ -30,7 +30,7 @@ type Card = {
   standalone: true,
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
-    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule, 
+    MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule,
     MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
   ],
   templateUrl: './livro-card-list.component.html',
@@ -88,17 +88,19 @@ export class LivroCardListComponent implements OnInit {
   }
 
   carregarCards(): void {
+    const favoritos: Record<string, boolean> = JSON.parse(localStorage.getItem('favoritos') || '{}');
+
     const cards: Card[] = [];
     this.livros.forEach(livro => {
       cards.push({
-        id: livro.id,
         titulo: livro.titulo,
         descricao: livro.descricao,
         autores: livro.autores.map(autor => autor.nome).join(', '),
         generos: livro.generos.map(genero => genero.nome).join(', '),
         preco: livro.preco,
         imageUrl: this.livroService.getUrlImage(livro.nomeImagem),
-        verDescricao: false
+        verDescricao: false,
+        favorito: favoritos[livro.titulo] || false
       });
     });
     this.cards.set(cards);
@@ -135,21 +137,52 @@ export class LivroCardListComponent implements OnInit {
     this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar', { duration: 3000 });
   }
 
-  verMais(id: number): void{
-    this.router.navigate(['/livros', id]);
+  formatarTitulo(titulo: string): string {
+    return titulo
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove acentos
+      .replace(/\s+/g, '-'); // Substitui espaços por hífens
   }
 
-  toogleDescricao(card: Card): void{
+  verMais(titulo: string): void {
+    this.router.navigate(['/livros', titulo]);
+  }
+
+  verDescricao(card: Card): void {
     card.verDescricao = !card.verDescricao;
   }
 
-  ordenar(): void{
+  favoritar(card: Card, event: Event): void {
+    event.stopPropagation();
+    card.favorito = !card.favorito;
+
+    // Encontra o elemento do botão e adiciona a classe de rotação lateral
+    const button = (event.target as HTMLElement).closest('.favorite-button');
+    if (button) {
+      button.classList.add('spin');
+
+      // Remove a classe após a animação completar
+      setTimeout(() => button.classList.remove('spin'), 600);
+    }
+
+    // Atualiza os favoritos no localStorage
+    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '{}');
+    if (card.favorito) {
+      favoritos[card.titulo] = true;
+    } else {
+      delete favoritos[card.titulo];
+    }
+    localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  }
+
+  ordenar(): void {
     const ordenarCards = this.cards().slice();
-    if(this.ordenacao === 'asc'){
+    if (this.ordenacao === 'asc') {
       ordenarCards.sort((a, b) => a.preco - b.preco);
-    }else if(this.ordenacao === 'desc'){
+    } else if (this.ordenacao === 'desc') {
       ordenarCards.sort((a, b) => b.preco - a.preco);
-    } else if(this.ordenacao === 'maisRelevantes'){
+    } else if (this.ordenacao === 'maisRelevantes') {
       this.carregarCards();
       return;
     }

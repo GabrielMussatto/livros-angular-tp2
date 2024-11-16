@@ -31,33 +31,38 @@
 </div>
 
 <div class="container responsive-grid">
-    <mat-card *ngFor="let card of cards()" class="card">
-        <img mat-card-image [src]="card.imageUrl" />
-
-        <div class="card-content">
-            <mat-card-title class="centered-text">{{card.titulo}}</mat-card-title>
-            <mat-card-subtitle class="centered-text">
-                Autores: {{ card.autores }}
-            </mat-card-subtitle>
-
-            <mat-card-content *ngIf="card.verDescricao" class="centered-text">
-                {{card.descricao}}
-            </mat-card-content>
-
-            <mat-card-content class="centered-text">
-                Gênero: {{card.generos}}
-            </mat-card-content>
-
-            <mat-card-content class="centered-text">
-                {{card.preco | currency:'BRL':'symbol':'1.2-2'}}
-            </mat-card-content>
+    <mat-card *ngFor="let card of cards()" class="card" (click)="verMais(card.titulo)">
+        <div class="card-clickable">
+            <button 
+                mat-icon-button 
+                color="warn" 
+                class="favorite-button" 
+                (click)="favoritar(card, $event)" 
+                [ngClass]="{'active': card.favorito}">
+                <mat-icon>{{ card.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+            <img mat-card-image [src]="card.imageUrl" />
+            <div class="card-content">
+                <mat-card-title class="centered-text">{{card.titulo}}</mat-card-title>
+                <mat-card-subtitle class="centered-text">
+                    Autores: {{ card.autores }}
+                </mat-card-subtitle>
+                <mat-card-content class="centered-text">
+                    Gênero: {{card.generos}}
+                </mat-card-content>
+                <mat-card-content class="centered-text">
+                    {{card.preco | currency:'BRL':'symbol':'1.2-2'}}
+                </mat-card-content>
+                <mat-card-content *ngIf="card.verDescricao" class="centered-text">
+                    {{card.descricao}}
+                </mat-card-content>
+            </div>
         </div>
 
-        <mat-card-footer class="card-footer">
-            <button mat-button color="primary" class="card-button primary-button" (click)="toogleDescricao(card)">
+        <mat-card-footer class="card-footer" (click)="$event.stopPropagation()">
+            <button mat-button color="primary" class="card-button primary-button" (click)="verDescricao(card)">
                 {{ card.verDescricao ? 'Ocultar Descrição' : 'Ver Descrição Breve' }}
-              </button>
-            <button mat-button color="primary" class="card-button primary-button" (click)="verMais(card.id)">Ver Mais...</button>
+            </button>
             <button mat-button color="accent" class="card-button accent-button">Adicionar ao Carrinho</button>
         </mat-card-footer>
     </mat-card>
