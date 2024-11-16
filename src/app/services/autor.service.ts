@@ -11,6 +11,10 @@ export class AutorService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getUrlImage(nomeImagem: string): string{
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+  
   findAll(page?: number, pageSize?: number): Observable<Autor[]> {
     let params = {};
 
