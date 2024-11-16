@@ -104,3 +104,37 @@
     }
   }
   
+  /* Estilo para o botão "Voltar" */
+.voltar-button {
+  background-color: #f0f0f0; /* Cor de fundo cinza claro */
+  color: #007bff; /* Cor do texto azul */
+  border: 1px solid #007bff; /* Borda azul */
+  border-radius: 30%; /* Bordas arredondadas para um formato circular */
+  cursor: pointer; /* Aparece o cursor de "mãozinha" para indicar que é clicável */
+  transition: background-color 0.3s, transform 0.2s; /* Transições suaves para mudanças de cor e tamanho */
+  display: inline-flex; /* Para alinhar o ícone (se houver) com o texto */
+  justify-content: center; /* Alinha horizontalmente o conteúdo */
+  align-items: center; /* Alinha verticalmente o conteúdo */
+  width: 45px; /* Define uma largura fixa pequena */
+  height: 45px; /* Define uma altura fixa para que o botão seja quase quadrado */
+  margin-top: 20px; /* Espaço do topo (aumente ou diminua conforme necessário) */
+  margin-left: 20px; /* Espaço da direita */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.voltar-button:hover {
+  background-color: #e6f2ff; /* Cor de fundo mais clara quando o mouse passa */
+  transform: translateY(-2px); /* Efeito de levantar o botão */
+}
+
+/* Efeito ao clicar no botão */
+.voltar-button:active {
+  background-color: #cce0ff; /* Cor de fundo ainda mais clara quando pressionado */
+  transform: translateY(2px); /* Efeito de pressionar o botão para baixo */
+}
+
+/* Efeito de foco no botão */
+.voltar-button:focus {
+  outline: none; /* Remove o contorno padrão */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra azul para indicar foco */
+}

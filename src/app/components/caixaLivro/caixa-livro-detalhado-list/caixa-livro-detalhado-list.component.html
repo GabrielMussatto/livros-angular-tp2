@@ -1,3 +1,7 @@
+<button mat-fab color="accent" class="voltar-button" (click)="voltar()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
 <div *ngIf="caixaLivro; else loading" class="caixa-livro-detalhado-container">
     <mat-card class="caixa-livro-card">
       <div class="caixa-livro-detalhado-content">
@@ -8,11 +12,19 @@
           <mat-card-header>
             <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
             <mat-card-subtitle>{{ generosString }}</mat-card-subtitle> <!-- Usando a propriedade computada -->
+            <mat-card-subtitle>
+              <span *ngFor="let autor of caixaLivro.autores; let i = index">
+                <a [routerLink]="['/autores', autor.nome]" class="autor-link">
+                  {{ autor.nome }}
+                </a>
+                <span *ngIf="i < caixaLivro.autores.length - 1">, </span>
+              </span>
+            </mat-card-subtitle>
           </mat-card-header>
   
           <mat-card-content>
             <p><strong>Descrição:</strong> {{ caixaLivro.descricao }}</p>
-            <p><strong>Classificação:</strong> {{ caixaLivro.classificacao }}</p>
+            <p><strong>Classificação:</strong> {{ caixaLivro.classificacao.descricao }}</p>
             <p><strong>Editora:</strong> {{ caixaLivro.editora.nome }}</p>
             <p><strong>Preço:</strong> {{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
             <p><strong>Gêneros:</strong> {{ generosString }}</p>
