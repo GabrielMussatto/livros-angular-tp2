@@ -28,6 +28,17 @@ export class CaixaLivroService {
     return this.httpClient.get<CaixaLivro[]>(this.baseUrl, {params});
   }
 
+  findByAutor(autor: string, page?: number, pageSize?: number): Observable<CaixaLivro[]> {
+    let params = {};
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      };
+    }
+    return this.httpClient.get<CaixaLivro[]>(`${this.baseUrl}/search/autor/${autor}`, { params });
+  }
+
   count(): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
