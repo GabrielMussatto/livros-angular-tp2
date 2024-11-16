@@ -1,39 +1,49 @@
+<button mat-fab color="accent" class="voltar-button" (click)="voltar()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
 <div *ngIf="livro; else loading" class="livro-detalhado-container">
-    <mat-card class="livro-card">
-      <div class="livro-detalhado-content">
-        <div class="livro-imagem">
-          <img mat-card-image [src]="livroService.getUrlImage(livro.nomeImagem)" alt="Imagem do livro" class="livro-imagem-img" />
-        </div>
-        <div class="livro-info">
-          <mat-card-header>
-            <mat-card-title>{{ livro.titulo }}</mat-card-title>
-            <mat-card-subtitle>{{ autoresString }}</mat-card-subtitle> <!-- Usando a propriedade computada -->
-          </mat-card-header>
-  
-          <mat-card-content>
-            <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
-            <p><strong>Classificação:</strong> {{ livro.classificacao }}</p>
-            <p><strong>Editora:</strong> {{ livro.editora.nome }}</p>
-            <p><strong>Preço:</strong> {{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</p>
-            <p><strong>Gêneros:</strong> {{ generosString }}</p>
-            <p><strong>Data de Lançamento:</strong> {{ livro.datalancamento }}</p>
-            
-          </mat-card-content>
-  
-          <mat-card-actions>
-            <button mat-button color="primary">Adicionar ao Carrinho</button>
-          </mat-card-actions>
-        </div>
+  <mat-card class="livro-card">
+    <div class="livro-detalhado-content">
+      <div class="livro-imagem">
+        <img mat-card-image [src]="livroService.getUrlImage(livro.nomeImagem)" alt="Imagem do livro"
+          class="livro-imagem-img" />
       </div>
-    </mat-card>
-  </div>
-  
-  <ng-template #loading>
-    <div class="loading-container">
-      <div class="loading-content">
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-          <p>Carregando detalhes do livro...</p>
+      <div class="livro-info">
+        <mat-card-header>
+          <mat-card-title>{{ livro.titulo }}</mat-card-title>
+          <mat-card-subtitle>
+            <span *ngFor="let autor of livro.autores; let i = index">
+              <a [routerLink]="['/autores', autor.nome]" class="autor-link">
+                {{ autor.nome }}
+              </a>
+              <span *ngIf="i < livro.autores.length - 1">, </span>
+            </span>
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p><strong>Descrição:</strong> {{ livro.descricao }}</p>
+          <p><strong>Classificação:</strong> {{ livro.classificacao.descricao }}</p>
+          <p><strong>Editora:</strong> {{ livro.editora.nome }}</p>
+          <p><strong>Preço:</strong> {{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</p>
+          <p><strong>Gêneros:</strong> {{ generosString }}</p>
+          <p><strong>Data de Lançamento:</strong> {{ livro.datalancamento }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button color="primary">Adicionar ao Carrinho</button>
+        </mat-card-actions>
       </div>
     </div>
-  </ng-template>
-  
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="loading-content">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <p>Carregando detalhes do livro...</p>
+    </div>
+  </div>
+</ng-template>

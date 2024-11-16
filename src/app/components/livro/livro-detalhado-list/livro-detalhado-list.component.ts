@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LivroService } from '../../../services/livro.service';
 import { Livro } from '../../../models/livro.model';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-livro-detalhado-list',
   standalone: true,
-  imports: [CommonModule, MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner],
+  imports: [CommonModule, MatIcon, MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner, RouterModule],
   templateUrl: './livro-detalhado-list.component.html',
   styleUrls: ['./livro-detalhado-list.component.css']
 })
@@ -19,16 +20,17 @@ export class LivroDetalhadoListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public livroService: LivroService
+    public livroService: LivroService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const idLivro = this.route.snapshot.paramMap.get('id');
-    if (idLivro) {
-      this.livroService.findById(idLivro).subscribe(
+    const tituloLivro = this.route.snapshot.paramMap.get('titulo');
+    if (tituloLivro) {
+      this.livroService.findByNome(tituloLivro).subscribe(
         (livro) => {
           setTimeout(() => {
-            this.livro = livro;
+            this.livro = livro[0];
             this.carregando = false;
           }, 200);
         },
@@ -40,12 +42,11 @@ export class LivroDetalhadoListComponent implements OnInit {
     }
   }
 
-  get autoresString(): string {
-    return this.livro ? this.livro.autores.map(autor => autor.nome).join(', ') : '';
-  }
-
   get generosString(): string {
     return this.livro ? this.livro.generos.map(genero => genero.nome).join(', ') : '';
   }
 
+  voltar(): void {
+    window.history.back();
+  }
 }
