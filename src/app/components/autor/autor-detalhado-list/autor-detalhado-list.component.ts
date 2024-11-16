@@ -25,10 +25,9 @@ export class AutorDetalhadoListComponent implements OnInit {
   caixaLivros: CaixaLivro[] = [];
   carregando = true;
 
-  // Variáveis para controlar o carrossel
   livrosCarouselIndex = 0;
   caixaLivrosCarouselIndex = 0;
-  livrosPerPage = 3;  // Defina quantos livros aparecem por vez
+  livrosPerPage = 5;
 
   constructor(
     private autorService: AutorService,
@@ -125,21 +124,20 @@ export class AutorDetalhadoListComponent implements OnInit {
     }
   }
 
-  // Método para redirecionar para a página de detalhes
   verMaisLivro(titulo: string): void {
-    this.router.navigate(['/livros', titulo]);  // Redireciona para a página de livro detalhado
+    this.router.navigate(['/livros', titulo]);
   }
 
   verMaisCaixaLivro(nome: string): void {
-    this.router.navigate(['/caixaLivros', nome]);  // Redireciona para a página de caixa de livro detalhado
+    this.router.navigate(['/caixaLivros', nome]);
   }
 
   formatarTitulo(titulo: string): string {
     return titulo
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-      .replace(/\s+/g, '-'); // Substitui espaços por hífens
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-');
   }
 
   voltar(): void {
