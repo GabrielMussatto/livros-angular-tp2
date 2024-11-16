@@ -1,4 +1,5 @@
 import { Autor } from "./autor.model";
+import { Classificacao } from "./classificacao.model";
 import { Editora } from "./editora.model";
 import { Fornecedor } from "./fornecedor.model";
 import { Genero } from "./genero.model";
@@ -10,7 +11,7 @@ export class Livro {
     quantidadeEstoque!: number;
     isbn!: string;
     preco!: number;
-    classificacao!: string;
+    classificacao!: Classificacao;
     fornecedor!: Fornecedor;
     editora!: Editora;
     datalancamento!: Date;

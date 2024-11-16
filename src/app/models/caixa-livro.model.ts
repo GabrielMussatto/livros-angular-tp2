@@ -1,4 +1,5 @@
 import { Autor } from "./autor.model";
+import { Classificacao } from "./classificacao.model";
 import { Editora } from "./editora.model";
 import { Fornecedor } from "./fornecedor.model";
 import { Genero } from "./genero.model";
@@ -12,7 +13,7 @@ export class CaixaLivro {
     editora!: Editora;
     generos!: Genero[];
     autores!: Autor[];
-    classificacao!: string;
+    classificacao!: Classificacao;
     preco!: number;
     nomeImagem!: string;
 }
