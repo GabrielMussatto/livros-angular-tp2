@@ -39,16 +39,31 @@ export class CaixaLivroService {
     return this.httpClient.get<CaixaLivro[]>(`${this.baseUrl}/search/autor/${autor}`, { params });
   }
 
+  findByGenero(genero: string, page?: number, pageSize?: number): Observable<CaixaLivro[]> {
+    let params = {};
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      };
+    }
+    return this.httpClient.get<CaixaLivro[]>(`${this.baseUrl}/search/genero/${genero}`, { params });
+  }
+
   count(): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
   countByNome(nome: string): Observable<number>{
-    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${nome}`);
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/mome/${nome}`);
+  }
+
+  countByAutor(autor: string): Observable<number>{
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/autor/${autor}`);
   }
 
   countByGenero(genero: string): Observable<number>{
-    return this.httpClient.get<number>(`${this.baseUrl}/count/search/${genero}`);
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/genero/${genero}`);
   }
 
   findByNome(nome: string, page?: number, pageSize?: number): Observable<CaixaLivro[]> {
