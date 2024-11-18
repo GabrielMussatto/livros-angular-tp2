@@ -17,11 +17,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-caixa-livro-list',
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, MatToolbarModule, MatSidenavModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
+  imports: [CommonModule, NgFor, NgIf, MatToolbarModule, MatSelectModule, MatSidenavModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './caixa-livro-list.component.html',
   styleUrls: ['./caixa-livro-list.component.css']
 })
@@ -33,6 +34,7 @@ export class CaixaLivroListComponent implements OnInit {
   pageSize = 10;
   page = 0;
   filtro: string = "";
+  tipoFiltro: string = "nome";
 
   constructor(
     private caixaLivroService: CaixaLivroService,
@@ -61,23 +63,58 @@ export class CaixaLivroListComponent implements OnInit {
     this.ngOnInit();
   }
 
-  buscarCaixaLivro(){
-    if(this.filtro){
-      this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
-        data => { this.caixaLivros = data; }
-      );
-    } else {
-      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
-        data => { this.caixaLivros = data;}
-      );
+  buscarCaixaLivro() {
+    if (this.filtro) {
+      if (this.tipoFiltro === 'autor') {
+        this.caixaLivroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.caixaLivros = data;
+            if (this.caixaLivros.length === 0) {
+              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
+          }
+        );
+      } else if (this.tipoFiltro === 'genero') {
+        this.caixaLivroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.caixaLivros = data;
+            if (this.caixaLivros.length === 0) {
+              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
+          }
+        );
+      } else if (this.tipoFiltro === 'nome') {
+        this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.caixaLivros = data;
+            if (this.caixaLivros.length === 0) {
+              this.snackBar.open('A Caixa de Livro pesquisada não foi encontrada. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
+          }
+        );
+      } else {
+        this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
+          data => { this.caixaLivros = data; }
+        );
+      }
     }
   }
 
-  buscarTodos(){
-    if(this.filtro){
-      this.caixaLivroService.countByNome(this.filtro).subscribe(
-        data => { this.totalRecords = data; }
-      );
+  buscarTodos() {
+    if (this.filtro) {
+      if (this.tipoFiltro === 'autor') {
+        this.caixaLivroService.countByAutor(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      } else if (this.tipoFiltro === 'nome') {
+        this.caixaLivroService.countByNome(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      } else if (this.tipoFiltro === 'genero') {
+        this.caixaLivroService.countByGenero(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      }
     } else {
       this.caixaLivroService.count().subscribe(
         data => { this.totalRecords = data; }
@@ -107,7 +144,7 @@ export class CaixaLivroListComponent implements OnInit {
             this.snackBar.open('A Caixa de Livro foi excluída com Sucesso!!', 'Fechar', {duration: 3000});
           },
           error: (err) => {
-            console.error('Erro ao tentar excluir a Caixa de Livros', err);
+            console.error('Erro ao tentar excluir a Caixa de caixaLivros', err);
             this.snackBar.open('Erro ao tentar excluir a Caixa de Livro', 'Fechar', {duration: 3000});
           }
         });

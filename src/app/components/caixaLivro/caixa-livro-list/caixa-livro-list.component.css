@@ -1,27 +1,3 @@
-.sidenav-container {
-  height: 100%;
-}
-
-.sidenav {
-  width: 250px;
-  background-color: #1A2E6D; /* Azul Marinho */
-  color: #FFFFFF;
-  border-radius: 0%;
-}
-
-.sidenav-header {
-  background-color: #1A2E6D;
-  color: #FFFFFF;
-}
-
-.mat-nav-list button {
-  color: #FFFFFF;
-}
-
-.mat-nav-list button:hover {
-  background-color: #2D6A4F; /* Verde Floresta */
-}
-
 .titulo {
   display: fixed;
   background-color: #1A2E6D; /* Azul Marinho para a toolbar */
@@ -34,6 +10,7 @@
   color: #ffffff;
   font-weight: 500;
 }
+
 
 .container {
   padding: 1rem;

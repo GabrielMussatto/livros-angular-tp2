@@ -8,8 +8,17 @@
 
 <div class="container">
   <div class="input-container">
+    <mat-form-field appearance="outline" class="select-field">
+      <mat-label>Pesquisar por</mat-label>
+      <mat-select [(ngModel)]="tipoFiltro">
+          <mat-option value="nome">Nome</mat-option>
+          <mat-option value="autor">Autor</mat-option>
+          <mat-option value="genero">Gênero</mat-option>
+      </mat-select>
+  </mat-form-field>
+
     <mat-form-field appearance="outline" class="input-field">
-      <mat-label>Pesquisar pelo Nome da Caixa</mat-label>
+      <mat-label>Pesquisar</mat-label>
       <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()" />
     </mat-form-field>
     <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
