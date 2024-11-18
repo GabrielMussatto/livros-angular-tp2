@@ -95,10 +95,15 @@ button {
   background-color: white;
   border: 2px solid #ddd;
   border-radius: 50%; /* Botões redondos */
-  padding: 10px;
+  padding: 0; /* Remover padding extra */
   z-index: 10;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave nos botões */
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex; /* Usando flexbox para facilitar o alinhamento */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  width: 60px; /* Tamanho fixo do botão */
+  height: 60px; /* Tamanho fixo do botão */
 }
 
 /* Efeitos ao passar o mouse nos botões */
@@ -109,16 +114,15 @@ button:hover {
 
 button mat-icon {
   color: #333; /* Cor dos ícones dentro dos botões */
-  font-size: 24px; /* Ajusta o tamanho do ícone */
 }
 
 /* Posicionamento dos botões */
 button:nth-of-type(1) {
-  left: 10px; /* Distância da borda esquerda */
+  left: 15px; /* Distância da borda esquerda */
 }
 
 button:nth-of-type(2) {
-  right: 10px; /* Distância da borda direita */
+  right: 15px; /* Distância da borda direita */
 }
 
 /* Desabilita o botão quando necessário */
