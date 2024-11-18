@@ -45,7 +45,6 @@ export class CaixaLivroCardListComponent implements OnInit{
   tipoFiltro: string = "titulo";
   ordenacao: string = 'maisRelevantes';
 
-
   constructor(
     private caixaLivroService: CaixaLivroService,
     private snackBar: MatSnackBar,
@@ -60,17 +59,34 @@ export class CaixaLivroCardListComponent implements OnInit{
   carregarCaixaLivros(): void {
     if (this.filtro) {
       if (this.tipoFiltro === 'genero') {
-        this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        this.caixaLivroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.caixaLivros = data;
+            if(this.caixaLivros.length === 0){
+              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
             this.carregarCards();
             this.ordenar();
           }
         );
-      } else {
+      } else if (this.tipoFiltro === 'titulo'){
         this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.caixaLivros = data;
+            if(this.caixaLivros.length === 0){
+              this.snackBar.open('O Nome da Caixa de Livros pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
+            this.carregarCards();
+            this.ordenar();
+          }
+        );
+      } else if (this.tipoFiltro === 'autor'){
+        this.caixaLivroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.caixaLivros = data;
+            if(this.caixaLivros.length === 0){
+              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
             this.carregarCards();
             this.ordenar();
           }
@@ -119,8 +135,12 @@ export class CaixaLivroCardListComponent implements OnInit{
         this.caixaLivroService.countByNome(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
-      } else {
+      } else if (this.tipoFiltro === 'genero'){
         this.caixaLivroService.countByGenero(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      } else if (this.tipoFiltro === 'autor'){
+        this.caixaLivroService.countByAutor(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
       }
