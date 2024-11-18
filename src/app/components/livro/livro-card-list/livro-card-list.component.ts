@@ -63,14 +63,31 @@ export class LivroCardListComponent implements OnInit {
         this.livroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.livros = data;
+            if(this.livros.length === 0){
+              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
             this.carregarCards();
             this.ordenar();
           }
         );
-      } else {
+      } else if(this.tipoFiltro === 'titulo'){
         this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.livros = data;
+            if(this.livros.length === 0){
+              this.snackBar.open('O Livro pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
+            this.carregarCards();
+            this.ordenar();
+          }
+        );
+      } else if(this.tipoFiltro === 'genero'){
+        this.livroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.livros = data;
+            if(this.livros.length === 0){
+              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
+            }
             this.carregarCards();
             this.ordenar();
           }
@@ -119,8 +136,12 @@ export class LivroCardListComponent implements OnInit {
         this.livroService.countByAutor(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
-      } else {
+      } else if (this.tipoFiltro === 'titulo'){
         this.livroService.countByTitulo(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      } else if (this.tipoFiltro === 'genero'){
+        this.livroService.countByGenero(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
       }
