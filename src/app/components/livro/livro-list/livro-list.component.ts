@@ -52,6 +52,9 @@ export class LivroListComponent implements OnInit {
     this.livroService.count().subscribe(
       data => { this.totalRecords = data }
     );
+
+    this.buscarLivros();
+    this.buscarTodos();
   }
 
   obterNumeroLinha(index: number): number {
@@ -70,17 +73,34 @@ export class LivroListComponent implements OnInit {
         this.livroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.livros = data;
+            if (this.livros.length === 0) {
+              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
+          }
+        );
+      } else if (this.tipoFiltro === 'genero') {
+        this.livroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.livros = data;
+            if (this.livros.length === 0) {
+              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
+          }
+        );
+      } else if (this.tipoFiltro === 'titulo') {
+        this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+          data => {
+            this.livros = data;
+            if (this.livros.length === 0) {
+              this.snackBar.open('O Livro pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 5000 });
+            }
           }
         );
       } else {
-        this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        this.livroService.findAll(this.page, this.pageSize).subscribe(
           data => { this.livros = data; }
         );
       }
-    } else {
-      this.livroService.findAll(this.page, this.pageSize).subscribe(
-        data => { this.livros = data; }
-      );
     }
   }
 
@@ -90,8 +110,12 @@ export class LivroListComponent implements OnInit {
         this.livroService.countByAutor(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
-      } else {
+      } else if (this.tipoFiltro === 'titulo') {
         this.livroService.countByTitulo(this.filtro).subscribe(
+          data => { this.totalRecords = data; }
+        );
+      } else if (this.tipoFiltro === 'genero') {
+        this.livroService.countByGenero(this.filtro).subscribe(
           data => { this.totalRecords = data; }
         );
       }
@@ -101,7 +125,6 @@ export class LivroListComponent implements OnInit {
       );
     }
   }
-
 
   filtrar() {
     this.buscarLivros();

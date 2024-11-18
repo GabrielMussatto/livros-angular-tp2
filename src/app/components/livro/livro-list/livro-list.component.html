@@ -13,11 +13,12 @@
       <mat-select [(ngModel)]="tipoFiltro">
           <mat-option value="titulo">Título</mat-option>
           <mat-option value="autor">Autor</mat-option>
+          <mat-option value="genero">Gênero</mat-option>
       </mat-select>
   </mat-form-field>
 
     <mat-form-field appearance="outline" class="input-field">
-      <mat-label>Pesquisar pelo Titulo do Livro</mat-label>
+      <mat-label>Pesquisar</mat-label>
       <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" #input (keyup.enter)="filtrar()" />
     </mat-form-field>
     <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
