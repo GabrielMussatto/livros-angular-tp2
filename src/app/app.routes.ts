@@ -27,6 +27,7 @@ import { livroDetalhadoResolver } from './components/livro/resolver/livro-detalh
 import { caixaLivroDetalhadoResolver } from './components/caixaLivro/resolver/caixa-livro-detalhado.resolver';
 import { AutorDetalhadoListComponent } from './components/autor/autor-detalhado-list/autor-detalhado-list.component';
 import { autorDetalhadoResolver } from './components/autor/resolver/autor-detalhado.resolver';
+import { PaginaInicialComponent } from './components/inicio/pagina-inicial/pagina-inicial.component';
 
 export const routes: Routes = [
     {
@@ -72,15 +73,15 @@ export const routes: Routes = [
         component: UserTemplateComponent,
         title: 'e-commerce',
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'livros' },
+            { path: '', pathMatch: 'full', redirectTo: 'inicio' },
+            { path: 'inicio', component: PaginaInicialComponent, title: 'Página Inicial'},
+
             { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
             { path: 'livros/:titulo', component: LivroDetalhadoListComponent, title: 'Detalhes do Livro', resolve: {livro : livroDetalhadoResolver} },
 
-            { path: '', pathMatch: 'full', redirectTo: 'caixaLivros' },
             { path: 'caixaLivros', component: CaixaLivroCardListComponent, title: 'Lista de Caixa de Livros' },
             { path: 'caixaLivros/:nome', component: CaixaLivroDetalhadoListComponent, title: 'Detalhes das Caixas de Livro', resolve: { caixaLivro: caixaLivroDetalhadoResolver} },
 
-            { path: '', pathMatch: 'full', redirectTo: 'autores' },
             { path: 'autores/:nome', component: AutorDetalhadoListComponent, title: 'Detalhes dos Autores', resolve: { autor: autorDetalhadoResolver }},
 
         ]
