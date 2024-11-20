@@ -42,7 +42,7 @@ export class CaixaLivroCardListComponent implements OnInit{
   pageSize = 10;
   page = 0;
   filtro: string = "";
-  tipoFiltro: string = "titulo";
+  tipoFiltro: string = "nome";
   ordenacao: string = 'maisRelevantes';
 
   constructor(
@@ -69,7 +69,7 @@ export class CaixaLivroCardListComponent implements OnInit{
             this.ordenar();
           }
         );
-      } else if (this.tipoFiltro === 'titulo'){
+      } else if (this.tipoFiltro === 'nome'){
         this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.caixaLivros = data;
