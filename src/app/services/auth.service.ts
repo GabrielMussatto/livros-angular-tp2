@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
 import { LocalStorageService } from './local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -25,42 +25,52 @@ export class AuthService {
   private initUsuarioLogado(): void {
     const usuario = this.localStorageService.getItem(this.usuarioLogadoKey);
     if (usuario) {
-      this.usuarioLogadoSubject.next(JSON.parse(usuario));
+      // Atribuindo o objeto do usuário diretamente ao BehaviorSubject
+      this.usuarioLogadoSubject.next(usuario);
     }
-  }
+  } 
 
   public login(username: string, senha: string, perfil: number): Observable<any> {
     const params = {
-      username,
-      senha,
-      perfil
+      username: username,
+      senha: senha,
+      perfil: perfil // perfil dinâmico
     };
-
+  
     return this.httpClient.post(`${this.baseUrl}`, params, { observe: 'response' }).pipe(
       tap((res: any) => {
         const authToken = res.headers.get('Authorization') ?? '';
         if (authToken) {
           this.setToken(authToken);
           const usuarioLogado = res.body;
-          console.log(usuarioLogado);
           if (usuarioLogado) {
-            this.setUsuarioLogado(usuarioLogado);
-            this.usuarioLogadoSubject.next(usuarioLogado);
+            const usuarioParaArmazenar = {
+              id: usuarioLogado.id,
+              username: usuarioLogado.username,
+              perfil: usuarioLogado.perfil
+            };
+            this.setUsuarioLogado(usuarioParaArmazenar);
+            this.usuarioLogadoSubject.next(usuarioParaArmazenar);
           }
         }
+      }),
+      catchError((error) => {
+        console.error('Erro ao realizar login:', error);
+        return throwError(() => new Error('Erro ao realizar login'));
       })
     );
+    
   }
 
-  setUsuarioLogado(usuario: Usuario): void {
-    this.localStorageService.setItem(this.usuarioLogadoKey, JSON.stringify(usuario));
+  setUsuarioLogado(usuario: { id: number; username: string; perfil: number }): void {
+    this.localStorageService.setItem(this.usuarioLogadoKey, usuario);
   }
 
   setToken(token: string): void {
     this.localStorageService.setItem(this.tokenKey, token);
   }
 
-  getUsuarioLogado(): Observable<Usuario | null> {
+  getUsuarioLogado() {
     return this.usuarioLogadoSubject.asObservable();
   }
 
@@ -73,8 +83,8 @@ export class AuthService {
   }
 
   removeUsuarioLogado(): void {
-    this.localStorageService.removeItem(this.usuarioLogadoKey);
-    this.usuarioLogadoSubject.next(null);
+    this.localStorageService.removeItem(this.usuarioLogadoKey); // Remove apenas as informações essenciais
+    this.usuarioLogadoSubject.next(null); // Reseta o estado do usuário no BehaviorSubject
   }
 
   isTokenExpired(): boolean {

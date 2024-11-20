@@ -28,14 +28,19 @@ import { caixaLivroDetalhadoResolver } from './components/caixaLivro/resolver/ca
 import { AutorDetalhadoListComponent } from './components/autor/autor-detalhado-list/autor-detalhado-list.component';
 import { autorDetalhadoResolver } from './components/autor/resolver/autor-detalhado.resolver';
 import { PaginaInicialComponent } from './components/inicio/pagina-inicial/pagina-inicial.component';
+import { LoginComponent } from './components/login/login.component';
+import { AdminGuard } from './admin.guard';
 
 export const routes: Routes = [
+
     {
         path: 'admin',
         component: AdminTemplateComponent,
         title: 'administração',
+        canActivate: [AdminGuard], // Apenas admin pode acessar
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'autores' },
+
 
             // Rotas para Autores
             { path: 'autores', component: AutorListComponent, title: 'Lista de Autores' },
@@ -56,12 +61,12 @@ export const routes: Routes = [
             { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos' },
             { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero' },
             { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver } },
-
+            
             // Rotas para Editoras
             { path: 'editoras', component: EditoraListComponent, title: 'Lista de Editoras' },
             { path: 'editoras/new', component: EditoraFormComponent, title: 'Nova Editora' },
             { path: 'editoras/edit/:id', component: EditoraFormComponent, resolve: { editora: editoraResolver } },
-
+            
             // Rotas para Fornecedores
             { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
             { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
@@ -73,7 +78,7 @@ export const routes: Routes = [
         component: UserTemplateComponent,
         title: 'e-commerce',
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'inicio' },
+            { path: '', pathMatch: 'full', redirectTo: 'login' },
             { path: 'inicio', component: PaginaInicialComponent, title: 'Página Inicial'},
 
             { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
@@ -84,6 +89,8 @@ export const routes: Routes = [
 
             { path: 'autores/:nome', component: AutorDetalhadoListComponent, title: 'Detalhes dos Autores', resolve: { autor: autorDetalhadoResolver }},
 
+            { path: 'login', component: LoginComponent, title: 'Login' },
         ]
     }
+   
 ];

@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="login-container">
+    <div class="login-box">
+      <img class="login-icon" src="/icons/passkey.svg" alt="Passkey">
+      <h2 class="login-title">Bem-vindo</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="login-input">
+          <input matInput placeholder="Username" formControlName="username" required>
+          <mat-error *ngIf="loginForm.get('username')!.hasError('required')">O username é obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-input">
+          <input matInput type="password" placeholder="Senha" formControlName="senha" required>
+          <mat-error *ngIf="loginForm.get('senha')!.hasError('required')">A senha é obrigatória</mat-error>
+        </mat-form-field>
+  
+        <!-- Seleção do perfil (cliente por padrão) -->
+        <mat-form-field class="login-input">
+          <mat-select placeholder="Selecione o perfil" formControlName="perfil">
+            <mat-option value="2">Cliente</mat-option>
+            <mat-option value="1">Administrador</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button mat-raised-button class="login-button" color="primary" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+  
