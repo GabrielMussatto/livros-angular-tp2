@@ -51,6 +51,9 @@ export class CaixaLivroListComponent implements OnInit {
     this.caixaLivroService.count().subscribe(
       data => { this.totalRecords = data }
     );
+
+    this.buscarCaixaLivro();
+    this.buscarTodos();
   }
 
   obterNumeroLinha(index: number): number {
