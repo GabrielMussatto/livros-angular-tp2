@@ -55,7 +55,7 @@ export class CaixaLivroService {
   }
 
   countByNome(nome: string): Observable<number>{
-    return this.httpClient.get<number>(`${this.baseUrl}/count/search/mome/${nome}`);
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/nome/${nome}`);
   }
 
   countByAutor(autor: string): Observable<number>{
