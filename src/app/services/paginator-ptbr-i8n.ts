@@ -7,8 +7,8 @@ export class MatPaginatorIntlPtBr extends MatPaginatorIntl {
     override itemsPerPageLabel: string = 'Itens por página';
     override nextPageLabel: string = 'Próxima página';
     override previousPageLabel: string = 'Página anterior';
-    override firstPageLabel: string = 'Próxima página';
-    override lastPageLabel: string = 'Página anterior';
+    override firstPageLabel: string = 'Primeira página';
+    override lastPageLabel: string = 'Última página';
     override getRangeLabel: (page: number, pageSize: number, length: number) => string =
         (page: number,
         pageSize: number,
