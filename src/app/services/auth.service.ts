@@ -1,103 +1,109 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
-import { Usuario } from '../models/usuario.model';
-import { LocalStorageService } from './local-storage.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth';
-  private tokenKey = 'jwt_token';
+  private apiUrl = 'http://localhost:8080/auth';
+  private token = 'jwt_token';
   private usuarioLogadoKey = 'usuario_logado';
-  private usuarioLogadoSubject = new BehaviorSubject<Usuario | null>(null);
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private usuarioLogadoSubject = new BehaviorSubject<any>(this.getUsuarioLogadoFromLocalStorage());
 
   constructor(
-    private httpClient: HttpClient,
-    private localStorageService: LocalStorageService,
+    private http: HttpClient, 
+    private router: Router, 
     private jwtHelper: JwtHelperService
-  ) {
-    this.initUsuarioLogado();
-  }
+  ) {}
 
-  private initUsuarioLogado(): void {
-    const usuario = this.localStorageService.getItem(this.usuarioLogadoKey);
-    if (usuario) {
-      // Atribuindo o objeto do usuário diretamente ao BehaviorSubject
-      this.usuarioLogadoSubject.next(usuario);
-    }
-  } 
+  login(username: string, senha: string, perfil: number): Observable<any> {
+    const payload = { username, senha, perfil };
+    return this.http.post(this.apiUrl, payload, { observe: 'response' }).pipe(
+      map((response) => {
+        const token = response.headers.get('Authorization');
+        const usuario = response.body;
 
-  public login(username: string, senha: string, perfil: number): Observable<any> {
-    const params = {
-      username: username,
-      senha: senha,
-      perfil: perfil // perfil dinâmico
-    };
-  
-    return this.httpClient.post(`${this.baseUrl}`, params, { observe: 'response' }).pipe(
-      tap((res: any) => {
-        const authToken = res.headers.get('Authorization') ?? '';
-        if (authToken) {
-          this.setToken(authToken);
-          const usuarioLogado = res.body;
-          if (usuarioLogado) {
-            const usuarioParaArmazenar = {
-              id: usuarioLogado.id,
-              username: usuarioLogado.username,
-              perfil: usuarioLogado.perfil
-            };
-            this.setUsuarioLogado(usuarioParaArmazenar);
-            this.usuarioLogadoSubject.next(usuarioParaArmazenar);
-          }
+        if (token) {
+          localStorage.setItem('token', token);
+          this.loggedIn.next(true);
+          this.setUsuarioLogado(usuario); // Atualiza o usuário logado
         }
-      }),
-      catchError((error) => {
-        console.error('Erro ao realizar login:', error);
-        return throwError(() => new Error('Erro ao realizar login'));
+        return usuario;
       })
     );
-    
   }
 
-  setUsuarioLogado(usuario: { id: number; username: string; perfil: number }): void {
-    this.localStorageService.setItem(this.usuarioLogadoKey, usuario);
+  register(email: string): Observable<any> {
+    const payload = { email };
+    return this.http.post(this.apiUrl, payload, { observe: 'response' }).pipe(
+      map((response) => {
+        const token = response.headers.get('Authorization');
+        const usuario = response.body;
+
+        if (token) {
+          localStorage.setItem('token', token);
+          this.loggedIn.next(true);
+          this.setUsuarioLogado(usuario); // Atualiza o usuário logado
+        }
+        return usuario;
+      })
+    );
   }
 
-  setToken(token: string): void {
-    this.localStorageService.setItem(this.tokenKey, token);
+  logout(): void {
+    localStorage.removeItem('token');
+    this.loggedIn.next(false);
+    this.usuarioLogadoSubject.next(null); // Limpa o usuário logado
+    this.router.navigate(['/login']);
   }
 
-  getUsuarioLogado() {
-    return this.usuarioLogadoSubject.asObservable();
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return token != null && !this.jwtHelper.isTokenExpired(token);
+  }
+
+  hasToken(): boolean {
+    return !!localStorage.getItem('token');
   }
 
   getToken(): string | null {
-    return this.localStorageService.getItem(this.tokenKey);
+    return localStorage.getItem('token');
   }
 
+  decodeToken(token: string): any {
+    return this.jwtHelper.decodeToken(token);
+  }
+
+  // Obtém o estado do usuário logado, caso exista
+  getUsuarioLogado(): Observable<any> {
+    return this.usuarioLogadoSubject.asObservable();
+  }
+
+  // Salva o usuário logado no localStorage e no BehaviorSubject
+  private setUsuarioLogado(usuario: any): void {
+    localStorage.setItem(this.usuarioLogadoKey, JSON.stringify(usuario));
+    this.usuarioLogadoSubject.next(usuario);
+  }
+
+  // Recupera o usuário logado do localStorage
+  private getUsuarioLogadoFromLocalStorage(): any {
+    const usuario = localStorage.getItem(this.usuarioLogadoKey);
+    return usuario ? JSON.parse(usuario) : null;
+  }
+
+  // Remove o token do localStorage
   removeToken(): void {
-    this.localStorageService.removeItem(this.tokenKey);
+    localStorage.removeItem('token');
   }
 
+  // Remove o usuário logado do localStorage e BehaviorSubject
   removeUsuarioLogado(): void {
-    this.localStorageService.removeItem(this.usuarioLogadoKey); // Remove apenas as informações essenciais
-    this.usuarioLogadoSubject.next(null); // Reseta o estado do usuário no BehaviorSubject
-  }
-
-  isTokenExpired(): boolean {
-    const token = this.getToken();
-    if (!token) {
-      return true;
-    }
-
-    try {
-      return this.jwtHelper.isTokenExpired(token);
-    } catch (error) {
-      console.error('Token inválido', error);
-      return true;
-    }
+    localStorage.removeItem(this.usuarioLogadoKey);
+    this.usuarioLogadoSubject.next(null); // Limpa o usuário logado
   }
 }
