@@ -28,8 +28,10 @@ import { caixaLivroDetalhadoResolver } from './components/caixaLivro/resolver/ca
 import { AutorDetalhadoListComponent } from './components/autor/autor-detalhado-list/autor-detalhado-list.component';
 import { autorDetalhadoResolver } from './components/autor/resolver/autor-detalhado.resolver';
 import { PaginaInicialComponent } from './components/inicio/pagina-inicial/pagina-inicial.component';
-import { LoginComponent } from './components/login/login.component';
-import { AdminGuard } from './admin.guard';
+//import { AdminGuard } from './admin.guard';
+import { LoginFuncionarioComponent } from './components/login/login-funcionario/login-funcionario.component';
+import { LoginClienteComponent } from './components/login/login-cliente/login-cliente.component';
+import { GerenciarComponent } from './components/gerenciar/gerenciar/gerenciar.component';
 
 export const routes: Routes = [
 
@@ -37,10 +39,13 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminTemplateComponent,
         title: 'administração',
-        canActivate: [AdminGuard], // Apenas admin pode acessar
+        //canActivate: [AdminGuard], // Apenas admin pode acessar
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'autores' },
+            { path: '', pathMatch: 'full', redirectTo: 'loginAdm' },
 
+            { path: 'loginAdm', component: LoginFuncionarioComponent, title: 'Login Admin' },
+            
+            { path: 'gerenciar', component: GerenciarComponent, title: 'Gerenciar' },
 
             // Rotas para Autores
             { path: 'autores', component: AutorListComponent, title: 'Lista de Autores' },
@@ -78,7 +83,7 @@ export const routes: Routes = [
         component: UserTemplateComponent,
         title: 'e-commerce',
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'login' },
+            { path: '', pathMatch: 'full', redirectTo: 'inicio' },
             { path: 'inicio', component: PaginaInicialComponent, title: 'Página Inicial'},
 
             { path: 'livros', component: LivroCardListComponent, title: 'Lista de Livros' },
@@ -89,7 +94,7 @@ export const routes: Routes = [
 
             { path: 'autores/:nome', component: AutorDetalhadoListComponent, title: 'Detalhes dos Autores', resolve: { autor: autorDetalhadoResolver }},
 
-            { path: 'login', component: LoginComponent, title: 'Login' },
+            { path: 'login', component: LoginClienteComponent, title: 'Login' },
         ]
     }
    
