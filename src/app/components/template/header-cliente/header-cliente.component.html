@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <button (click)="clickMenu()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+    </button>
+    
+    <span>Livros visao cliente</span>
+
+    <span class="livro-spacer"></span>
+
+    <button  mat-icon-button (click)="deslogar()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <span>{{usuarioLogado?.username}}</span>
+</mat-toolbar>
