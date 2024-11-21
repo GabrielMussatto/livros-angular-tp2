@@ -1,0 +1,94 @@
+/* Define o estilo global da página */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Cor de fundo suave */
+  }
+  
+  /* Container principal para centralizar o formulário */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* A altura ocupa toda a tela */
+    background-color: #f5f5f5; /* Cor de fundo para toda a página */
+  }
+  
+  /* Estilo do card do formulário */
+  mat-card {
+    width: 100%;
+    max-width: 400px; /* Largura máxima do formulário */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombras suaves para destaque */
+    border-radius: 8px; /* Bordas arredondadas */
+    background-color: #fff; /* Fundo branco para o card */
+  }
+  
+  /* Estilo do cabeçalho do card */
+  mat-toolbar {
+    background-color: #1A2E6D; /* Azul Marinho */
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  /* Estilo para os campos de entrada */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  /* Estilo para o botão de envio */
+  .button-container {
+    margin-top: 16px;
+  }
+  
+  button.mat-raised-button {
+    width: 100%;
+    background-color: #E96A2A; /* Laranja Queimado */
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.mat-raised-button:hover {
+    background-color: #d85e1b; /* Cor mais escura ao passar o mouse */
+  }
+  
+  /* Estilo para o botão de cadastro */
+  .register-link {
+    margin-top: 12px;
+    text-align: center;
+  }
+  
+  button.mat-button {
+    color: #1A2E6D; /* Azul Marinho para o botão de registro */
+    font-size: 14px;
+    text-transform: none; /* Remove a transformação de texto em maiúsculas */
+  }
+  
+  /* Estilos para o erro de validação dos campos */
+  mat-error {
+    font-size: 12px;
+    color: red;
+  }
+  
+  /* Responsividade para telas menores */
+  @media (max-width: 600px) {
+    mat-card {
+      width: 90%;
+      padding: 16px;
+    }
+  
+    mat-toolbar {
+      font-size: 18px;
+    }
+  
+    button.mat-raised-button {
+      padding: 10px;
+    }
+  }
+  
