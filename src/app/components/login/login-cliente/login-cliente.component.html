@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2 class="login-title">Bem-vindo</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field class="login-input">
+        <input matInput placeholder="Username" formControlName="username" required>
+        <mat-error *ngIf="loginForm.get('username')!.hasError('required')">
+          O username é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="login-input">
+        <input matInput type="password" placeholder="Senha" formControlName="senha" required>
+        <mat-error *ngIf="loginForm.get('senha')!.hasError('required')">
+          A senha é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button class="login-button" color="primary" type="submit">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- <mat-divider [vertical]="true"></mat-divider>
+
+    <form [formGroup]="cadastroForm" (ngSubmit)="onCadastroSubmit()" class="form">
+        <div>
+            <h1 class="h1">Cadastrar como novo cliente</h1>
+        </div>
+
+        <div class="flex-column">
+          <label>Email</label>
+        </div>
+        <div class="inputForm">
+          <mat-icon>alternate_email</mat-icon>
+          <input matInput placeholder="Enter your Email" formControlName="emailCadastro" type="text" required>
+          <mat-error *ngIf="cadastroForm.get('emailCadastro')!.hasError('required')"></mat-error>
+        </div>
+        <button class="button-submit" type="submit">Prosseguir</button>
+    </form> -->
