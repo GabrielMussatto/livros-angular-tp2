@@ -1,0 +1,28 @@
+.gerenciar-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  gap: 20px; /* Espaçamento entre os cards */
+  padding: 20px;
+}
+
+mat-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+mat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3f51b5; /* Cor principal */
+  margin-bottom: 20px;
+}
+
+.welcome-message .username {
+  color: #ff5722; /* Destaque para o nome do usuário */
+}
