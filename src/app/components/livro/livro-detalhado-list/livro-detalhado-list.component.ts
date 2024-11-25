@@ -27,7 +27,7 @@ export class LivroDetalhadoListComponent implements OnInit {
   ngOnInit(): void {
     const tituloLivro = this.route.snapshot.paramMap.get('titulo');
     if (tituloLivro) {
-      this.livroService.findByNome(tituloLivro).subscribe(
+      this.livroService.findByTitulo(tituloLivro).subscribe(
         (livro) => {
           setTimeout(() => {
             this.livro = livro[0];
