@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Livro } from '../models/livro.model';
+import { Classificacao } from '../models/classificacao.model';
+import { Autor } from '../models/autor.model';
+import { Genero } from '../models/genero.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,19 @@ export class LivroService {
 
   getUrlImage(nomeImagem: string): string{
     return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
+  uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('nomeImagem', imagem.name);
+    formData.append('imagem', imagem, imagem.name);
+
+    return this.httpClient.patch<Livro>(`${this.baseUrl}/image/upload`, formData);
+  }
+
+  findClassificacoes(): Observable<Classificacao[]>{
+    return this.httpClient.get<Classificacao[]>(`${this.baseUrl}/classificacoes`);
   }
 
   findAll(page?: number, pageSize?: number): Observable<Livro[]> {
@@ -44,7 +60,7 @@ export class LivroService {
     return this.httpClient.get<number>(`${this.baseUrl}/count/search/genero/${genero}`);
   }
 
-  findByNome(titulo: string, page?: number, pageSize?: number): Observable<Livro[]> {
+  findByTitulo(titulo: string, page?: number, pageSize?: number): Observable<Livro[]> {
     let params = {};
     if (page !== undefined && pageSize !== undefined) {
       params = {
@@ -77,6 +93,37 @@ export class LivroService {
     return this.httpClient.get<Livro[]>(`${this.baseUrl}/search/genero/${genero}`, { params });
   }
 
+  findByFilters(
+    autores: number[],
+    editoras: number[],
+    generos: number[],
+    page?: number,
+    pageSize?: number
+  ): Observable<{ livros: Livro[]; autores: number[]; editoras: number[]; generos: number[] }> {
+    let params = new HttpParams();
+  
+    if (autores.length > 0) {
+      params = params.set('autores', autores.join(','));
+    }
+    if (editoras.length > 0) {
+      params = params.set('editoras', editoras.join(','));
+    }
+    if (generos.length > 0) {
+      params = params.set('generos', generos.join(','));
+    }
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    if (pageSize !== undefined) {
+      params = params.set('pageSize', pageSize.toString());
+    }
+  
+    return this.httpClient.get<{ livros: Livro[]; autores: number[]; editoras: number[]; generos: number[] }>(
+      `${this.baseUrl}/search/filters`, 
+      { params }
+    );
+  }
+  
   findById(id: string): Observable<Livro>{
     return this.httpClient.get<Livro>(`${this.baseUrl}/${id}`);
   }
