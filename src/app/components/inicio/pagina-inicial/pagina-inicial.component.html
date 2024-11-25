@@ -37,40 +37,40 @@
     </mat-card>
   </div>
 
-  <!-- Carrossel de Caixa de Livros -->
+<!-- Carrossel de Caixa de Livros -->
 <div class="container">
-    <mat-card class="carrossel-card">
-        <h3 class="centralizado">Caixa de Livros</h3>
-      <div class="carousel-content">
-        <mat-card *ngFor="let caixaLivro of caixaLivros.slice(caixaLivrosCarouselIndex, caixaLivrosCarouselIndex + livrosPorPagina)" class="caixa-livro-card" (click)="verMaisCaixaLivro(caixaLivro.nome)">
-          <img *ngIf="caixaLivro?.nomeImagem" [src]="getCaixaLivroImageUrl(caixaLivro.nomeImagem)" alt="{{ caixaLivro.nome }}" class="caixa-livro-image">
-          <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
-          <mat-card-subtitle>{{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
-        </mat-card>
-      </div>
-  
-      <!-- Botões de navegação -->
-      <button mat-icon-button (click)="moveCarouselLeft('caixaLivros')">
-        <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_left
-            </span>
-        </mat-icon>
-      </button>
-      <button mat-icon-button (click)="moveCarouselRight('caixaLivros')">
-        <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_right
-            </span>
-        </mat-icon>
-      </button>
+  <mat-card class="carrossel-card">
+    <h3 class="centralizado">Caixa de Livros</h3>
+    <div class="carousel-content">
+      <!-- Exibe os 5 itens a partir do índice atual -->
+      <mat-card *ngFor="let caixaLivro of caixaLivros.slice(caixaLivrosCarouselIndex, caixaLivrosCarouselIndex + 5)" 
+                class="caixa-livro-card" 
+                (click)="verMaisCaixaLivro(caixaLivro.nome)">
+        <img *ngIf="caixaLivro?.nomeImagem" [src]="getCaixaLivroImageUrl(caixaLivro.nomeImagem)" alt="{{ caixaLivro.nome }}" class="caixa-livro-image">
+        <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
+        <mat-card-subtitle>{{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
+      </mat-card>
+    </div>
 
-      <!-- Botão "Ver Mais..." -->
+    <!-- Botões de navegação -->
+    <button mat-icon-button (click)="moveCarouselLeft('caixaLivros')">
+      <mat-icon>
+        <span class="material-symbols-outlined">chevron_left</span>
+      </mat-icon>
+    </button>
+    <button mat-icon-button (click)="moveCarouselRight('caixaLivros')">
+      <mat-icon>
+        <span class="material-symbols-outlined">chevron_right</span>
+      </mat-icon>
+    </button>
+
+    <!-- Botão "Ver Mais..." -->
     <div class="ver-mais" (click)="verMaisCaixaLivrosAll()">
-        Ver Mais em Caixa de Livros...
-      </div>
-    </mat-card>
-  </div>
+      Ver Mais em Caixa de Livros...
+    </div>
+  </mat-card>
+</div>
+
 
 <!-- Carrossel de Autores -->
 <div class="container">
