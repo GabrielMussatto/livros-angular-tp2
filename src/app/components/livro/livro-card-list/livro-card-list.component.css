@@ -185,3 +185,89 @@ mat-card-subtitle {
 .card:hover .favorite-button {
     display: block;
 }
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    /* Espaço entre a barra lateral e o conteúdo principal */
+    padding: 20px;
+    /* Adiciona espaçamento interno */
+    background-color: #f9f9f9;
+    /* Cor de fundo suave */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+/* Estilização da barra lateral */
+.sidebar {
+    width: 25%;
+    min-width: 250px;
+    /* Largura mínima para manter uma boa aparência */
+    background-color: white;
+    /* Fundo branco para destaque */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    padding: 15px;
+    /* Espaçamento interno */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espaço entre as seções de filtros */
+}
+
+/* Estilização de cada seção de filtro */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Espaço entre os itens */
+}
+
+.filter-section h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+    /* Cor do texto */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* Linha separadora */
+    padding-bottom: 5px;
+    /* Espaçamento inferior para a linha */
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Espaço entre o checkbox e o texto */
+}
+
+/* Para centralizar e alinhar os checkboxes */
+.filter-item mat-checkbox {
+    flex-shrink: 0;
+    /* Evita que o checkbox diminua */
+}
+
+.filter-item span {
+    font-size: 0.9rem;
+    color: #555;
+    /* Cor do texto mais suave */
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        /* Empilha barra lateral e conteúdo */
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: auto;
+        /* Ocupa toda a largura disponível */
+    }
+}

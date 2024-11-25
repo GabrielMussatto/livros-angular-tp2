@@ -13,6 +13,13 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { AutorService } from '../../../services/autor.service';
+import { GeneroService } from '../../../services/genero.service';
+import { EditoraService } from '../../../services/editora.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { Autor } from '../../../models/autor.model';
+import { Editora } from '../../../models/editora.model';
+import { Genero } from '../../../models/genero.model';
 
 type Card = {
   titulo: string;
@@ -31,7 +38,7 @@ type Card = {
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
     MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule,
-    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
+    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf, MatCheckbox
   ],
   templateUrl: './livro-card-list.component.html',
   styleUrl: './livro-card-list.component.css'
@@ -48,6 +55,9 @@ export class LivroCardListComponent implements OnInit {
 
   constructor(
     private livroService: LivroService,
+    private autorService: AutorService,
+    private generoService: GeneroService,
+    private editoraService: EditoraService,
     private snackBar: MatSnackBar,
     private router: Router
   ) { }
@@ -71,7 +81,7 @@ export class LivroCardListComponent implements OnInit {
           }
         );
       } else if(this.tipoFiltro === 'titulo'){
-        this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        this.livroService.findByTitulo(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.livros = data;
             if(this.livros.length === 0){
@@ -158,13 +168,13 @@ export class LivroCardListComponent implements OnInit {
     this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar', { duration: 3000 });
   }
 
-  formatarTitulo(titulo: string): string {
-    return titulo
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-      .replace(/\s+/g, '-'); // Substitui espaços por hífens
-  }
+  // formatarTitulo(titulo: string): string {
+  //   return titulo
+  //     .toLowerCase()
+  //     .normalize('NFD')
+  //     .replace(/[\u0300-\u036f]/g, '') // Remove acentos
+  //     .replace(/\s+/g, '-'); // Substitui espaços por hífens
+  // }
 
   verMais(titulo: string): void {
     this.router.navigate(['/livros', titulo]);

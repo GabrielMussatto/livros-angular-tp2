@@ -31,48 +31,67 @@
     </div>
 </div>
 
-<div class="container responsive-grid">
-    <mat-card *ngFor="let card of cards()" class="card" (click)="verMais(card.titulo)">
-        <div class="card-clickable">
-            <button 
-                mat-icon-button 
-                color="warn" 
-                class="favorite-button" 
-                (click)="favoritar(card, $event)" 
-                [ngClass]="{'active': card.favorito}">
-                <mat-icon>{{ card.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
-            </button>
-            <img mat-card-image [src]="card.imageUrl" />
-            <div class="card-content">
-                <mat-card-title class="centered-text">{{card.titulo}}</mat-card-title>
-                <mat-card-subtitle class="centered-text">
-                    Autores: {{ card.autores }}
-                </mat-card-subtitle>
-                <mat-card-content class="centered-text">
-                    Gênero: {{card.generos}}
-                </mat-card-content>
-                <mat-card-content class="centered-text">
-                    {{card.preco | currency:'BRL':'symbol':'1.2-2'}}
-                </mat-card-content>
-                <mat-card-content *ngIf="card.verDescricao" class="centered-text">
-                    {{card.descricao}}
-                </mat-card-content>
+<!-- <div class="main-content"> -->
+    <!-- Barra lateral para filtros -->
+    <!-- <div class="sidebar">
+        <div class="filter-section">
+            <h3>Filtrar por Autor</h3>
+            <div *ngFor="let autor of autores" class="filter-item">
+                <mat-checkbox (change)="onAutorSelect(autor.id)">{{ autor.nome }}</mat-checkbox>
             </div>
         </div>
+        <div class="filter-section">
+            <h3>Filtrar por Editora</h3>
+            <div *ngFor="let editora of editoras" class="filter-item">
+                <mat-checkbox (change)="onEditoraSelect(editora.id)">{{ editora.nome }}</mat-checkbox>
+            </div>
+        </div>
+        <div class="filter-section">
+            <h3>Filtrar por Gênero</h3>
+            <div *ngFor="let genero of generos" class="filter-item">
+                <mat-checkbox (change)="onGeneroSelect(genero.id)">{{ genero.nome }}</mat-checkbox>
+            </div>
+        </div>
+    </div> -->
 
-        <mat-card-footer class="card-footer" (click)="$event.stopPropagation()">
-            <button mat-button color="primary" class="card-button primary-button" (click)="verDescricao(card)">
-                {{ card.verDescricao ? 'Ocultar Descrição' : 'Ver Descrição Breve' }}
-            </button>
-            <button mat-button color="accent" class="card-button accent-button">Adicionar ao Carrinho</button>
-        </mat-card-footer>
-    </mat-card>
-</div>
+    <div class="container responsive-grid">
+        <mat-card *ngFor="let card of cards()" class="card" (click)="verMais(card.titulo)">
+            <div class="card-clickable">
+                <button mat-icon-button color="warn" class="favorite-button" (click)="favoritar(card, $event)"
+                    [ngClass]="{'active': card.favorito}">
+                    <mat-icon>{{ card.favorito ? 'favorite' : 'favorite_border' }}</mat-icon>
+                </button>
+                <img mat-card-image [src]="card.imageUrl" />
+                <div class="card-content">
+                    <mat-card-title class="centered-text">{{card.titulo}}</mat-card-title>
+                    <mat-card-subtitle class="centered-text">
+                        Autores: {{ card.autores }}
+                    </mat-card-subtitle>
+                    <mat-card-content class="centered-text">
+                        Gênero: {{card.generos}}
+                    </mat-card-content>
+                    <mat-card-content class="centered-text">
+                        {{card.preco | currency:'BRL':'symbol':'1.2-2'}}
+                    </mat-card-content>
+                    <mat-card-content *ngIf="card.verDescricao" class="centered-text">
+                        {{card.descricao}}
+                    </mat-card-content>
+                </div>
+            </div>
+
+            <mat-card-footer class="card-footer" (click)="$event.stopPropagation()">
+                <button mat-button color="primary" class="card-button primary-button" (click)="verDescricao(card)">
+                    {{ card.verDescricao ? 'Ocultar Descrição' : 'Ver Descrição Breve' }}
+                </button>
+                <button mat-button color="accent" class="card-button accent-button">Adicionar ao Carrinho</button>
+            </mat-card-footer>
+        </mat-card>
+    </div>
+<!-- </div> -->
 
 
-<mat-paginator 
-    [pageSizeOptions]="[10, 25, 50, 100]" 
-    [pageSize]="pageSize" 
-    [length]="totalRecords"
+
+
+<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="pageSize" [length]="totalRecords"
     (page)="paginar($event)">
 </mat-paginator>
