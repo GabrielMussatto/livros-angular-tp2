@@ -88,7 +88,7 @@ export class LivroListComponent implements OnInit {
           }
         );
       } else if (this.tipoFiltro === 'titulo') {
-        this.livroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
+        this.livroService.findByTitulo(this.filtro, this.page, this.pageSize).subscribe(
           data => {
             this.livros = data;
             if (this.livros.length === 0) {
