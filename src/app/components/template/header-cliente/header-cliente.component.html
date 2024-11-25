@@ -1,14 +1,33 @@
-<mat-toolbar color="primary">
-    <button (click)="clickMenu()" mat-icon-button>
-        <mat-icon>menu</mat-icon>
-    </button>
-    
-    <span>Livros visao cliente</span>
+<mat-toolbar class="header-cliente-minimal">
+  <!-- Logo -->
+  <div class="header-logo">
+    <span>LivrosVisão</span>
+  </div>
 
-    <span class="livro-spacer"></span>
+  <!-- Espaçador -->
+  <span class="livro-spacer"></span>
 
-    <button  mat-icon-button (click)="deslogar()">
-      <mat-icon>exit_to_app</mat-icon>
+  <!-- Ícones à direita -->
+  <div class="header-actions">
+    <button mat-icon-button>
+      <mat-icon>search</mat-icon>
     </button>
-    <span>{{usuarioLogado?.username}}</span>
+    <button mat-icon-button>
+      <mat-icon>shopping_cart</mat-icon>
+      <mat-badge [hidden]="true" matBadge="0"></mat-badge>
+    </button>
+
+    <!-- Menu de deslogar -->
+    <button mat-icon-button *ngIf="usuarioLogado" [matMenuTriggerFor]="menu">
+      <span *ngIf="usuarioLogado">{{ usuarioLogado.username.charAt(0) }}</span>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="deslogar()">Sair</button>
+    </mat-menu>
+
+    <button mat-icon-button *ngIf="!usuarioLogado" routerLink="/login">
+      <mat-icon>person</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

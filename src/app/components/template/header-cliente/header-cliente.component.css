@@ -1,3 +1,52 @@
-.livro-spacer{
+.header-cliente-minimal {
+    background-color: #1A2E6D; /* Azul Marinho */
+    color: #F9D56B; /* Amarelo Dourado */
+    display: flex;
+    align-items: center;
+    height: 90px;
+    padding: 0 15%; /* Adiciona padding na esquerda e direita */
+    font-family: Arial, sans-serif;
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho total */
+  }
+  
+  .header-logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #F9D56B;
+  }
+  
+  .livro-spacer {
     flex: 1 1 auto;
-}
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Espaçamento uniforme entre os ícones */
+  }
+  
+  .header-actions button {
+    color: #F9D56B; /* Ícones dourados */
+  }
+  
+  .header-actions button:hover {
+    background-color: rgba(249, 213, 107, 0.1); /* Hover sutil */
+    border-radius: 50%;
+  }
+  
+  mat-icon {
+    font-size: 24px;
+  }
+  
+  mat-menu {
+    background-color: #1A2E6D;
+    color: #F9D56B;
+  }
+  
+  mat-menu button {
+    color: #F9D56B;
+  }
+  
+  mat-menu button:hover {
+    background-color: rgba(249, 213, 107, 0.1); /* Hover sutil */
+  }

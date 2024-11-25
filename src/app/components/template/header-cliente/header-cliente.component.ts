@@ -3,16 +3,18 @@ import { MatBadge } from '@angular/material/badge';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/sidebar.service';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario.model';
 import { Subscription } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header-cliente',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatBadge, MatButton, MatIconButton, RouterModule],
+  imports: [NgIf, MatToolbar, MatIcon, MatBadge, MatButton, MatIconButton, RouterModule, MatMenuModule],
   templateUrl: './header-cliente.component.html',
   styleUrl: './header-cliente.component.css'
 })
@@ -22,8 +24,8 @@ export class HeaderClienteComponent {
 
   constructor(
     private sidebarService: SidebarService,
-    private authService: AuthService) {
-
+    private authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
