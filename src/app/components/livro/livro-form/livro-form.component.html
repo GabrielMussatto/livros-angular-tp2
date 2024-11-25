@@ -49,7 +49,7 @@
       <form [formGroup]="formGroup">
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Titulo</mat-label>
-          <input matInput type="text" formControlName="titulo">
+          <input matInput type="text" formControlName="titulo" #inputTitulo>
           <mat-error *ngIf="formGroup.get('titulo')
                                && formGroup.get('titulo')?.invalid
                                && formGroup.get('titulo')?.touched">
@@ -64,7 +64,7 @@
 
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Descrição</mat-label>
-          <input matInput type="text" formControlName="descricao">
+          <input matInput type="text" formControlName="descricao" #inputDescricao>
           <mat-error *ngIf="formGroup.get('descricao')
                                && formGroup.get('descricao')?.invalid
                                && formGroup.get('descricao')?.touched">
@@ -109,7 +109,7 @@
 
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Preço</mat-label>
-          <input matInput type="number" formControlName="preco">
+          <input matInput type="number" formControlName="preco" #inputPreco>
           <mat-error *ngIf="formGroup.get('preco')
                                && formGroup.get('preco')?.invalid
                                && formGroup.get('preco')?.touched">
@@ -167,8 +167,8 @@
 
         <mat-form-field appearance="fill" class="full-width-input" color="accent">
           <mat-label>Gêneros</mat-label>
-          <mat-select formControlName="generos" name="generos" multiple>
-            <mat-option *ngFor="let genero of generos" [value]="genero">
+          <mat-select formControlName="generos" name="generos" multiple #selectGenero>
+            <mat-option *ngFor="let genero of generos" [value]="genero" >
               {{genero.nome}}
             </mat-option>
           </mat-select>
@@ -186,8 +186,8 @@
 
         <mat-form-field appearance="fill" class="full-width-input" color="accent">
           <mat-label>Autores</mat-label>
-          <mat-select formControlName="autores" name="autores" multiple>
-            <mat-option *ngFor="let autor of autores" [value]="autor">
+          <mat-select formControlName="autores" name="autores" multiple #inputAutor>
+            <mat-option *ngFor="let autor of autores" [value]="autor" >
               {{autor.nome}}
             </mat-option>
           </mat-select>
@@ -206,12 +206,9 @@
         <mat-form-field appearance="fill" class="full-width-input" color="accent">
           <mat-label> Classificação </mat-label>
           <mat-select formControlName="classificacao" name="classificacao">
-            <mat-option value="1">Livre</mat-option>
-            <mat-option value="2">10 Anos</mat-option>
-            <mat-option value="3">12 Anos</mat-option>
-            <mat-option value="4">14 Anos</mat-option>
-            <mat-option value="5">16 Anos</mat-option>
-            <mat-option value="6">18 Anos</mat-option>
+            <mat-option *ngFor="let classificacao of classificacoes" [value]="classificacao">
+              {{classificacao.descricao}}
+            </mat-option>
           </mat-select>
           <mat-error *ngIf="formGroup.get('classificacao')
                                 && formGroup.get('classificacao')?.invalid
@@ -242,6 +239,38 @@
             }
           </mat-error>
         </mat-form-field>
+
+        <!-- inserindo a Imagem -->
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Imagem do Livro</mat-label>
+          <input type="file" (change)="carregarImagemSelecionada($event)" hidden #fileInput>
+          <input matInput [value]="fileName" readonly>
+          
+          <button mat-icon-button matSuffix (click)="fileInput.click()">
+              <mat-icon>folder_open</mat-icon>
+          </button>   
+      </mat-form-field>
+
+      <div class="container responsive-grid">
+        <mat-card>
+                <img mat-card-image [src]="imagePreview" />
+                <div class="card-content">
+                    <mat-card-title class="centered-text">{{inputTitulo.value}}</mat-card-title>
+                    <mat-card-subtitle class="centered-text">
+                        Autores: {{ inputAutor.value }}
+                    </mat-card-subtitle>
+                    <mat-card-content class="centered-text">
+                        Gênero: {{ selectGenero.value.descricao }}
+                    </mat-card-content>
+                    <mat-card-content class="centered-text">
+                        {{ inputPreco.value | currency:'BRL':'symbol':'1.2-2'}}
+                    </mat-card-content>
+                    <mat-card-content class="centered-text">
+                        {{inputDescricao.value}}
+                    </mat-card-content>
+                </div>
+        </mat-card>
+    </div>
       </form>
     </mat-card-content>
     <mat-card-actions>
