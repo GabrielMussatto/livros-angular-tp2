@@ -1,14 +1,25 @@
 <mat-toolbar color="primary">
-    <button (click)="clickMenu()" mat-icon-button>
-        <mat-icon>menu</mat-icon>
-    </button>
-    
-    <span>Livros</span>
+  <!-- Menu Button -->
+  <button (click)="clickMenu()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <span class="livro-spacer"></span>
+  <!-- Spacer -->
+  <span class="livro-spacer"></span>
 
-    <button  mat-icon-button (click)="deslogar()">
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
-    <span>{{usuarioLogado?.username}}</span>
+
+  <!-- Cart Button -->
+  <button mat-icon-button>
+    <mat-icon matBadgeColor="accent">shopping_cart</mat-icon>
+  </button>
+
+  <!-- User Info -->
+  <button mat-icon-button *ngIf="usuarioLogado" (click)="deslogar()">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+  <span *ngIf="usuarioLogado">{{ usuarioLogado.username }}</span>
+
+  <button mat-icon-button *ngIf="!usuarioLogado" routerLink="/login">
+    <mat-icon>login</mat-icon>
+  </button>
 </mat-toolbar>
