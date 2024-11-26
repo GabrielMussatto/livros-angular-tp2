@@ -1,24 +1,8 @@
 <div class="container">
     <div class="input-container">
-        <!-- Select para o tipo de pesquisa -->
-        <mat-form-field appearance="outline" class="select-field">
-            <mat-label>Pesquisar por</mat-label>
-            <mat-select [(ngModel)]="tipoFiltro">
-                <mat-option value="titulo">Título</mat-option>
-                <mat-option value="autor">Autor</mat-option>
-                <mat-option value="genero">Gênero</mat-option>
-            </mat-select>
-        </mat-form-field>
+        
 
         <!-- Campo de entrada para o valor da pesquisa -->
-        <mat-form-field appearance="outline" class="input-field">
-            <mat-label>Digite para pesquisar</mat-label>
-            <input [(ngModel)]="filtro" matInput placeholder="Ex: Harry Potter" (keyup.enter)="filtrar()" />
-        </mat-form-field>
-
-        <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
-            <mat-icon>search</mat-icon>
-        </button>
 
         <mat-form-field appearance="outline" class="select-field">
             <mat-label>Ordenar por</mat-label>

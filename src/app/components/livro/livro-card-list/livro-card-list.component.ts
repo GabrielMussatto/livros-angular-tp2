@@ -12,11 +12,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AutorService } from '../../../services/autor.service';
 import { GeneroService } from '../../../services/genero.service';
 import { EditoraService } from '../../../services/editora.service';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { forkJoin } from 'rxjs';
 import { Autor } from '../../../models/autor.model';
 import { Editora } from '../../../models/editora.model';
 import { Genero } from '../../../models/genero.model';
@@ -55,79 +56,78 @@ export class LivroCardListComponent implements OnInit {
 
   constructor(
     private livroService: LivroService,
-    private autorService: AutorService,
-    private generoService: GeneroService,
-    private editoraService: EditoraService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.carregarLivros();
-    this.buscarTodos();
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.filtro = params['termo'] || '';
+      this.carregarLivros();
+    });
   }
 
   carregarLivros(): void {
     if (this.filtro) {
-      if (this.tipoFiltro === 'autor') {
-        this.livroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.livros = data;
-            if(this.livros.length === 0){
-              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      } else if(this.tipoFiltro === 'titulo'){
-        this.livroService.findByTitulo(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.livros = data;
-            if(this.livros.length === 0){
-              this.snackBar.open('O Livro pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      } else if(this.tipoFiltro === 'genero'){
-        this.livroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.livros = data;
-            if(this.livros.length === 0){
-              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      }
-    } else {
-      this.livroService.findAll(this.page, this.pageSize).subscribe(
-        data => {
-          this.livros = data;
+      // Executa todas as buscas em paralelo
+      forkJoin({
+        porTitulo: this.livroService.findByTitulo(this.filtro, this.page, this.pageSize),
+        porAutor: this.livroService.findByAutor(this.filtro, this.page, this.pageSize),
+        porGenero: this.livroService.findByGenero(this.filtro, this.page, this.pageSize),
+      }).subscribe(
+        (resultados) => {
+          // Combina os resultados removendo duplicatas
+          const todosLivros = [
+            ...resultados.porTitulo,
+            ...resultados.porAutor,
+            ...resultados.porGenero,
+          ];
+          this.livros = this.removerDuplicatas(todosLivros);
           this.carregarCards();
           this.ordenar();
+        },
+        (erro) => {
+          console.error('Erro ao carregar livros:', erro);
+          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
+    } else {
+      // Se não há filtro, carrega todos os livros
+      this.livroService.findAll(this.page, this.pageSize).subscribe((data) => {
+        this.livros = data;
+        this.carregarCards();
+        this.ordenar();
+      });
     }
+  }
+
+  removerDuplicatas(livros: Livro[]): Livro[] {
+    const vistos = new Set();
+    return livros.filter((livro) => {
+      const id = livro.id || livro.titulo; // Use o identificador único ou título
+      if (vistos.has(id)) {
+        return false;
+      }
+      vistos.add(id);
+      return true;
+    });
   }
 
   carregarCards(): void {
     const favoritos: Record<string, boolean> = JSON.parse(localStorage.getItem('favoritos') || '{}');
 
     const cards: Card[] = [];
-    this.livros.forEach(livro => {
+    this.livros.forEach((livro) => {
       cards.push({
         titulo: livro.titulo,
         descricao: livro.descricao,
-        autores: livro.autores.map(autor => autor.nome).join(', '),
-        generos: livro.generos.map(genero => genero.nome).join(', '),
+        autores: livro.autores.map((autor) => autor.nome).join(', '),
+        generos: livro.generos.map((genero) => genero.nome).join(', '),
         preco: livro.preco,
         imageUrl: this.livroService.getUrlImage(livro.nomeImagem),
         verDescricao: false,
-        favorito: favoritos[livro.titulo] || false
+        favorito: favoritos[livro.titulo] || false,
       });
     });
     this.cards.set(cards);
@@ -139,42 +139,6 @@ export class LivroCardListComponent implements OnInit {
     this.carregarLivros();
     this.ordenar();
   }
-
-  buscarTodos(): void {
-    if (this.filtro) {
-      if (this.tipoFiltro === 'autor') {
-        this.livroService.countByAutor(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      } else if (this.tipoFiltro === 'titulo'){
-        this.livroService.countByTitulo(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      } else if (this.tipoFiltro === 'genero'){
-        this.livroService.countByGenero(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      }
-    } else {
-      this.livroService.count().subscribe(
-        data => { this.totalRecords = data; }
-      );
-    }
-  }
-
-  filtrar(): void {
-    this.carregarLivros();
-    this.buscarTodos();
-    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar', { duration: 3000 });
-  }
-
-  // formatarTitulo(titulo: string): string {
-  //   return titulo
-  //     .toLowerCase()
-  //     .normalize('NFD')
-  //     .replace(/[\u0300-\u036f]/g, '') // Remove acentos
-  //     .replace(/\s+/g, '-'); // Substitui espaços por hífens
-  // }
 
   verMais(titulo: string): void {
     this.router.navigate(['/livros', titulo]);
