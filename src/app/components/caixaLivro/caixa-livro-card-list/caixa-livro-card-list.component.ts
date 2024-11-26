@@ -11,7 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CaixaLivro } from '../../../models/caixa-livro.model';
 import { CaixaLivroService } from '../../../services/caixa-livro.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+
 
 type Card = {
   nome: string;
@@ -48,59 +50,62 @@ export class CaixaLivroCardListComponent implements OnInit{
   constructor(
     private caixaLivroService: CaixaLivroService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+
   ){}
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.filtro = params['termo'] || '';
       this.carregarCaixaLivros();
-      this.buscarTodos();
+    });
   }
 
   carregarCaixaLivros(): void {
     if (this.filtro) {
-      if (this.tipoFiltro === 'genero') {
-        this.caixaLivroService.findByGenero(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.caixaLivros = data;
-            if(this.caixaLivros.length === 0){
-              this.snackBar.open('O Gênero pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      } else if (this.tipoFiltro === 'nome'){
-        this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.caixaLivros = data;
-            if(this.caixaLivros.length === 0){
-              this.snackBar.open('O Nome da Caixa de Livros pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      } else if (this.tipoFiltro === 'autor'){
-        this.caixaLivroService.findByAutor(this.filtro, this.page, this.pageSize).subscribe(
-          data => {
-            this.caixaLivros = data;
-            if(this.caixaLivros.length === 0){
-              this.snackBar.open('O Autor pesquisado não foi encontrado. Tente novamente.', 'Fechar', { duration: 3000 });
-            }
-            this.carregarCards();
-            this.ordenar();
-          }
-        );
-      }
-    } else {
-      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
-        data => {
-          this.caixaLivros = data;
+      // Executa todas as buscas em paralelo
+      forkJoin({
+        porNome: this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize),
+        porAutor: this.caixaLivroService.findByAutor(this.filtro, this.page, this.pageSize),
+        porGenero: this.caixaLivroService.findByGenero(this.filtro, this.page, this.pageSize),
+      }).subscribe(
+        (resultados) => {
+          // Combina os resultados removendo duplicatas
+          const todosCaixaLivros = [
+            ...resultados.porNome,
+            ...resultados.porAutor,
+            ...resultados.porGenero,
+          ];
+          this.caixaLivros = this.removerDuplicatas(todosCaixaLivros);
           this.carregarCards();
           this.ordenar();
+        },
+        (erro) => {
+          console.error('Erro ao carregar caixa de livros:', erro);
+          this.snackBar.open('Erro ao carregar os caixa de livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
+    } else {
+      // Se não há filtro, carrega todos os livros
+      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe((data) => {
+        this.caixaLivros = data;
+        this.carregarCards();
+        this.ordenar();
+      });
     }
+  }
+
+  removerDuplicatas(caixaLivros: CaixaLivro[]): CaixaLivro[] {
+    const vistos = new Set();
+    return caixaLivros.filter((caixaLivro) => {
+      const id = caixaLivro.id || caixaLivro.nome; // Use o identificador único ou título
+      if (vistos.has(id)) {
+        return false;
+      }
+      vistos.add(id);
+      return true;
+    });
   }
 
   carregarCards(): void {
@@ -127,42 +132,6 @@ export class CaixaLivroCardListComponent implements OnInit{
     this.pageSize = event.pageSize;
     this.carregarCaixaLivros();
     this.ordenar();
-  }
-
-  buscarTodos(): void {
-    if (this.filtro) {
-      if (this.tipoFiltro === 'nome') {
-        this.caixaLivroService.countByNome(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      } else if (this.tipoFiltro === 'genero'){
-        this.caixaLivroService.countByGenero(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      } else if (this.tipoFiltro === 'autor'){
-        this.caixaLivroService.countByAutor(this.filtro).subscribe(
-          data => { this.totalRecords = data; }
-        );
-      }
-    } else {
-      this.caixaLivroService.count().subscribe(
-        data => { this.totalRecords = data; }
-      );
-    }
-  }
-
-  filtrar(): void {
-    this.carregarCaixaLivros();
-    this.buscarTodos();
-    this.snackBar.open('O filtro foi aplicado com Sucesso!!', 'Fechar', { duration: 3000 });
-  }
-
-  formatarTitulo(nome: string): string {
-    return nome
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g,'-');
   }
 
   verMais(nome: string): void{
