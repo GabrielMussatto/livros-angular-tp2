@@ -9,9 +9,10 @@
 
   <!-- Ícones à direita -->
   <div class="header-actions">
-    <button mat-icon-button>
+    <button mat-icon-button (click)="togglePesquisa()">
       <mat-icon>search</mat-icon>
     </button>
+
     <button mat-icon-button>
       <mat-icon>shopping_cart</mat-icon>
       <mat-badge [hidden]="true" matBadge="0"></mat-badge>
@@ -31,3 +32,32 @@
     </button>
   </div>
 </mat-toolbar>
+
+<!-- Sobreposição de fundo e campo de pesquisa -->
+<div class="overlay" *ngIf="exibirPesquisa">
+  <div class="search-container" *ngIf="exibirPesquisa">
+    <!-- Campo de pesquisa -->
+    <!-- Filtros de Pesquisa -->
+    <mat-form-field appearance="outline" class="select-field">
+      <mat-label>Pesquisar por</mat-label>
+      <mat-select [(ngModel)]="filtroSelecionado">
+        <mat-option value="livro">Livros</mat-option>
+        <mat-option value="caixaLivro">Caixa de Livros</mat-option>
+      </mat-select>
+  </mat-form-field>
+  
+    <mat-form-field class="search-input">
+      <mat-label>O que você procura?</mat-label>
+      <input matInput [(ngModel)]="termoPesquisa" placeholder="Título, autor ou gênero">
+      <button mat-icon-button matSuffix (click)="pesquisar()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  
+   
+  
+    <!-- Botão de Fechar -->
+    <button class="close-btn" mat-icon-button (click)="togglePesquisa()">
+      <mat-icon>close</mat-icon>
+    </button>
+</div>

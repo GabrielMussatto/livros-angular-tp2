@@ -1,52 +1,86 @@
+/* Estilo do cabeçalho */
 .header-cliente-minimal {
-    background-color: #1A2E6D; /* Azul Marinho */
-    color: #F9D56B; /* Amarelo Dourado */
-    display: flex;
-    align-items: center;
-    height: 90px;
-    padding: 0 15%; /* Adiciona padding na esquerda e direita */
-    font-family: Arial, sans-serif;
-    box-sizing: border-box; /* Garante que o padding não afete o tamanho total */
-  }
-  
-  .header-logo span {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #F9D56B;
-  }
-  
-  .livro-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px; /* Espaçamento uniforme entre os ícones */
-  }
-  
-  .header-actions button {
-    color: #F9D56B; /* Ícones dourados */
-  }
-  
-  .header-actions button:hover {
-    background-color: rgba(249, 213, 107, 0.1); /* Hover sutil */
-    border-radius: 50%;
-  }
-  
-  mat-icon {
-    font-size: 24px;
-  }
-  
-  mat-menu {
-    background-color: #1A2E6D;
-    color: #F9D56B;
-  }
-  
-  mat-menu button {
-    color: #F9D56B;
-  }
-  
-  mat-menu button:hover {
-    background-color: rgba(249, 213, 107, 0.1); /* Hover sutil */
-  }
+  background-color: #1A2E6D; /* Azul Marinho */
+  color: #F9D56B; /* Amarelo Dourado */
+  display: flex;
+  align-items: center;
+  height: 90px;
+  padding: 0 15%;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.header-logo span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #F9D56B;
+}
+
+.livro-spacer {
+  flex: 1 1 auto;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-actions button {
+  color: #F9D56B;
+}
+
+.header-actions button:hover {
+  background-color: rgba(249, 213, 107, 0.1);
+  border-radius: 50%;
+}
+
+/* Estilo da sobreposição de fundo */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.795); /* Fundo escuro semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Garantir que fique sobre os outros elementos */
+}
+
+/* Estilo do container de pesquisa */
+.search-container {
+  background-color: #FFFFFF; /* Fundo branco */
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 60%;
+  max-width: 500px; /* Limita a largura para não ficar muito grande */
+}
+
+.search-input {
+  flex: 1;
+}
+
+.search-container button {
+  color: #FFFFFF;
+  background-color: #1A2E6D;
+}
+
+.search-container button:hover {
+  background-color: #2D6A4F; /* Verde Floresta */
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  color: #1A2E6D;
+}
+
+.close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Efeito hover */
+}
