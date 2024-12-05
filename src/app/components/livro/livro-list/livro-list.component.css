@@ -1,3 +1,5 @@
+
+
 .titulo {
   display: fixed;
   background-color: #1A2E6D; /* Azul Marinho para a toolbar */
@@ -101,4 +103,8 @@ button[mat-fab]:hover {
   margin-bottom: 15px;
   cursor: pointer;
   transform: scale(1.4);
+}
+
+mat-paginator{
+  background-color: transparent;
 }
