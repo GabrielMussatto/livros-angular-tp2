@@ -4,17 +4,33 @@
   color: #F9D56B; /* Amarelo Dourado */
   display: flex;
   align-items: center;
-  height: 90px;
-  padding: 0 15%;
+  height: 110px;
+  padding: 0 10%;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
 
-.header-logo span {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #F9D56B;
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza horizontalmente a logo dentro do header */
+  height: 100%; /* Certifique-se de que o header tem altura definida */
 }
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.logo {
+  
+  max-height: 90%; /* A logo se ajustará à altura do contêiner pai */
+  object-fit: contain; /* Garante que a proporção da logo seja mantida */
+}
+
+
 
 .livro-spacer {
   flex: 1 1 auto;
