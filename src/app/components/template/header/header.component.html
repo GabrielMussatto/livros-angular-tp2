@@ -1,25 +1,31 @@
-<mat-toolbar color="primary">
-  <!-- Menu Button -->
-  <button (click)="clickMenu()" mat-icon-button>
+<mat-toolbar class="header-admin">
+  <!-- Botão de menu lateral -->
+  <button (click)="clickMenu()" mat-icon-button class="menu-button">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <!-- Spacer -->
+  <!-- Logo Centralizada -->
+  <div class="header-logo">
+    <a routerLink="/admin/gerenciar" class="logo-link">
+      <img class="logo" src="/icons/LogoTp2LivrosColorida.svg" alt="Logo">
+    </a>
+  </div>
+
+  <!-- Espaçador -->
   <span class="livro-spacer"></span>
 
+  <div class="header-actions">
+    <!-- Exibição de usuário logado ou botão de login -->
+    <div *ngIf="usuarioLogado" [matMenuTriggerFor]="menu" class="username-container">
+      <span class="username">{{ usuarioLogado.username }}</span>
+    </div>
 
-  <!-- Cart Button -->
-  <button mat-icon-button>
-    <mat-icon matBadgeColor="accent">shopping_cart</mat-icon>
-  </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="deslogar()">Sair</button>
+    </mat-menu>
 
-  <!-- User Info -->
-  <button mat-icon-button *ngIf="usuarioLogado" (click)="deslogar()">
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
-  <span *ngIf="usuarioLogado">{{ usuarioLogado.username }}</span>
-
-  <button mat-icon-button *ngIf="!usuarioLogado" routerLink="/login">
-    <mat-icon>login</mat-icon>
-  </button>
+    <button mat-icon-button *ngIf="!usuarioLogado" routerLink="/admin">
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

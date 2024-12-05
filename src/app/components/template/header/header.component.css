@@ -1,39 +1,75 @@
-.mat-toolbar {
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    background-color: #1A2E6D;
-  }
-  
-  .header-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.2rem;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .header-nav a {
-    margin: 0 8px;
-    color: white;
-  }
-  
-  .livro-spacer {
-    flex: 1 1 auto;
-  }
-  
-  
-  .mat-form-field {
-    background-color: white;
-    border-radius: 4px;
-    height: 40px;
-  }
-  
-  .mat-form-field.mat-focused {
-    border: 1px solid var(--primary-color);
-  }
-  
-  button {
-    color: white;
-  }
+/* Estilo do header de admin */
+.header-admin {
+  background-color: #1A2E6D; /* Azul Marinho */
+  color: #F9D56B; /* Amarelo Dourado */
+  display: flex;
+  align-items: center;
+  height: 110px;
+  padding-left: 10%; /* Espaçamento lateral */
+  padding-right: 10%; /* Espaçamento lateral */
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Botão de menu alinhado à esquerda */
+.menu-button {
+  position: absolute;
+  left: 15%; /* Respeita o padding lateral */
+  color: #F9D56B;
+}
+
+.menu-button:hover {
+  background-color: rgba(249, 213, 107, 0.1);
+  border-radius: 50%;
+}
+
+/* Logo centralizada */
+.header-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.logo {
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* Ações à direita */
+.header-actions {
+  position: absolute;
+  right: 15%; /* Respeita o padding lateral */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-actions button {
+  color: #F9D56B;
+}
+
+.header-actions button:hover {
+  background-color: rgba(249, 213, 107, 0.1);
+  border-radius: 50%;
+}
+
+/* Informações do usuário */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #F9D56B;
+  font-size: 1rem;
+}
