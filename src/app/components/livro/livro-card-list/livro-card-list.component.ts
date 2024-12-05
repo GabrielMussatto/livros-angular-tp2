@@ -64,7 +64,7 @@ export class LivroCardListComponent implements OnInit {
 
   carregarLivros(): void {
     if (this.filtro) {
-      // Realiza as contagens
+      // Caso exista um filtro, realiza as contagens e busca
       forkJoin({
         countTitulo: this.livroService.countByTitulo(this.filtro),
         countAutor: this.livroService.countByAutor(this.filtro),
@@ -73,7 +73,7 @@ export class LivroCardListComponent implements OnInit {
         (contagens) => {
           this.totalRecords = contagens.countTitulo + contagens.countAutor + contagens.countGenero;
   
-          // Carrega todos os livros não paginados (remova paginação aqui)
+          // Busca todos os livros relacionados ao filtro
           forkJoin({
             porTitulo: this.livroService.findByTitulo(this.filtro, 0, this.totalRecords),
             porAutor: this.livroService.findByAutor(this.filtro, 0, this.totalRecords),
@@ -86,38 +86,47 @@ export class LivroCardListComponent implements OnInit {
                 ...resultados.porGenero,
               ];
   
-              // Remove duplicatas e atualiza livrosFiltrados
               this.livrosFiltrados = this.removerDuplicatas(todosLivros);
-  
-              // Paginação correta agora funcionará
               this.paginacao();
             },
             (erro) => {
-              console.error('Erro ao carregar livros:', erro);
+              console.error('Erro ao carregar livros filtrados:', erro);
               this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
             }
           );
         },
         (erro) => {
-          console.error('Erro ao contar registros:', erro);
+          console.error('Erro ao contar registros filtrados:', erro);
           this.snackBar.open('Erro ao contar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
     } else {
-      // Carrega todos os livros sem filtro
-      this.livroService.findAll(this.page, this.pageSize).subscribe(
-        (data) => {
-          this.totalRecords = data.length;
-          this.livrosFiltrados = data;
-          this.paginacao();
+      // Caso não exista filtro, conta e busca todos os livros
+      this.livroService.count().subscribe(
+        (total) => {
+          this.totalRecords = total;
+  
+          // Carrega todos os livros de uma vez
+          this.livroService.findAll(0, this.totalRecords).subscribe(
+            (data) => {
+              this.livrosFiltrados = data;
+              this.paginacao();
+            },
+            (erro) => {
+              console.error('Erro ao carregar todos os livros:', erro);
+              this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+            }
+          );
         },
         (erro) => {
-          console.error('Erro ao carregar todos os livros:', erro);
-          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          console.error('Erro ao contar todos os livros:', erro);
+          this.snackBar.open('Erro ao contar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
     }
   }
+  
+  
   
 
   removerDuplicatas(livros: Livro[]): Livro[] {
