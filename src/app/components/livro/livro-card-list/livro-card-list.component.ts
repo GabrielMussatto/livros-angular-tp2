@@ -13,14 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AutorService } from '../../../services/autor.service';
-import { GeneroService } from '../../../services/genero.service';
-import { EditoraService } from '../../../services/editora.service';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { forkJoin } from 'rxjs';
-import { Autor } from '../../../models/autor.model';
-import { Editora } from '../../../models/editora.model';
-import { Genero } from '../../../models/genero.model';
 
 type Card = {
   titulo: string;
@@ -39,19 +32,20 @@ type Card = {
   imports: [
     MatCardModule, MatButtonModule, NgFor, MatCardActions, MatCardContent,
     MatCardTitle, MatCardSubtitle, MatIcon, FormsModule, CommonModule,
-    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf, MatCheckbox
+    MatFormField, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatPaginatorModule, MatSelectModule, NgIf
   ],
   templateUrl: './livro-card-list.component.html',
   styleUrl: './livro-card-list.component.css'
 })
+
 export class LivroCardListComponent implements OnInit {
   livros: Livro[] = [];
-  cards = signal<Card[]>([]);
+  livrosFiltrados: Livro[] = [];
+  cards = signal<Card[]>([]);  // Inicializando o signal corretamente
   totalRecords = 0;
   pageSize = 10;
   page = 0;
   filtro: string = "";
-  tipoFiltro: string = "titulo";
   ordenacao: string = 'maisRelevantes';
 
   constructor(
@@ -63,55 +57,97 @@ export class LivroCardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.filtro = params['termo'] || '';
-      this.carregarLivros();
+      this.filtro = params['termo'] || '';  // Recupera o filtro do parâmetro de URL
+      this.carregarLivros();  // Carrega os livros ao inicializar
     });
   }
 
   carregarLivros(): void {
     if (this.filtro) {
-      // Executa todas as buscas em paralelo
+      // Realiza as contagens
       forkJoin({
-        porTitulo: this.livroService.findByTitulo(this.filtro, this.page, this.pageSize),
-        porAutor: this.livroService.findByAutor(this.filtro, this.page, this.pageSize),
-        porGenero: this.livroService.findByGenero(this.filtro, this.page, this.pageSize),
+        countTitulo: this.livroService.countByTitulo(this.filtro),
+        countAutor: this.livroService.countByAutor(this.filtro),
+        countGenero: this.livroService.countByGenero(this.filtro),
       }).subscribe(
-        (resultados) => {
-          // Combina os resultados removendo duplicatas
-          const todosLivros = [
-            ...resultados.porTitulo,
-            ...resultados.porAutor,
-            ...resultados.porGenero,
-          ];
-          this.livros = this.removerDuplicatas(todosLivros);
-          this.carregarCards();
-          this.ordenar();
+        (contagens) => {
+          this.totalRecords = contagens.countTitulo + contagens.countAutor + contagens.countGenero;
+  
+          // Carrega todos os livros não paginados (remova paginação aqui)
+          forkJoin({
+            porTitulo: this.livroService.findByTitulo(this.filtro, 0, this.totalRecords),
+            porAutor: this.livroService.findByAutor(this.filtro, 0, this.totalRecords),
+            porGenero: this.livroService.findByGenero(this.filtro, 0, this.totalRecords),
+          }).subscribe(
+            (resultados) => {
+              const todosLivros = [
+                ...resultados.porTitulo,
+                ...resultados.porAutor,
+                ...resultados.porGenero,
+              ];
+  
+              // Remove duplicatas e atualiza livrosFiltrados
+              this.livrosFiltrados = this.removerDuplicatas(todosLivros);
+  
+              // Paginação correta agora funcionará
+              this.paginacao();
+            },
+            (erro) => {
+              console.error('Erro ao carregar livros:', erro);
+              this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+            }
+          );
         },
         (erro) => {
-          console.error('Erro ao carregar livros:', erro);
-          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          console.error('Erro ao contar registros:', erro);
+          this.snackBar.open('Erro ao contar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
     } else {
-      // Se não há filtro, carrega todos os livros
-      this.livroService.findAll(this.page, this.pageSize).subscribe((data) => {
-        this.livros = data;
-        this.carregarCards();
-        this.ordenar();
-      });
+      // Carrega todos os livros sem filtro
+      this.livroService.findAll(this.page, this.pageSize).subscribe(
+        (data) => {
+          this.totalRecords = data.length;
+          this.livrosFiltrados = data;
+          this.paginacao();
+        },
+        (erro) => {
+          console.error('Erro ao carregar todos os livros:', erro);
+          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+        }
+      );
     }
   }
+  
 
   removerDuplicatas(livros: Livro[]): Livro[] {
     const vistos = new Set();
     return livros.filter((livro) => {
-      const id = livro.id || livro.titulo; // Use o identificador único ou título
+      const id = livro.id || livro.titulo;
       if (vistos.has(id)) {
         return false;
       }
       vistos.add(id);
       return true;
     });
+  }
+
+  paginacao(): void {
+    console.log('Livros antes da paginação:', this.livrosFiltrados);
+    const inicio = this.page * this.pageSize;
+    const fim = inicio + this.pageSize;
+  
+    this.livros = this.livrosFiltrados.slice(inicio, fim);
+  
+    console.log(`Livros na página ${this.page + 1}:`, this.livros);
+    this.carregarCards();
+  }
+  
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;    // Atualiza a página com o índice
+    this.pageSize = event.pageSize; // Atualiza o tamanho da página
+    this.paginacao();  // Aplica a paginação com os novos parâmetros
   }
 
   carregarCards(): void {
@@ -130,14 +166,8 @@ export class LivroCardListComponent implements OnInit {
         favorito: favoritos[livro.titulo] || false,
       });
     });
-    this.cards.set(cards);
-  }
 
-  paginar(event: PageEvent): void {
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.carregarLivros();
-    this.ordenar();
+    this.cards.set(cards);
   }
 
   verMais(titulo: string): void {
@@ -152,16 +182,12 @@ export class LivroCardListComponent implements OnInit {
     event.stopPropagation();
     card.favorito = !card.favorito;
 
-    // Encontra o elemento do botão e adiciona a classe de rotação lateral
     const button = (event.target as HTMLElement).closest('.favorite-button');
     if (button) {
       button.classList.add('spin');
-
-      // Remove a classe após a animação completar
       setTimeout(() => button.classList.remove('spin'), 600);
     }
 
-    // Atualiza os favoritos no localStorage
     const favoritos = JSON.parse(localStorage.getItem('favoritos') || '{}');
     if (card.favorito) {
       favoritos[card.titulo] = true;
@@ -184,3 +210,5 @@ export class LivroCardListComponent implements OnInit {
     this.cards.set(ordenarCards);
   }
 }
+
+

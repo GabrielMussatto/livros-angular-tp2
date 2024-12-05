@@ -1,3 +1,8 @@
+.all{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
 .card-clickable {
     height: 100%;
     width: 100%;
@@ -270,4 +275,8 @@ mat-card-subtitle {
         min-width: auto;
         /* Ocupa toda a largura disponível */
     }
+}
+
+mat-paginator{
+    background-color: transparent;
 }
