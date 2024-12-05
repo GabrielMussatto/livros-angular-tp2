@@ -1,66 +1,88 @@
-<mat-toolbar color="primary" class="titulo">
-  <span class="toolbar-title">Controle de Autores</span>
-  <button mat-fab color="accent" routerLink="./new">
-    <mat-icon>add</mat-icon>
-  </button>
-</mat-toolbar>
-
-<div class="container">
-  <div class="input-container">
-    <mat-form-field appearance="outline" class="input-field">
-      <mat-label>Pesquisar pelo Nome do Autor</mat-label>
-      <input [(ngModel)]="filtro" matInput placeholder="Ex: J.K. Rowling" #input (keyup.enter)="filtrar()" />
-    </mat-form-field>
-    <button mat-icon-button color="primary" class="search-button" id="meuBotaoPesquisar" (click)="filtrar()">
-      <mat-icon>search</mat-icon>
+<div class="all">
+  <mat-toolbar color="primary" class="titulo">
+    <span class="toolbar-title">Controle de Autores</span>
+    <button mat-fab color="accent" routerLink="./new">
+      <mat-icon>add</mat-icon>
     </button>
+  </mat-toolbar>
+
+  <div class="container">
+    <div class="input-container">
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>Pesquisar pelo Nome do Autor</mat-label>
+        <input
+          [(ngModel)]="filtro"
+          matInput
+          placeholder="Ex: J.K. Rowling"
+          #input
+          (keyup.enter)="filtrar()"
+        />
+      </mat-form-field>
+      <button
+        mat-icon-button
+        color="primary"
+        class="search-button"
+        id="meuBotaoPesquisar"
+        (click)="filtrar()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
   </div>
+
+  <table mat-table [dataSource]="autores" class="mat-elevation-z8">
+    <ng-container matColumnDef="linha">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let livro; let i = index">
+        {{ obterNumeroLinha(i) }}
+      </td>
+    </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let autor">{{ autor.id }}</td>
+    </ng-container>
+
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let autor">{{ autor.nome }}</td>
+    </ng-container>
+
+    <!-- Biografia Column -->
+    <ng-container matColumnDef="biografia">
+      <th mat-header-cell *matHeaderCellDef>Biografia</th>
+      <td mat-cell *matCellDef="let autor">{{ autor.biografia }}</td>
+    </ng-container>
+
+    <!-- ação Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let autor">
+        <button
+          mat-icon-button
+          color="primary"
+          routerLink="/admin/autores/edit/{{ autor.id }}"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="excluir(autor)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <!--Colunas que serao exibidas-->
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    [pageSize]="pageSize"
+    [length]="totalRecords"
+    (page)="paginar($event)"
+  >
+  </mat-paginator>
 </div>
-
-<table mat-table [dataSource]="autores" class="mat-elevation-z8">
-  <ng-container matColumnDef="linha">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let livro; let i = index">{{obterNumeroLinha(i)}}</td>
-  </ng-container>
-  
-  <!-- Id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Id</th>
-    <td mat-cell *matCellDef="let autor">{{ autor.id }}</td>
-  </ng-container>
-
-  <!-- Nome Column -->
-  <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef>Nome</th>
-    <td mat-cell *matCellDef="let autor">{{ autor.nome }}</td>
-  </ng-container>
-
-  <!-- Biografia Column -->
-  <ng-container matColumnDef="biografia">
-    <th mat-header-cell *matHeaderCellDef>Biografia</th>
-    <td mat-cell *matCellDef="let autor">{{ autor.biografia }}</td>
-  </ng-container>
-
-  <!-- ação Column -->
-  <ng-container matColumnDef="acao">
-    <th mat-header-cell *matHeaderCellDef>Ação</th>
-    <td mat-cell *matCellDef="let autor">
-      <button mat-icon-button color="primary" routerLink="/admin/autores/edit/{{ autor.id }}">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="excluir(autor)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr><!--Colunas que serao exibidas-->
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
-
-<mat-paginator 
-  [pageSizeOptions]="[10, 25, 50, 100]" 
-  [pageSize]="pageSize" 
-  [length]="totalRecords" 
-  (page)="paginar($event)">
-</mat-paginator>
