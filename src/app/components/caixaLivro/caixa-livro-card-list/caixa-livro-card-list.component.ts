@@ -66,39 +66,61 @@ export class CaixaLivroCardListComponent implements OnInit{
     if (this.filtro) {
       // Executa todas as buscas em paralelo
       forkJoin({
-        porNome: this.caixaLivroService.findByNome(this.filtro, this.page, this.pageSize),
-        porAutor: this.caixaLivroService.findByAutor(this.filtro, this.page, this.pageSize),
-        porGenero: this.caixaLivroService.findByGenero(this.filtro, this.page, this.pageSize),
+        countNome: this.caixaLivroService.countByNome(this.filtro),
+        countAutor: this.caixaLivroService.countByAutor(this.filtro),
+        countGenero: this.caixaLivroService.countByGenero(this.filtro),
       }).subscribe(
-        (resultados) => {
-          // Combina os resultados removendo duplicatas
-          const todosCaixaLivros = [
-            ...resultados.porNome,
-            ...resultados.porAutor,
-            ...resultados.porGenero,
-          ];
-
-          const caixaLivrosFiltrados = this.removerDuplicatas(todosCaixaLivros);
-          this.totalRecords = caixaLivrosFiltrados.length;
-
-          this.caixaLivrosFiltrados = caixaLivrosFiltrados;
-          this.paginacao();
+        (contagens) => {
+          this.totalRecords = contagens.countNome + contagens.countAutor + contagens.countGenero;
+  
+          // Busca todos os livros relacionados ao filtro
+          forkJoin({
+            porNome: this.caixaLivroService.findByNome(this.filtro, 0, this.totalRecords),
+            porAutor: this.caixaLivroService.findByAutor(this.filtro, 0, this.totalRecords),
+            porGenero: this.caixaLivroService.findByGenero(this.filtro, 0, this.totalRecords),
+          }).subscribe(
+            (resultados) => {
+              const todosCaixaLivros = [
+                ...resultados.porNome,
+                ...resultados.porAutor,
+                ...resultados.porGenero,
+              ];
+  
+              this.caixaLivrosFiltrados = this.removerDuplicatas(todosCaixaLivros);
+              this.paginacao();
+            },
+            (erro) => {
+              console.error('Erro ao carregar livros filtrados:', erro);
+              this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+            }
+          );
         },
         (erro) => {
-          console.error('Erro ao carregar caixa de livros:', erro);
-          this.snackBar.open('Erro ao carregar os caixa de livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          console.error('Erro ao contar registros filtrados:', erro);
+          this.snackBar.open('Erro ao contar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
     } else {
-      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
-        (data) => {
-          this.totalRecords = data.length;  // Atualiza o total de livros
-          this.caixaLivrosFiltrados = data;  // Atualiza a lista de livros
-          this.paginacao();  // Aplica a paginação
+      // Caso não exista filtro, conta e busca todos os livros
+      this.caixaLivroService.count().subscribe(
+        (total) => {
+          this.totalRecords = total;
+  
+          // Carrega todos os livros de uma vez
+          this.caixaLivroService.findAll(0, this.totalRecords).subscribe(
+            (data) => {
+              this.caixaLivrosFiltrados = data;
+              this.paginacao();
+            },
+            (erro) => {
+              console.error('Erro ao carregar todos os livros:', erro);
+              this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+            }
+          );
         },
         (erro) => {
-          console.error('Erro ao carregar todos os livros:', erro);
-          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          console.error('Erro ao contar todos os livros:', erro);
+          this.snackBar.open('Erro ao contar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
         }
       );
     }
