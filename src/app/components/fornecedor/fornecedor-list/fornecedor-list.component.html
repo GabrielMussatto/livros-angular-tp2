@@ -1,104 +1,109 @@
-<mat-toolbar color="primary" class="titulo">
-  <span class="toolbar-title">Controle de Fornecedores</span>
-  <button mat-fab color="accent" routerLink="./new">
-    <mat-icon>add</mat-icon>
-  </button>
-</mat-toolbar>
-
-<div class="container">
-  <div class="input-container">
-    <mat-form-field appearance="outline" class="input-field">
-      <mat-label>Pesquisar pelo Nome do Fornecedor</mat-label>
-      <input
-        [(ngModel)]="filtro"
-        matInput
-        placeholder="Ex: Sextante Ltda"
-        #input
-        (keyup.enter)="filtrar()"
-      />
-    </mat-form-field>
-    <button
-      mat-icon-button
-      color="primary"
-      class="search-button"
-      id="meuBotaoPesquisar"
-      (click)="filtrar()"
-    >
-      <mat-icon>search</mat-icon>
+<div class="all">
+  <mat-toolbar color="primary" class="titulo">
+    <span class="toolbar-title">Controle de Fornecedores</span>
+    <button mat-fab color="accent" routerLink="./new">
+      <mat-icon>add</mat-icon>
     </button>
-  </div>
-</div>
+  </mat-toolbar>
 
-<table mat-table [dataSource]="fornecedores" class="mat-elevation-z8">
-  <ng-container matColumnDef="linha">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let livro; let i = index">{{obterNumeroLinha(i)}}</td>
-  </ng-container>
-  
-  <!-- Id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Id</th>
-    <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.id }}</td>
-  </ng-container>
-
-  <!-- Nome Column -->
-  <ng-container matColumnDef="nome">
-    <th mat-header-cell *matHeaderCellDef>Nome</th>
-    <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.nome }}</td>
-  </ng-container>
-
-  <!-- CNPJ Column -->
-  <ng-container matColumnDef="cnpj">
-    <th mat-header-cell *matHeaderCellDef>CNPJ</th>
-    <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.cnpj }}</td>
-  </ng-container>
-
-  <!-- Email Column -->
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef>Email</th>
-    <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.email }}</td>
-  </ng-container>
-
-  <!-- Endereço Column -->
-  <ng-container matColumnDef="endereco">
-    <th mat-header-cell *matHeaderCellDef>Endereço</th>
-    <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.endereco }}</td>
-  </ng-container>
-
-  <!-- Telefone Column -->
-  <ng-container matColumnDef="telefone">
-    <th mat-header-cell *matHeaderCellDef>Telefone</th>
-    <td mat-cell *matCellDef="let fornecedor">
-      {{ fornecedor.telefone?.codigoArea }} -
-      {{ fornecedor.telefone?.numero }}
-    </td>
-  </ng-container>
-
-  <!-- Ação Column -->
-  <ng-container matColumnDef="acao">
-    <th mat-header-cell *matHeaderCellDef>Ação</th>
-    <td mat-cell *matCellDef="let fornecedor">
+  <div class="container">
+    <div class="input-container">
+      <mat-form-field appearance="outline" class="input-field">
+        <mat-label>Pesquisar pelo Nome do Fornecedor</mat-label>
+        <input
+          [(ngModel)]="filtro"
+          matInput
+          placeholder="Ex: Sextante Ltda"
+          #input
+          (keyup.enter)="filtrar()"
+        />
+      </mat-form-field>
       <button
         mat-icon-button
         color="primary"
-        routerLink="/admin/fornecedores/edit/{{ fornecedor.id }}"
+        class="search-button"
+        id="meuBotaoPesquisar"
+        (click)="filtrar()"
       >
-        <mat-icon>edit</mat-icon>
+        <mat-icon>search</mat-icon>
       </button>
+    </div>
+  </div>
 
-      <button mat-icon-button color="warn" (click)="excluir(fornecedor)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+  <table mat-table [dataSource]="fornecedores" class="mat-elevation-z8">
+    <ng-container matColumnDef="linha">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let livro; let i = index">
+        {{ obterNumeroLinha(i) }}
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.id }}</td>
+    </ng-container>
 
-<mat-paginator 
-  [pageSizeOptions]="[10, 25, 50, 100]" 
-  [pageSize]="pageSize" 
-  [length]="totalRecords" 
-  (page)="paginar($event)">
-</mat-paginator>
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.nome }}</td>
+    </ng-container>
+
+    <!-- CNPJ Column -->
+    <ng-container matColumnDef="cnpj">
+      <th mat-header-cell *matHeaderCellDef>CNPJ</th>
+      <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.cnpj }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.email }}</td>
+    </ng-container>
+
+    <!-- Endereço Column -->
+    <ng-container matColumnDef="endereco">
+      <th mat-header-cell *matHeaderCellDef>Endereço</th>
+      <td mat-cell *matCellDef="let fornecedor">{{ fornecedor.endereco }}</td>
+    </ng-container>
+
+    <!-- Telefone Column -->
+    <ng-container matColumnDef="telefone">
+      <th mat-header-cell *matHeaderCellDef>Telefone</th>
+      <td mat-cell *matCellDef="let fornecedor">
+        {{ fornecedor.telefone?.codigoArea }} -
+        {{ fornecedor.telefone?.numero }}
+      </td>
+    </ng-container>
+
+    <!-- Ação Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let fornecedor">
+        <button
+          mat-icon-button
+          color="primary"
+          routerLink="/admin/fornecedores/edit/{{ fornecedor.id }}"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" (click)="excluir(fornecedor)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    [pageSize]="pageSize"
+    [length]="totalRecords"
+    (page)="paginar($event)"
+  >
+  </mat-paginator>
+</div>
