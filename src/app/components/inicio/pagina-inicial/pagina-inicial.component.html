@@ -1,113 +1,142 @@
-<div *ngIf="carregando" class="loading-container">
+<div class="all">
+  <div *ngIf="carregando" class="loading-container">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</div>
+  </div>
 
-<!-- Carrossel de Livros -->
-<div class="container">
+  <!-- Carrossel de Livros -->
+  <div class="container">
     <mat-card class="carrossel-card">
-        <h3 class="centralizado">Livros</h3>
+      <h3 class="centralizado">Livros</h3>
       <div class="carousel-content">
-        <mat-card *ngFor="let livro of livros.slice(livrosCarouselIndex, livrosCarouselIndex + livrosPorPagina)" class="livro-card" (click)="verMaisLivro(livro.titulo)">
-          <img *ngIf="livro?.nomeImagem" [src]="getLivroImageUrl(livro.nomeImagem)" alt="{{ livro.titulo }}" class="livro-image">
+        <mat-card
+          *ngFor="
+            let livro of livros.slice(
+              livrosCarouselIndex,
+              livrosCarouselIndex + livrosPorPagina
+            )
+          "
+          class="livro-card"
+          (click)="verMaisLivro(livro.titulo)"
+        >
+          <img
+            *ngIf="livro?.nomeImagem"
+            [src]="getLivroImageUrl(livro.nomeImagem)"
+            alt="{{ livro.titulo }}"
+            class="livro-image"
+          />
           <mat-card-title>{{ livro.titulo }}</mat-card-title>
-          <mat-card-subtitle>{{ livro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
+          <mat-card-subtitle>{{
+            livro.preco | currency : "BRL" : "symbol" : "1.2-2"
+          }}</mat-card-subtitle>
         </mat-card>
       </div>
-  
+
       <!-- Botões de navegação -->
       <button mat-icon-button (click)="moveCarouselLeft('livros')">
         <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_left
-            </span>
+          <span class="material-symbols-outlined"> chevron_left </span>
         </mat-icon>
       </button>
       <button mat-icon-button (click)="moveCarouselRight('livros')">
         <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_right
-            </span>
+          <span class="material-symbols-outlined"> chevron_right </span>
         </mat-icon>
       </button>
 
       <!-- Botão "Ver Mais..." -->
-    <div class="ver-mais" (click)="verMaisLivrosAll()">
+      <div class="ver-mais" (click)="verMaisLivrosAll()">
         Ver Mais em Livros...
       </div>
     </mat-card>
   </div>
 
-<!-- Carrossel de Caixa de Livros -->
-<div class="container">
-  <mat-card class="carrossel-card">
-    <h3 class="centralizado">Caixa de Livros</h3>
-    <div class="carousel-content">
-      <!-- Exibe os 5 itens a partir do índice atual -->
-      <mat-card *ngFor="let caixaLivro of caixaLivros.slice(caixaLivrosCarouselIndex, caixaLivrosCarouselIndex + 5)" 
-                class="caixa-livro-card" 
-                (click)="verMaisCaixaLivro(caixaLivro.nome)">
-        <img *ngIf="caixaLivro?.nomeImagem" [src]="getCaixaLivroImageUrl(caixaLivro.nomeImagem)" alt="{{ caixaLivro.nome }}" class="caixa-livro-image">
-        <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
-        <mat-card-subtitle>{{ caixaLivro.preco | currency:'BRL':'symbol':'1.2-2'}}</mat-card-subtitle>
-      </mat-card>
-    </div>
-
-    <!-- Botões de navegação -->
-    <button mat-icon-button (click)="moveCarouselLeft('caixaLivros')">
-      <mat-icon>
-        <span class="material-symbols-outlined">chevron_left</span>
-      </mat-icon>
-    </button>
-    <button mat-icon-button (click)="moveCarouselRight('caixaLivros')">
-      <mat-icon>
-        <span class="material-symbols-outlined">chevron_right</span>
-      </mat-icon>
-    </button>
-
-    <!-- Botão "Ver Mais..." -->
-    <div class="ver-mais" (click)="verMaisCaixaLivrosAll()">
-      Ver Mais em Caixa de Livros...
-    </div>
-  </mat-card>
-</div>
-
-
-<!-- Carrossel de Autores -->
-<div class="container">
+  <!-- Carrossel de Caixa de Livros -->
+  <div class="container">
     <mat-card class="carrossel-card">
-        <h3 class="centralizado">Autores</h3>
-        <div class="carousel-content">
-        <mat-card 
-          *ngFor="let autor of autores.slice(autoresCarouselIndex, autoresCarouselIndex + autoresPorPagina)" 
-          class="autor-card" 
-          (click)="verMaisAutor(autor.nome)">
-          
+      <h3 class="centralizado">Caixa de Livros</h3>
+      <div class="carousel-content">
+        <!-- Exibe os 5 itens a partir do índice atual -->
+        <mat-card
+          *ngFor="
+            let caixaLivro of caixaLivros.slice(
+              caixaLivrosCarouselIndex,
+              caixaLivrosCarouselIndex + 5
+            )
+          "
+          class="caixa-livro-card"
+          (click)="verMaisCaixaLivro(caixaLivro.nome)"
+        >
+          <img
+            *ngIf="caixaLivro?.nomeImagem"
+            [src]="getCaixaLivroImageUrl(caixaLivro.nomeImagem)"
+            alt="{{ caixaLivro.nome }}"
+            class="caixa-livro-image"
+          />
+          <mat-card-title>{{ caixaLivro.nome }}</mat-card-title>
+          <mat-card-subtitle>{{
+            caixaLivro.preco | currency : "BRL" : "symbol" : "1.2-2"
+          }}</mat-card-subtitle>
+        </mat-card>
+      </div>
+
+      <!-- Botões de navegação -->
+      <button mat-icon-button (click)="moveCarouselLeft('caixaLivros')">
+        <mat-icon>
+          <span class="material-symbols-outlined">chevron_left</span>
+        </mat-icon>
+      </button>
+      <button mat-icon-button (click)="moveCarouselRight('caixaLivros')">
+        <mat-icon>
+          <span class="material-symbols-outlined">chevron_right</span>
+        </mat-icon>
+      </button>
+
+      <!-- Botão "Ver Mais..." -->
+      <div class="ver-mais" (click)="verMaisCaixaLivrosAll()">
+        Ver Mais em Caixa de Livros...
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Carrossel de Autores -->
+  <div class="container">
+    <mat-card class="carrossel-card">
+      <h3 class="centralizado">Autores</h3>
+      <div class="carousel-content">
+        <mat-card
+          *ngFor="
+            let autor of autores.slice(
+              autoresCarouselIndex,
+              autoresCarouselIndex + autoresPorPagina
+            )
+          "
+          class="autor-card"
+          (click)="verMaisAutor(autor.nome)"
+        >
           <!-- Imagem circular do autor -->
-          <img 
-            *ngIf="autor?.nomeImagem" 
-            [src]="getAutorImageUrl(autor.nomeImagem)" 
-            alt="{{ autor.nome }}" 
-            class="autor-image">
-  
+          <img
+            *ngIf="autor?.nomeImagem"
+            [src]="getAutorImageUrl(autor.nomeImagem)"
+            alt="{{ autor.nome }}"
+            class="autor-image"
+          />
+
           <!-- Nome do autor -->
           <mat-card-title>{{ autor.nome }}</mat-card-title>
         </mat-card>
       </div>
-  
+
       <!-- Botões de navegação -->
       <button mat-icon-button (click)="moveCarouselLeft('autores')">
         <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_left
-            </span>
+          <span class="material-symbols-outlined"> chevron_left </span>
         </mat-icon>
       </button>
       <button mat-icon-button (click)="moveCarouselRight('autores')">
         <mat-icon>
-            <span class="material-symbols-outlined">
-                chevron_right
-            </span>
+          <span class="material-symbols-outlined"> chevron_right </span>
         </mat-icon>
       </button>
     </mat-card>
   </div>
+</div>

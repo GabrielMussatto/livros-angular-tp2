@@ -1,47 +1,68 @@
+.all{
+    padding-left: 3%;
+    padding-right: 3%;
+
+}
+
 /* Estilo do carrossel */
 .carrossel-card {
     position: relative;
     display: flex;
-    justify-content: center; /* Centraliza o conteúdo dentro do card */
+    justify-content: center;
+    /* Centraliza o conteúdo dentro do card */
     align-items: center;
     overflow: hidden;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave para o card */
-    height: 550px; /* Aumentando a altura do container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para o card */
+    height: 550px;
+    /* Aumentando a altura do container */
 }
 
 /* Conteúdo do carrossel (livros ou caixas de livros) */
 .carousel-content {
     display: flex;
-    gap: 20px; /* Adiciona espaçamento entre os cards */
-    transition: transform 0.5s ease-in-out; /* Transição suave ao mover os cards */
-    will-change: transform; /* Indica que a propriedade transform será alterada */
-    padding: 10px; /* Espaçamento interno ao redor dos cards */
-    overflow: hidden; /* Garante que o conteúdo adicional não seja exibido */
+    gap: 1%;
+    /* Adiciona espaçamento entre os cards */
+    transition: transform 0.5s ease-in-out;
+    /* Transição suave ao mover os cards */
+    will-change: transform;
+    /* Indica que a propriedade transform será alterada */
+    padding: 10px;
+    /* Espaçamento interno ao redor dos cards */
+    overflow: hidden;
+    /* Garante que o conteúdo adicional não seja exibido */
 }
 
 /* Card individual */
 .carousel-content mat-card {
-    width: 250px; /* Ajusta o tamanho dos cards */
-    height: 350px; /* Altura dos cards internos */
+    width: 250px;
+    /* Ajusta o tamanho dos cards */
+    height: 350px;
+    /* Altura dos cards internos */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     border-radius: 8px;
     overflow: hidden;
-    padding: 10px; /* Espaçamento interno */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para o card */
-    margin: 10px; /* Adiciona 10px de distância das bordas do container */
+    padding: 10px;
+    /* Espaçamento interno */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra para o card */
+    margin: 10px;
+    /* Adiciona 10px de distância das bordas do container */
 }
 
 /* Imagens dentro dos cards */
 .livro-image,
 .caixa-livro-image {
     width: 100%;
-    height: 180px; /* Ajuste o tamanho da imagem */
-    object-fit: contain; /* Ajusta a imagem para caber sem cortar */
+    height: 180px;
+    /* Ajuste o tamanho da imagem */
+    object-fit: contain;
+    /* Ajusta a imagem para caber sem cortar */
     border-radius: 8px;
 }
 
@@ -52,16 +73,24 @@ button {
     transform: translateY(-50%);
     background-color: white;
     border: 2px solid #ddd;
-    border-radius: 50%; /* Botões redondos */
-    padding: 0; /* Remover padding extra */
+    border-radius: 50%;
+    /* Botões redondos */
+    padding: 0;
+    /* Remover padding extra */
     z-index: 10;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave nos botões */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Sombra suave nos botões */
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    display: flex; /* Usando flexbox para facilitar o alinhamento */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    width: 60px; /* Tamanho fixo do botão */
-    height: 60px; /* Tamanho fixo do botão */
+    display: flex;
+    /* Usando flexbox para facilitar o alinhamento */
+    justify-content: center;
+    /* Centraliza o conteúdo horizontalmente */
+    align-items: center;
+    /* Centraliza o conteúdo verticalmente */
+    width: 60px;
+    /* Tamanho fixo do botão */
+    height: 60px;
+    /* Tamanho fixo do botão */
 }
 
 /* Efeitos ao passar o mouse nos botões */
@@ -71,16 +100,19 @@ button:hover {
 }
 
 button mat-icon {
-    color: #333; /* Cor dos ícones dentro dos botões */
+    color: #333;
+    /* Cor dos ícones dentro dos botões */
 }
 
 /* Posicionamento dos botões */
 button:nth-of-type(1) {
-    left: 15px; /* Distância da borda esquerda */
+    left: 15px;
+    /* Distância da borda esquerda */
 }
 
 button:nth-of-type(2) {
-    right: 15px; /* Distância da borda direita */
+    right: 15px;
+    /* Distância da borda direita */
 }
 
 /* Desabilita o botão quando necessário */
@@ -92,92 +124,140 @@ button:disabled {
 /* Centralizar o conteúdo da tag h3 */
 .centralizado {
     text-align: center;
-    width: 100%; /* Garante que o texto ocupe toda a largura disponível */
-    margin-bottom: 15px; /* Adiciona um espaçamento inferior */
+    width: 100%;
+    /* Garante que o texto ocupe toda a largura disponível */
+    margin-bottom: 15px;
+    /* Adiciona um espaçamento inferior */
 }
 
 /* Estilo do card do livro */
 .livro-card {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
-    height: 100%; /* Garante que o card ocupe toda a altura */
-    text-align: center; /* Centraliza o texto */
+    justify-content: center;
+    /* Centraliza verticalmente */
+    align-items: center;
+    /* Centraliza horizontalmente */
+    height: 100%;
+    /* Garante que o card ocupe toda a altura */
+    text-align: center;
+    /* Centraliza o texto */
     padding: 10px;
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho */
-    cursor: pointer; /* Adiciona o efeito de cursor de mão */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adiciona transição para o efeito */
+    box-sizing: border-box;
+    /* Inclui o padding no cálculo do tamanho */
+    cursor: pointer;
+    /* Adiciona o efeito de cursor de mão */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Adiciona transição para o efeito */
 }
 
 /* Efeito de hover no card de livro */
 .livro-card:hover {
-    transform: scale(1.05); /* Aumenta o tamanho do card */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte no hover */
+    transform: scale(1.05);
+    /* Aumenta o tamanho do card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Sombra mais forte no hover */
 }
 
 /* Estilo do título do livro */
 .livro-card mat-card-title {
-    font-size: 1.2em; /* Tamanho do título */
-    font-weight: bold; /* Deixa o título mais destacado */
-    margin-top: 10px; /* Espaçamento entre a imagem e o título */
-    text-align: center; /* Centraliza o texto */
-    white-space: normal; /* Permite quebra de linha no título */
-    word-wrap: break-word; /* Quebra palavras longas, se necessário */
-    max-height: 4.8em; /* Permite até 4 linhas */
-    overflow: hidden; /* Oculta o excesso de texto */
-    display: -webkit-box; /* Configuração para truncar texto */
-    -webkit-line-clamp: 4; /* Exibe até 4 linhas */
-    -webkit-box-orient: vertical; /* Orienta o box no formato vertical */
+    font-size: 1.2em;
+    /* Tamanho do título */
+    font-weight: bold;
+    /* Deixa o título mais destacado */
+    margin-top: 10px;
+    /* Espaçamento entre a imagem e o título */
+    text-align: center;
+    /* Centraliza o texto */
+    white-space: normal;
+    /* Permite quebra de linha no título */
+    word-wrap: break-word;
+    /* Quebra palavras longas, se necessário */
+    max-height: 4.8em;
+    /* Permite até 4 linhas */
+    overflow: hidden;
+    /* Oculta o excesso de texto */
+    display: -webkit-box;
+    /* Configuração para truncar texto */
+    -webkit-line-clamp: 4;
+    /* Exibe até 4 linhas */
+    -webkit-box-orient: vertical;
+    /* Orienta o box no formato vertical */
 }
 
 /* Estilo do preço do livro */
 .livro-card mat-card-subtitle {
-    font-size: 1em; /* Tamanho do preço */
-    color: #333; /* Cor do preço */
-    margin-top: 10px; /* Espaçamento entre o título e o preço */
+    font-size: 1em;
+    /* Tamanho do preço */
+    color: #333;
+    /* Cor do preço */
+    margin-top: 10px;
+    /* Espaçamento entre o título e o preço */
 }
 
 /* Estilo do card da caixa de livro */
 .caixa-livro-card {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
-    height: 100%; /* Garante que o card ocupe toda a altura */
-    text-align: center; /* Centraliza o texto */
+    justify-content: center;
+    /* Centraliza verticalmente */
+    align-items: center;
+    /* Centraliza horizontalmente */
+    height: 100%;
+    /* Garante que o card ocupe toda a altura */
+    text-align: center;
+    /* Centraliza o texto */
     padding: 15px;
-    box-sizing: border-box; /* Inclui o padding no cálculo do tamanho */
-    cursor: pointer; /* Adiciona o efeito de cursor de mão */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Adiciona transição para o efeito */
+    box-sizing: border-box;
+    /* Inclui o padding no cálculo do tamanho */
+    cursor: pointer;
+    /* Adiciona o efeito de cursor de mão */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    /* Adiciona transição para o efeito */
 }
 
 /* Efeito de hover no card de caixa de livro */
 .caixa-livro-card:hover {
-    transform: scale(1.05); /* Aumenta o tamanho do card */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte no hover */
+    transform: scale(1.05);
+    /* Aumenta o tamanho do card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Sombra mais forte no hover */
 }
 
 /* Estilo do título da caixa de livro */
 .caixa-livro-card mat-card-title {
-    font-size: 1.2em; /* Tamanho do título */
-    font-weight: bold; /* Deixa o título mais destacado */
-    margin-top: 10px; /* Espaçamento entre a imagem e o título */
-    text-align: center; /* Centraliza o texto */
-    white-space: normal; /* Permite quebra de linha no título */
-    word-wrap: break-word; /* Quebra palavras longas, se necessário */
-    max-height: 4.8em; /* Permite até 4 linhas */
-    overflow: hidden; /* Oculta o excesso de texto */
-    display: -webkit-box; /* Configuração para truncar texto */
-    -webkit-line-clamp: 4; /* Exibe até 4 linhas */
-    -webkit-box-orient: vertical; /* Orienta o box no formato vertical */
+    font-size: 1.2em;
+    /* Tamanho do título */
+    font-weight: bold;
+    /* Deixa o título mais destacado */
+    margin-top: 10px;
+    /* Espaçamento entre a imagem e o título */
+    text-align: center;
+    /* Centraliza o texto */
+    white-space: normal;
+    /* Permite quebra de linha no título */
+    word-wrap: break-word;
+    /* Quebra palavras longas, se necessário */
+    max-height: 4.8em;
+    /* Permite até 4 linhas */
+    overflow: hidden;
+    /* Oculta o excesso de texto */
+    display: -webkit-box;
+    /* Configuração para truncar texto */
+    -webkit-line-clamp: 4;
+    /* Exibe até 4 linhas */
+    -webkit-box-orient: vertical;
+    /* Orienta o box no formato vertical */
 }
 
 /* Estilo do preço da caixa de livro */
 .caixa-livro-card mat-card-subtitle {
-    font-size: 1em; /* Tamanho do preço */
-    color: #333; /* Cor do preço */
-    margin-top: 10px; /* Espaçamento entre o título e o preço */
+    font-size: 1em;
+    /* Tamanho do preço */
+    color: #333;
+    /* Cor do preço */
+    margin-top: 10px;
+    /* Espaçamento entre o título e o preço */
 }
 
 /* Estilo do card dos autores */
@@ -187,13 +267,17 @@ button:disabled {
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 250px; /* Reduz a altura do card */
-    width: 200px;  /* Reduz a largura do card */
-    padding: 10px; /* Ajuste o padding conforme necessário */
+    height: 250px;
+    /* Reduz a altura do card */
+    width: 200px;
+    /* Reduz a largura do card */
+    padding: 10px;
+    /* Ajuste o padding conforme necessário */
     box-sizing: border-box;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    margin: 10px; /* Adiciona um espaçamento entre os cards */
+    margin: 10px;
+    /* Adiciona um espaçamento entre os cards */
 }
 
 /* Estilo da imagem do autor */
@@ -204,16 +288,19 @@ button:disabled {
     border-radius: 50%;
     border: 3px solid #ddd;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: auto; /* Menor margem entre a imagem e o nome */
+    margin-bottom: auto;
+    /* Menor margem entre a imagem e o nome */
     margin-top: auto;
 }
 
 /* Estilo do nome do autor */
 .autor-card mat-card-title {
-    font-size: 1.1em; /* Diminui o tamanho da fonte */
+    font-size: 1.1em;
+    /* Diminui o tamanho da fonte */
     font-weight: bold;
     text-align: center;
-    margin-top: auto; /* Menor margem entre a imagem e o nome */
+    margin-top: auto;
+    /* Menor margem entre a imagem e o nome */
     margin-bottom: auto;
 }
 
