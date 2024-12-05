@@ -39,12 +39,12 @@ type Card = {
 })
 export class CaixaLivroCardListComponent implements OnInit{
   caixaLivros: CaixaLivro[] = [];
+  caixaLivrosFiltrados: CaixaLivro[] = [];
   cards = signal<Card[]>([]);
   totalRecords = 0;
   pageSize = 10;
   page = 0;
   filtro: string = "";
-  tipoFiltro: string = "nome";
   ordenacao: string = 'maisRelevantes';
 
   constructor(
@@ -77,9 +77,12 @@ export class CaixaLivroCardListComponent implements OnInit{
             ...resultados.porAutor,
             ...resultados.porGenero,
           ];
-          this.caixaLivros = this.removerDuplicatas(todosCaixaLivros);
-          this.carregarCards();
-          this.ordenar();
+
+          const caixaLivrosFiltrados = this.removerDuplicatas(todosCaixaLivros);
+          this.totalRecords = caixaLivrosFiltrados.length;
+
+          this.caixaLivrosFiltrados = caixaLivrosFiltrados;
+          this.paginacao();
         },
         (erro) => {
           console.error('Erro ao carregar caixa de livros:', erro);
@@ -87,12 +90,17 @@ export class CaixaLivroCardListComponent implements OnInit{
         }
       );
     } else {
-      // Se não há filtro, carrega todos os livros
-      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe((data) => {
-        this.caixaLivros = data;
-        this.carregarCards();
-        this.ordenar();
-      });
+      this.caixaLivroService.findAll(this.page, this.pageSize).subscribe(
+        (data) => {
+          this.totalRecords = data.length;  // Atualiza o total de livros
+          this.caixaLivrosFiltrados = data;  // Atualiza a lista de livros
+          this.paginacao();  // Aplica a paginação
+        },
+        (erro) => {
+          console.error('Erro ao carregar todos os livros:', erro);
+          this.snackBar.open('Erro ao carregar os livros. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+        }
+      );
     }
   }
 
@@ -106,6 +114,24 @@ export class CaixaLivroCardListComponent implements OnInit{
       vistos.add(id);
       return true;
     });
+  }
+
+  paginacao(): void {
+    // A cada mudança de página, divide os livros filtrados de acordo com a página e o tamanho
+    const inicio = this.page * this.pageSize;
+    const fim = inicio + this.pageSize;
+
+    // Atualiza a lista de livros com base na página atual
+    this.caixaLivros = this.caixaLivrosFiltrados.slice(inicio, fim);
+
+    // Atualiza os cards a serem exibidos
+    this.carregarCards();
+  }
+
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;    // Atualiza a página com o índice
+    this.pageSize = event.pageSize; // Atualiza o tamanho da página
+    this.paginacao();  // Aplica a paginação com os novos parâmetros
   }
 
   carregarCards(): void {
@@ -127,12 +153,6 @@ export class CaixaLivroCardListComponent implements OnInit{
     this.cards.set(cards);
   }
 
-  paginar(event: PageEvent): void {
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.carregarCaixaLivros();
-    this.ordenar();
-  }
 
   verMais(nome: string): void{
     this.router.navigate(['/caixaLivros', nome]);

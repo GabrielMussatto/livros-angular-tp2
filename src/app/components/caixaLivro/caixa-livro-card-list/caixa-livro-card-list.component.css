@@ -1,3 +1,8 @@
+.all{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
 .card-clickable {
     height: 100%;
     width: 100%;
@@ -159,4 +164,8 @@ mat-card-subtitle {
 /* Mostra o botão apenas quando o mouse está sobre o card */
 .card:hover .favorite-button {
     display: block;
+}
+
+mat-paginator{
+    background-color: transparent;
 }
