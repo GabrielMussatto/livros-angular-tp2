@@ -2,6 +2,10 @@
   display: fixed;
   background-color: #1A2E6D; /* Azul Marinho para a toolbar */
 }
+.all{
+  padding-left: 10%;
+  padding-right: 10%;
+}
 
 .toolbar-title {
   flex: 1;
@@ -100,4 +104,8 @@ button[mat-fab]:hover {
   margin-bottom: 15px;
   cursor: pointer;
   transform: scale(1.4);
+}
+
+mat-paginator{
+  background-color: transparent;
 }
