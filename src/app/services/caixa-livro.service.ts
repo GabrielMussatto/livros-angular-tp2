@@ -91,7 +91,7 @@ export class CaixaLivroService {
       editora: caixaLivro.editora?.id,
       generos: caixaLivro.generos.filter(genero => genero?.id).map(genero => genero.id),
       autores: caixaLivro.autores.filter(autor => autor?.id).map(autor => autor.id),
-      classificacao: caixaLivro.classificacao
+      idClassificacao: caixaLivro.classificacao.id
     };
     return this.httpClient.post<CaixaLivro>(this.baseUrl, data);
   }
@@ -106,7 +106,7 @@ export class CaixaLivroService {
       editora: caixaLivro.editora?.id,
       generos: caixaLivro.generos.filter(genero => genero?.id).map(genero => genero.id),
       autores: caixaLivro.autores.filter(autor => autor?.id).map(autor => autor.id),
-      classificacao: caixaLivro.classificacao
+      idClassificacao: caixaLivro.classificacao.id
     };
     return this.httpClient.put<CaixaLivro>(`${this.baseUrl}/${caixaLivro.id}`, data);
   }
