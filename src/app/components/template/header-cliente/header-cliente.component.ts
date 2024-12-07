@@ -86,6 +86,14 @@ export class HeaderClienteComponent {
     }
   }
 
+  verFavoritos(){
+    this.router.navigate(['/favoritos']);
+  }
+
+  verCarrinho(){
+    this.router.navigate(['/carrinho']);
+  }
+
   // Função de pesquisa que chama os métodos do serviço
   pesquisar(): void {
 

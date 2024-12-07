@@ -15,7 +15,11 @@
       <mat-icon>search</mat-icon>
     </button>
 
-    <button mat-icon-button>
+    <button mat-icon-button (click)="verFavoritos()">
+      <mat-icon>favorite</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="verCarrinho()">
       <mat-icon>shopping_cart</mat-icon>
       <mat-badge [hidden]="true" matBadge="0"></mat-badge>
     </button>
