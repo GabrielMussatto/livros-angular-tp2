@@ -6,6 +6,8 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
+import { ItemPedido } from '../../../models/item-pedido';
+import { CarrinhoService } from '../../../services/carrinho.service';
 
 @Component({
   selector: 'app-livro-detalhado-list',
@@ -21,6 +23,7 @@ export class LivroDetalhadoListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public livroService: LivroService,
+    private carrinhoService: CarrinhoService,
     private router: Router
   ) {}
 
@@ -48,5 +51,19 @@ export class LivroDetalhadoListComponent implements OnInit {
 
   voltar(): void {
     window.history.back();
+  }
+
+  adicionarAoCarrinho(): void {
+    if (this.livro) {
+      const item: ItemPedido = {
+        idLivro: this.livro.id,
+        titulo: this.livro.titulo,
+        preco: this.livro.preco,
+        quantidade: 1,
+        subTotal: this.livro.preco * 1,
+      };
+      this.carrinhoService.adicionarAoCarrinho(item);
+      alert(`${this.livro.titulo} foi adicionado ao carrinho!`);
+    }
   }
 }
