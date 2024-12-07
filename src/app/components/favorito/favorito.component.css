@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .no-favorites {
+    text-align: center;
+    font-size: 1.2em;
+    color: gray;
+    margin-top: 20px;
+  }
+  

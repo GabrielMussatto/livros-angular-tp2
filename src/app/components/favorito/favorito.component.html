@@ -1,0 +1,42 @@
+<div class="container responsive-grid">
+    <mat-card *ngFor="let favorito of favoritos" class="card">
+      <div class="card-clickable">
+        <img mat-card-image [src]="favorito.imageUrl" />
+        <div class="card-content">
+          <mat-card-title class="centered-text">{{ favorito.titulo }}</mat-card-title>
+          <mat-card-subtitle class="centered-text">
+            Autores: {{ favorito.autores }}
+          </mat-card-subtitle>
+          <mat-card-content class="centered-text">
+            Gênero: {{ favorito.generos }}
+          </mat-card-content>
+          <mat-card-content class="centered-text">
+            {{ favorito.preco | currency: 'BRL': 'symbol': '1.2-2' }}
+          </mat-card-content>
+        </div>
+      </div>
+  
+      <mat-card-footer class="card-footer">
+        <button
+          mat-button
+          color="warn"
+          (click)="removerFavorito(favorito.id)"
+        >
+          Remover dos Favoritos
+        </button>
+        <button
+          mat-button
+          color="primary"
+          class="card-button"
+          (click)="verMais(favorito.titulo)"
+        >
+          Ver Mais
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  
+  <div *ngIf="favoritos.length === 0" class="no-favorites">
+    <p>Não há livros favoritos ainda.</p>
+  </div>
+  
