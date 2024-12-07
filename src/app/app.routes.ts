@@ -32,13 +32,15 @@ import { PaginaInicialComponent } from './components/inicio/pagina-inicial/pagin
 import { LoginFuncionarioComponent } from './components/login/login-funcionario/login-funcionario.component';
 import { LoginClienteComponent } from './components/login/login-cliente/login-cliente.component';
 import { GerenciarComponent } from './components/gerenciar/gerenciar/gerenciar.component';
+import { FavoritoComponent } from './components/favorito/favorito.component';
+import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 
 export const routes: Routes = [
 
     {
         path: 'admin',
         component: AdminTemplateComponent,
-        title: 'administração',
+        title: 'Administração',
         //canActivate: [AdminGuard], // Apenas admin pode acessar
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'loginAdm' },
@@ -93,6 +95,10 @@ export const routes: Routes = [
             { path: 'caixaLivros/:nome', component: CaixaLivroDetalhadoListComponent, title: 'Detalhes das Caixas de Livro', resolve: { caixaLivro: caixaLivroDetalhadoResolver} },
 
             { path: 'autores/:nome', component: AutorDetalhadoListComponent, title: 'Detalhes dos Autores', resolve: { autor: autorDetalhadoResolver }},
+
+            { path: 'favoritos', component: FavoritoComponent, title: 'Favoritos'},
+
+            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
 
             { path: 'login', component: LoginClienteComponent, title: 'Login' },
         ]
