@@ -1,0 +1,31 @@
+<div *ngIf="itensCarrinho.length > 0; else vazio">
+    <h2>Meu Carrinho</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Subtotal</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itensCarrinho; let i = index">
+                <td>{{ item.titulo }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.preco | currency: 'BRL' }}</td>
+                <td>{{ item.subTotal | currency: 'BRL' }}</td>
+                <td><button (click)="removerItem(i)">Remover</button></td>
+            </tr>
+            <p>Total do Carrinho: {{ calcularTotal() | currency: 'BRL' }}</p>
+        </tbody>
+    </table>
+    <button (click)="limparCarrinho()">Limpar Carrinho</button>
+    <button (click)="fecharPedido()">Fechar Pedido</button>
+    <button [disabled]="!fecharPedido" (click)="finalizarPedido()">Finalizar Pedido</button>
+    
+</div>
+<ng-template #vazio>
+    <p>Seu carrinho está vazio.</p>
+</ng-template>
