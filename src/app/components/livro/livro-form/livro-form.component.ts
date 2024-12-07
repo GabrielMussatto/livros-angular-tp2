@@ -189,7 +189,11 @@ export class LivroFormComponent implements OnInit {
 
       operacao.subscribe({
         next: (livroCadastrado) => {
-          this.uploadImage(livroCadastrado.id);
+          if(livro && livro.id){
+            this.uploadImage(livro.id);
+          } else if (livroCadastrado && livroCadastrado.id){
+            this.uploadImage(livroCadastrado.id);
+          }
           this.router.navigateByUrl('/admin/livros');
           this.snackBar.open('O Livro foi salvo com Sucesso!!', 'Fechar', { duration: 3000 });
         },

@@ -249,28 +249,13 @@
           <button mat-icon-button matSuffix (click)="fileInput.click()">
               <mat-icon>folder_open</mat-icon>
           </button>   
-      </mat-form-field>
+        </mat-form-field>
 
-      <div class="container responsive-grid">
-        <mat-card>
-                <img mat-card-image [src]="imagePreview" />
-                <div class="card-content">
-                    <mat-card-title class="centered-text">{{inputTitulo.value}}</mat-card-title>
-                    <mat-card-subtitle class="centered-text">
-                        Autores: {{ inputAutor.value }}
-                    </mat-card-subtitle>
-                    <mat-card-content class="centered-text">
-                        Gênero: {{ selectGenero.value.descricao }}
-                    </mat-card-content>
-                    <mat-card-content class="centered-text">
-                        {{ inputPreco.value | currency:'BRL':'symbol':'1.2-2'}}
-                    </mat-card-content>
-                    <mat-card-content class="centered-text">
-                        {{inputDescricao.value}}
-                    </mat-card-content>
-                </div>
-        </mat-card>
-    </div>
+        <div class="container responsive-grid">
+          <mat-card>
+            <img mat-card-image [src]="imagePreview" />
+          </mat-card>
+        </div>
       </form>
     </mat-card-content>
     <mat-card-actions>
