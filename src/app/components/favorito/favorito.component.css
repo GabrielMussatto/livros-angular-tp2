@@ -1,14 +1,136 @@
+/* Container que organiza os cards */
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
+  display: grid;
+  gap: 15px;  /* Espaçamento entre os cards */
+  padding: 20px;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste para aumentar o tamanho mínimo dos cards */
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 15px;
+}
+
+/* Estilo quando não houver favoritos */
+.no-favorites {
+  text-align: center;
+  font-size: 1.2em;
+  color: gray;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Cartões (livros e caixas de livros) */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto; /* Ajusta a altura do card conforme o conteúdo */
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Borda preta clara */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra suave */
+  border-radius: 8px; /* Bordas arredondadas para um efeito mais suave */
+  transition: box-shadow 0.3s ease; /* Transição suave para sombra */
+  cursor: pointer;
+  position: relative;
+  background-color: white; /* Fundo branco para os cards */
+}
+
+/* Hover: Quando o mouse passar sobre o card */
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra mais forte ao passar o mouse */
+}
+
+/* Imagem do livro/caixa de livro */
+.mat-card-image {
+  width: 100%;
+  height: 180px;  /* Ajuste para a altura das imagens */
+  object-fit: cover;  /* Garante que a imagem se ajuste bem ao tamanho */
+}
+
+/* Conteúdo do card (texto) */
+.card-content {
+  flex-grow: 1; /* Permite que o conteúdo cresça e ocupe o espaço disponível */
+  text-align: center; /* Centraliza o conteúdo */
+}
+
+/* Títulos do card */
+.mat-card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.mat-card-subtitle {
+  font-size: 0.9em;
+  color: #777;
+}
+
+/* Rodapé do card (onde estão os botões) */
+.card-footer {
+  cursor: default; /* Garante que os botões não herdem o comportamento clicável */
+  z-index: 1;
+  background-color: white; /* Fundo branco para sobrepor o fundo do card */
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Distanciamento entre os botões */
+}
+
+/* Estilo dos botões */
+.card-footer button {
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px; /* Adiciona bordas arredondadas aos botões */
+  transition: background-color 0.3s ease; /* Transição suave na cor de fundo */
+}
+
+/* Hover: Quando o mouse passar sobre o botão */
+.card-footer button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Altera a cor de fundo do botão */
+}
+
+/* Efeito de hover específico para o botão com a cor primary */
+.primary-button:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Cor suave de fundo quando hover em primary */
+}
+
+/* Efeito de hover específico para o botão com a cor accent */
+.accent-button:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Cor suave de fundo quando hover em accent */
+}
+
+img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+mat-card-title {
+  margin-top: 8px;
+  font-size: 1rem;
+}
+
+mat-card-subtitle {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+/* Ajustes responsivos */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 10px;  /* Reduz o padding para telas menores */
   }
-  
-  .no-favorites {
-    text-align: center;
-    font-size: 1.2em;
-    color: gray;
-    margin-top: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;  /* Em telas muito pequenas, os cards ocupam toda a largura */
   }
-  
+}

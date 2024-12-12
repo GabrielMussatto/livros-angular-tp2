@@ -7,5 +7,6 @@ export class Cliente{
     endereco!: string;
     cidade!: string;
     estado!: string;
-    listaFavorito!: Livro[];
+    listaFavorito?: number[];
+    listaFavoritoCaixaLivro?: number[];
 }
