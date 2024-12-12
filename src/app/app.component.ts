@@ -35,4 +35,9 @@ export class AppComponent {
   fornecedor() {
     this.router.navigateByUrl('/admin/fornecedores');
   }
+
+  cupom(){
+    this.router.navigateByUrl('/admin/cupons');
+
+  }
 }
