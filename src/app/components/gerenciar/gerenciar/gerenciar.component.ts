@@ -44,6 +44,9 @@ export class GerenciarComponent implements OnInit{
   genero() {
     this.router.navigateByUrl('/admin/generos');
   }
+  cupom() {
+    this.router.navigateByUrl('/admin/cupons');
+  }
   fornecedor() {
     this.router.navigateByUrl('/admin/fornecedores');
   }
