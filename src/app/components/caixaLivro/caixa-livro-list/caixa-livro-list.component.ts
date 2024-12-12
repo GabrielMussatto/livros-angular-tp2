@@ -27,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrls: ['./caixa-livro-list.component.css']
 })
 export class CaixaLivroListComponent implements OnInit {
-  displayedColumns: string[] = ['linha', 'id', 'nome', 'descricao', 'quantidadeEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
+  displayedColumns: string[] = ['linha', 'id', 'nome', 'descricao', 'quantidadeEmEstoque', 'preco', 'fornecedor', 'editora', 'genero', 'autor', 'classificacao', 'acao'];
   caixaLivros: CaixaLivro[] = [];
 
   totalRecords = 0;

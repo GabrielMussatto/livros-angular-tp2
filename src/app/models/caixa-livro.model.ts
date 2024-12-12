@@ -8,7 +8,7 @@ export class CaixaLivro {
     id!: number;
     nome!: string;
     descricao!: string;
-    quantidadeEstoque!: number;
+    quantidadeEmEstoque!: number;
     fornecedor!: Fornecedor;
     editora!: Editora;
     generos!: Genero[];
