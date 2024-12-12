@@ -2,48 +2,70 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { Livro } from '../models/livro.model';
 import { Cliente } from '../models/cliente.model';
+import { ItemFavorito } from '../models/item-favorito';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  private baseUrl = 'httpClient://localhost:8080/clientes';
+  private baseUrl = 'http://localhost:8080/clientes';
 
   constructor(
     private httpClient: HttpClient,
     private router: Router
   ) { }
 
-  adicionarLivroFavorito(idLivro: number): Observable<void>{
+  private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-    if(!token){
-      this.router.navigateByUrl('/login');
-      return throwError(() => new Error ('O Usuário não está logado'));
+    if (!token) {
+      this.router.navigate(['/login']);
+      throw new Error('Usuário não autenticado');
     }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.patch<void>(`${this.baseUrl}/search/adicionar-livro-favorito/${idLivro}`, {}, {headers});
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
-  removendoLivroFavorito(idLivro: number): Observable<void>{
-    const token = localStorage.getItem('token');
-    if(!token){
-      this.router.navigateByUrl('/login');
-      return throwError(() => new Error ('O Usuário não está logado'));
-    }
+  adicionarItemFavorito(idLivro?: number, idCaixaLivro?: number): Observable<void> {
+    const headers = this.getHeaders();
+    const params: any = {};
+    if (idLivro) params.idLivro = idLivro;
+    if (idCaixaLivro) params.idCaixaLivro = idCaixaLivro;
 
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.patch<void>(`${this.baseUrl}/search/remover-livro-favorito/${idLivro}`, {}, {headers});
+    console.log(params);
+    return this.httpClient.patch<void>(`${this.baseUrl}/favoritos/adicionar`, null, {
+      headers,
+      params,
+    });
   }
 
-  getLivrosListaFavoritos(): Observable<Livro[]>{
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    
-    return this.httpClient.get<Livro[]>(`${this.baseUrl}/search/livros-favoritos`, {headers});
+  removerItemFavorito(id: number): Observable<void> {
+    const headers = this.getHeaders();
+    return this.httpClient.patch<void>(`${this.baseUrl}/favoritos/remover/${id}`, {}, { headers });
   }
 
+  getListaFavoritos(): Observable<ItemFavorito[]> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<ItemFavorito[]>(`${this.baseUrl}/favoritos`, { headers });
+  }
+  
+  // Métodos específicos para livros
+  adicionarLivroFavorito(idLivro: number): Observable<void> {
+    return this.adicionarItemFavorito(idLivro);
+  }
+
+  removerLivroFavorito(idLivro: number): Observable<void> {
+    return this.removerItemFavorito(idLivro);
+  }
+
+  // Métodos específicos para boxes
+  adicionarCaixaLivroFavorito(idCaixaLivro: number): Observable<void> {
+    return this.adicionarItemFavorito(undefined, idCaixaLivro);
+  }
+
+  removerCaixaLivroFavorito(idCaixaLivro: number): Observable<void> {
+    return this.removerItemFavorito(idCaixaLivro);
+  }
+ 
   // Criar um cliente
   create(cliente: Cliente): Observable<Cliente> {
     return this.httpClient.post<Cliente>(this.baseUrl, cliente);
