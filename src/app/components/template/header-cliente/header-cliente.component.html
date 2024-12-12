@@ -2,7 +2,7 @@
   <!-- Logo -->
   <div class="header-logo">
     <a routerLink="/" class="logo-link">
-      <img class="logo" src="/icons/LogoTp2LivrosColorida.svg" alt="Logo">
+      <img class="logo" src="/icons/LogoTp2LivrosColorida.svg" alt="Logo" />
     </a>
   </div>
 
@@ -41,7 +41,7 @@
 
 <!-- Sobreposição de fundo e campo de pesquisa -->
 <div class="overlay" *ngIf="exibirPesquisa">
-  <div class="search-container" *ngIf="exibirPesquisa">
+  <div class="search-container">
     <!-- Campo de pesquisa -->
     <!-- Filtros de Pesquisa -->
     <mat-form-field appearance="outline" class="select-field">
@@ -50,20 +50,25 @@
         <mat-option value="livro">Livros</mat-option>
         <mat-option value="caixaLivro">Caixa de Livros</mat-option>
       </mat-select>
-  </mat-form-field>
-  
-    <mat-form-field class="search-input">
-      <mat-label>O que você procura?</mat-label>
-      <input matInput [(ngModel)]="termoPesquisa" placeholder="Título, autor ou gênero">
-      <button mat-icon-button matSuffix (click)="pesquisar()">
-        <mat-icon>search</mat-icon>
-      </button>
     </mat-form-field>
-  
-   
-  
-    <!-- Botão de Fechar -->
-    <button class="close-btn" mat-icon-button (click)="togglePesquisa()">
-      <mat-icon>close</mat-icon>
+
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>O que você procura?</mat-label>
+      <input
+        matInput
+        [(ngModel)]="termoPesquisa"
+        placeholder="Título, autor ou gênero"
+        #input
+        (keyup.enter)="pesquisar()" 
+      />
+    </mat-form-field>
+    <button mat-icon-button matSuffix (click)="pesquisar()">
+      <mat-icon>search</mat-icon>
     </button>
+  </div>
+
+  <!-- Botão de Fechar -->
+  <button class="close-btn" mat-icon-button (click)="togglePesquisa()">
+    <mat-icon>close</mat-icon>
+  </button>
 </div>

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
-import { LivroService } from '../../../services/livro.service'; // Serviço fictício para busca
+import { LivroService } from '../../../services/livro.service';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CaixaLivroService } from '../../../services/caixa-livro.service';
@@ -50,7 +50,7 @@ export class HeaderClienteComponent {
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService,
-    private livroService: LivroService, // Serviço fictício para buscar livros
+    private livroService: LivroService,
     private caixaLivroService: CaixaLivroService,
     private router: Router
   ) {}
@@ -86,25 +86,35 @@ export class HeaderClienteComponent {
     }
   }
 
-  verFavoritos(){
+  verFavoritos() {
     this.router.navigate(['/favoritos']);
   }
 
-  verCarrinho(){
+  verCarrinho() {
     this.router.navigate(['/carrinho']);
   }
 
   // Função de pesquisa que chama os métodos do serviço
   pesquisar(): void {
+    if (!this.filtroSelecionado || !this.termoPesquisa.trim()) {
+      alert('Por favor, preencha o termo de pesquisa e selecione um tipo.');
+      return;
+    }
 
     if (this.filtroSelecionado === 'livro') {
-      // Redireciona para a página de livros com o termo de pesquisa
-      this.router.navigate(['/livros'], { queryParams: { termo: this.termoPesquisa } });
+      this.router.navigate(['/livros'], {
+        queryParams: { termo: this.termoPesquisa },
+      });
     } else if (this.filtroSelecionado === 'caixaLivro') {
-      // Redireciona para a página de caixas de livros com o termo de pesquisa
-      this.router.navigate(['/caixaLivros'], { queryParams: { termo: this.termoPesquisa } });
+      this.router.navigate(['/caixaLivros'], {
+        queryParams: { termo: this.termoPesquisa },
+      });
     } else {
       alert('Por favor, selecione um tipo de pesquisa.');
     }
+
+    // Após pesquisar, fecha o campo de pesquisa
+    this.exibirPesquisa = false;
+    this.termoPesquisa = ''; // Opcional: limpa o campo de pesquisa após a execução
   }
 }

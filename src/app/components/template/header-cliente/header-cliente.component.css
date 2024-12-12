@@ -67,36 +67,62 @@
 
 /* Estilo do container de pesquisa */
 .search-container {
-  background-color: #FFFFFF; /* Fundo branco */
-  padding: 16px;
-  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  padding: 24px;
   display: flex;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 60%;
-  max-width: 500px; /* Limita a largura para não ficar muito grande */
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  justify-content: center; /* Centraliza os itens h orizontalmente */
+  border-radius: 15px;
+
 }
 
+/* Posiciona o botão de fechar no canto superior direito */
+.close-btn {
+  position: absolute;
+  top: 7%; /* Ajustado para menos afastado */
+  right: 7%; /* Ajustado para menos afastado */
+  background-color: transparent;
+  border: none;
+  color: white;
+  transform: scale(1.6);
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
+/* Estilo do input de busca */
 .search-input {
-  flex: 1;
+  flex: 2;
+  width: 100%;
+}
+
+.search-input input {
+  border-radius: 8px;
 }
 
 .search-container button {
   color: #FFFFFF;
   background-color: #1A2E6D;
+  display: flex;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 8px; /* Espaçamento interno consistente */
+  border: none; /* Remove borda extra */
+  cursor: pointer; /* Estiliza o cursor */
+  margin-top: -15px; /* Eleva o botão ligeiramente */
+  transform: scale(1.2);
+
 }
 
 .search-container button:hover {
-  background-color: #2D6A4F; /* Verde Floresta */
+  background-color: #2D6A4F;
 }
 
-.close-btn {
-  background-color: transparent;
-  border: none;
-  color: #1A2E6D;
-}
-
-.close-btn:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Efeito hover */
-}
