@@ -36,6 +36,9 @@ import { FavoritoComponent } from './components/favorito/favorito.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { authGuard } from './guard/auth.guard';
 import { authClienteGuard } from './guard/auth-cliente.guard';
+import { CupomListComponent } from './components/cupom/cupom-list/cupom-list.component';
+import { cupomResolver } from './components/cupom/resolver/cupom.resolver';
+import { CupomFormComponent } from './components/cupom/cupom-form/cupom-form.component';
 
 export const routes: Routes = [
 
@@ -69,6 +72,11 @@ export const routes: Routes = [
             { path: 'generos', component: GeneroListComponent, title: 'Lista de Generos', canActivate: [authGuard] },
             { path: 'generos/new', component: GeneroFormComponent, title: 'Novo Genero', canActivate: [authGuard] },
             { path: 'generos/edit/:id', component: GeneroFormComponent, resolve: { genero: generoResolver }, canActivate: [authGuard] },
+
+            // Rotas para Cupons
+            { path: 'cupons', component: CupomListComponent, title: 'Lista de Cupons', canActivate: [authGuard] },
+            { path: 'cupons/new', component: CupomFormComponent, title: 'Novo Cupom', canActivate: [authGuard] },
+            { path: 'cupons/edit/:id', component: CupomFormComponent, resolve: { cupom: cupomResolver }, canActivate: [authGuard] },
             
             // Rotas para Editoras
             { path: 'editoras', component: EditoraListComponent, title: 'Lista de Editoras', canActivate: [authGuard] },
