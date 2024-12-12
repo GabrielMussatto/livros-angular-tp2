@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CaixaLivro } from '../models/caixa-livro.model';
+import { Classificacao } from '../models/classificacao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,19 @@ export class CaixaLivroService {
 
   getUrlImage(nomeImagem: string): string{
     return `${this.baseUrl}/image/download/${nomeImagem}`;
+  }
+
+  uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('nomeImagem', imagem.name);
+    formData.append('imagem', imagem, imagem.name);
+
+    return this.httpClient.patch<CaixaLivro>(`${this.baseUrl}/image/upload`, formData);
+  }
+
+  findClassificacoes(): Observable<Classificacao[]>{
+    return this.httpClient.get<Classificacao[]>(`${this.baseUrl}/classificacoes`);
   }
 
   findAll(page?: number, pageSize?: number): Observable<CaixaLivro[]>{
@@ -85,7 +99,7 @@ export class CaixaLivroService {
     const data = {
       nome: caixaLivro.nome,
       descricao: caixaLivro.descricao,
-      quantidadeEstoque: caixaLivro.quantidadeEstoque,
+      quantidadeEmEstoque: caixaLivro.quantidadeEmEstoque,
       fornecedor: caixaLivro.fornecedor?.id,
       preco: caixaLivro.preco,
       editora: caixaLivro.editora?.id,
@@ -100,7 +114,7 @@ export class CaixaLivroService {
     const data = {
       nome: caixaLivro.nome,
       descricao: caixaLivro.descricao,
-      quantidadeEstoque: caixaLivro.quantidadeEstoque,
+      quantidadeEmEstoque: caixaLivro.quantidadeEmEstoque,
       fornecedor: caixaLivro.fornecedor?.id,
       preco: caixaLivro.preco,
       editora: caixaLivro.editora?.id,

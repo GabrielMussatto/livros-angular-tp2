@@ -57,7 +57,7 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('nome')?.hasError('apiError')){
-                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -72,22 +72,22 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('descricao')?.hasError('apiError')){
-                            <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('descricao')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Quantidade Estoque</mat-label>
-                    <input matInput type="number" formControlName="quantidadeEstoque">
-                    <mat-error *ngIf="formGroup.get('quantidadeEstoque')
-                               && formGroup.get('quantidadeEstoque')?.invalid
-                               && formGroup.get('quantidadeEstoque')?.touched">
-                        {{getErrorMessage('quantidadeEstoque' , formGroup.get('quantidadeEstoque')?.errors)}}
+                    <input matInput type="number" formControlName="quantidadeEmEstoque">
+                    <mat-error *ngIf="formGroup.get('quantidadeEmEstoque')
+                               && formGroup.get('quantidadeEmEstoque')?.invalid
+                               && formGroup.get('quantidadeEmEstoque')?.touched">
+                        {{getErrorMessage('quantidadeEmEstoque' , formGroup.get('quantidadeEmEstoque')?.errors)}}
 
                         <!--erros do back-end-->
-                        @if(formGroup.get('quantidadeEstoque')?.hasError('apiError')){
-                            <span>{{formGroup.get('quantidadeEstoque')?.getError('apiError')}}</span>
+                        @if(formGroup.get('quantidadeEmEstoque')?.hasError('apiError')){
+                        <span>{{formGroup.get('quantidadeEmEstoque')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -102,7 +102,7 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('preco')?.hasError('apiError')){
-                            <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('preco')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -123,7 +123,7 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('fornecedor')?.hasError('apiError')){
-                            <span>{{formGroup.get('fornecedor')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('fornecedor')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -144,7 +144,7 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('editora')?.hasError('apiError')){
-                            <span>{{formGroup.get('editora')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('editora')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -163,11 +163,11 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('generos')?.hasError('apiError')){
-                            <span>{{formGroup.get('generos')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('generos')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
-                
+
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label>Autores</mat-label>
                     <mat-select formControlName="autores" name="autores" multiple>
@@ -182,32 +182,46 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('autores')?.hasError('apiError')){
-                            <span>{{formGroup.get('autores')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('autores')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
-            
+
                 <mat-form-field appearance="fill" class="full-width-input" color="accent">
                     <mat-label> Classificação </mat-label>
                     <mat-select formControlName="classificacao" name="classificacao">
-                        <mat-option value="1">Livre</mat-option>
-                        <mat-option value="2">10 Anos</mat-option>
-                        <mat-option value="3">12 Anos</mat-option>
-                        <mat-option value="4">14 Anos</mat-option>
-                        <mat-option value="5">16 Anos</mat-option>
-                        <mat-option value="6">18 Anos</mat-option>
+                      <mat-option *ngFor="let classificacao of classificacoes" [value]="classificacao">
+                        {{classificacao.descricao}}
+                      </mat-option>
                     </mat-select>
                     <mat-error *ngIf="formGroup.get('classificacao')
-                                && formGroup.get('classificacao')?.invalid
-                                && formGroup.get('classificacao')?.touched">
-                        {{getErrorMessage('classificacao', formGroup.get('classificacao')?.errors)}}
-
-                        <!--erros do back-end-->
-                        @if(formGroup.get('classificacao')?.hasError('apiError')){
-                            <span>{{formGroup.get('classificacao')?.getError('apiError')}}</span>
-                        }
+                                          && formGroup.get('classificacao')?.invalid
+                                          && formGroup.get('classificacao')?.touched">
+                      {{getErrorMessage('classificacao', formGroup.get('classificacao')?.errors)}}
+          
+                      <!--erros do back-end-->
+                      @if(formGroup.get('classificacao')?.hasError('apiError')){
+                      <span>{{formGroup.get('classificacao')?.getError('apiError')}}</span>
+                      }
                     </mat-error>
+                  </mat-form-field>
+
+                <!-- inserindo a Imagem -->
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Imagem da Caixa Livro</mat-label>
+                    <input type="file" (change)="carregarImagemSelecionada($event)" hidden #fileInput>
+                    <input matInput [value]="fileName" readonly>
+
+                    <button mat-icon-button matSuffix (click)="fileInput.click()">
+                        <mat-icon>folder_open</mat-icon>
+                    </button>
                 </mat-form-field>
+
+                <div class="container responsive-grid">
+                    <mat-card>
+                        <img mat-card-image [src]="imagePreview" />
+                    </mat-card>
+                </div>
 
             </form>
         </mat-card-content>

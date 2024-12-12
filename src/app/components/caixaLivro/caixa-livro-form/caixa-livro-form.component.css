@@ -100,3 +100,19 @@ mat-error {
     font-size: 0.875rem;
     color: #D2B48C; /* Marrom Claro */
 }
+
+img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.container {
+    padding: 20px;
+}
+
+.responsive-grid {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); */
+    gap: 20px;
+}

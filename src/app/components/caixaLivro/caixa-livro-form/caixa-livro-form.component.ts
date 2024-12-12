@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Classificacao } from '../../../models/classificacao.model';
 
 @Component({
   selector: 'app-caixa-livro-form',
@@ -40,6 +41,11 @@ export class CaixaLivroFormComponent implements OnInit {
   autores: Autor[] = [];
   fornecedores: Fornecedor[] = [];
   editoras: Editora[] = [];
+  classificacoes: Classificacao[] = [];
+
+  fileName: string = '';
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private formBuilder: FormBuilder,
     private caixaLivroService: CaixaLivroService,
@@ -50,40 +56,46 @@ export class CaixaLivroFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar  
+    private snackBar: MatSnackBar,
+    private location: Location
   ) { 
 
     this.formGroup = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
       descricao: ['', Validators.required],
-      quantidadeEstoque: [null, Validators.required],
-      preco: [null, Validators.required],
+      quantidadeEmEstoque: ['', Validators.required],
+      preco: ['', Validators.required],
       fornecedor: [null, Validators.required],
       editora: [null, Validators.required],
       generos: [[], Validators.required],
       autores: [[], Validators.required],
-      classificacao: ['', Validators.required]
+      classificacao: [null, Validators.required]
     });
   }
 
   ngOnInit(): void {
+    this.caixaLivroService.findClassificacoes().subscribe(data => {
+      this.classificacoes = data;
+      this.initializeForm();
+    })
     this.generoService.findAll().subscribe(data => {
       this.generos = data;
       this.initializeForm();
-    }),
+    });
     this.fornecedorService.findAll().subscribe(data => {
       this.fornecedores = data;
       this.initializeForm();
-    }),
+    });
     this.editoraService.findAll().subscribe(data => {
       this.editoras = data;
       this.initializeForm();
-    }),
+    });
     this.autorService.findAll().subscribe(data => {
       this.autores = data;
       this.initializeForm();
-    })
+    });
+    this.initializeForm();
   }
 
   initializeForm(): void {
@@ -91,19 +103,55 @@ export class CaixaLivroFormComponent implements OnInit {
 
     const fornecedor = this.fornecedores.find(fornecedor => fornecedor.id === (caixaLivro?.fornecedor?.id || null));
     const editora = this.editoras.find(editora => editora.id === (caixaLivro?.editora?.id || null));
+    const classificacao = this.classificacoes.find(c => c.id === (caixaLivro?.classificacao?.id || null));
+
+    // carregando a imagem do preview
+    if (caixaLivro && caixaLivro.nomeImagem) {
+      this.imagePreview = this.caixaLivroService.getUrlImage(caixaLivro.nomeImagem);
+      this.fileName = caixaLivro.nomeImagem;
+    }
 
     this.formGroup = this.formBuilder.group({
       id: [(caixaLivro && caixaLivro.id) ? caixaLivro.id : null],
       nome: [(caixaLivro && caixaLivro.nome) ? caixaLivro.nome : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)])],
       descricao: [(caixaLivro && caixaLivro.descricao) ? caixaLivro.descricao : null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20000)])],
-      quantidadeEstoque: [(caixaLivro && caixaLivro.quantidadeEstoque) ? caixaLivro.quantidadeEstoque : null, Validators.compose([Validators.required, Validators.minLength(1)])],
+      quantidadeEmEstoque: [(caixaLivro && caixaLivro.quantidadeEmEstoque) ? caixaLivro.quantidadeEmEstoque : null, Validators.compose([Validators.required, Validators.minLength(1)])],
       preco: [(caixaLivro && caixaLivro.preco) ? caixaLivro.preco : null, Validators.required],
       fornecedor: [fornecedor, Validators.required],
       editora: [editora, Validators.required],
       generos: [(caixaLivro && caixaLivro.generos) ? caixaLivro.generos.map((genero) => genero.id) : [], Validators.required],
       autores: [(caixaLivro && caixaLivro.autores) ? caixaLivro.autores.map((autor) => autor.id) : [], Validators.required],
-      classificacao: [(caixaLivro && caixaLivro.classificacao) ? caixaLivro.classificacao : null, Validators.required]
+      classificacao: [classificacao, Validators.required]
     });
+  }
+
+  carregarImagemSelecionada(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    if (this.selectedFile) {
+      this.fileName = this.selectedFile.name;
+      // carregando image preview
+      const reader = new FileReader();
+      reader.onload = e => this.imagePreview = reader.result;
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  private uploadImage(caixaLivroId: number) {
+    if (this.selectedFile) {
+      this.caixaLivroService.uploadImage(caixaLivroId, this.selectedFile.name, this.selectedFile)
+        .subscribe({
+          next: () => {
+            this.voltarPagina();
+          },
+          error: err => {
+            console.log('Erro ao fazer o upload da imagem');
+            // tratar o erro
+          }
+        })
+    } else {
+      this.voltarPagina();
+    }
   }
 
   tratarErros(errorResponse: HttpErrorResponse){
@@ -132,7 +180,12 @@ export class CaixaLivroFormComponent implements OnInit {
       : this.caixaLivroService.update(caixaLivro);
 
       operacao.subscribe({
-        next: () => {
+        next: (caixaLivroCadastrado) => {
+          if(caixaLivro && caixaLivro.id){
+            this.uploadImage(caixaLivro.id);
+          } else if (caixaLivroCadastrado && caixaLivroCadastrado.id){
+            this.uploadImage(caixaLivroCadastrado.id);
+          }
           this.router.navigateByUrl('/admin/caixaLivros');
           this.snackBar.open('A Caixa de Livro foi salva com Sucesso!!', 'Fechar', {duration: 3000});
         },
@@ -197,7 +250,7 @@ export class CaixaLivroFormComponent implements OnInit {
       maxlength: 'Descrição deve ter no máximo 20000 caracteres',
       apiError: ''
     },
-    quantidadeEstoque: {
+    quantidadeEmEstoque: {
       required: 'Quantidade Estoque é obrigatório',
       minlength: 'Quantidade Estoque deve ser maior que zero',
       apiError: ''
@@ -248,5 +301,8 @@ export class CaixaLivroFormComponent implements OnInit {
   }
   voltar() {
     this.router.navigateByUrl('/admin/caixaLivros');
+  }
+  voltarPagina() {
+    this.location.back();
   }
 }
