@@ -57,7 +57,7 @@
 
                         <!--erros do back-end-->
                         @if(formGroup.get('nome')?.hasError('apiError')){
-                            <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('nome')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
@@ -67,18 +67,35 @@
                     <mat-error *ngIf="formGroup.get('biografia')
                                     && formGroup.get('biografia')?.invalid
                                     && formGroup.get('biografia')?.touched">
-                        {{getErrorMessage('biografia' , formGroup.get('biografia')?.errors)}} 
+                        {{getErrorMessage('biografia' , formGroup.get('biografia')?.errors)}}
 
                         <!--erros do back-end-->
                         @if(formGroup.get('biografia')?.hasError('apiError')){
-                            <span>{{formGroup.get('biografia')?.getError('apiError')}}</span>
+                        <span>{{formGroup.get('biografia')?.getError('apiError')}}</span>
                         }
                     </mat-error>
                 </mat-form-field>
+
+                <!-- inserindo a Imagem -->
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Imagem do Autor</mat-label>
+                    <input type="file" (change)="carregarImagemSelecionada($event)" hidden #fileInput>
+                    <input matInput [value]="fileName" readonly>
+
+                    <button mat-icon-button matSuffix (click)="fileInput.click()">
+                        <mat-icon>folder_open</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <div class="container responsive-grid">
+                    <mat-card>
+                        <img mat-card-image [src]="imagePreview" />
+                    </mat-card>
+                </div>
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" >
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
             </button>
             <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
