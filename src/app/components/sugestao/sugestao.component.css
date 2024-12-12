@@ -1,0 +1,14 @@
+.container {
+    margin: 20px;
+  }
+  
+  .form-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .list-group-item {
+    margin-bottom: 5px;
+  }
+  
