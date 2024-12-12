@@ -296,6 +296,9 @@ export class CaixaLivroFormComponent implements OnInit {
   genero() {
     this.router.navigateByUrl('/admin/generos/new');
   }
+  cupom() {
+    this.router.navigateByUrl('/admin/cupons/new');
+  }
   fornecedor() {
     this.router.navigateByUrl('/admin/fornecedores/new');
   }
