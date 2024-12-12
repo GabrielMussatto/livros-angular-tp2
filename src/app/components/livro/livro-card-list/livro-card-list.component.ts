@@ -14,8 +14,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { ClienteService } from '../../../services/cliente.service';
+import { AuthService } from '../../../services/auth.service';
 
 type Card = {
+  id: number;
   titulo: string;
   autores: string;
   generos: string;
@@ -23,7 +26,7 @@ type Card = {
   preco: number;
   imageUrl: string;
   verDescricao: boolean;
-  favorito?: boolean;
+  listaFavorito: boolean;
 }
 
 @Component({
@@ -50,6 +53,8 @@ export class LivroCardListComponent implements OnInit {
 
   constructor(
     private livroService: LivroService,
+    private clienteService: ClienteService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -72,7 +77,7 @@ export class LivroCardListComponent implements OnInit {
       }).subscribe(
         (contagens) => {
           this.totalRecords = contagens.countTitulo + contagens.countAutor + contagens.countGenero;
-  
+
           // Busca todos os livros relacionados ao filtro
           forkJoin({
             porTitulo: this.livroService.findByTitulo(this.filtro, 0, this.totalRecords),
@@ -85,7 +90,7 @@ export class LivroCardListComponent implements OnInit {
                 ...resultados.porAutor,
                 ...resultados.porGenero,
               ];
-  
+
               this.livrosFiltrados = this.removerDuplicatas(todosLivros);
               this.paginacao();
             },
@@ -125,9 +130,6 @@ export class LivroCardListComponent implements OnInit {
       );
     }
   }
-  
-  
-  
 
   removerDuplicatas(livros: Livro[]): Livro[] {
     const vistos = new Set();
@@ -145,13 +147,13 @@ export class LivroCardListComponent implements OnInit {
     console.log('Livros antes da paginação:', this.livrosFiltrados);
     const inicio = this.page * this.pageSize;
     const fim = inicio + this.pageSize;
-  
+
     this.livros = this.livrosFiltrados.slice(inicio, fim);
-  
+
     console.log(`Livros na página ${this.page + 1}:`, this.livros);
     this.carregarCards();
   }
-  
+
 
   paginar(event: PageEvent): void {
     this.page = event.pageIndex;    // Atualiza a página com o índice
@@ -160,23 +162,63 @@ export class LivroCardListComponent implements OnInit {
   }
 
   carregarCards(): void {
-    const favoritos: Record<string, boolean> = JSON.parse(localStorage.getItem('favoritos') || '{}');
-
-    const cards: Card[] = [];
-    this.livros.forEach((livro) => {
-      cards.push({
-        titulo: livro.titulo,
-        descricao: livro.descricao,
-        autores: livro.autores.map((autor) => autor.nome).join(', '),
-        generos: livro.generos.map((genero) => genero.nome).join(', '),
-        preco: livro.preco,
-        imageUrl: this.livroService.getUrlImage(livro.nomeImagem),
-        verDescricao: false,
-        favorito: favoritos[livro.titulo] || false,
+    const cards: Card[] = this.livros.map((livro) => ({
+      id: livro.id,
+      titulo: livro.titulo,
+      descricao: livro.descricao,
+      autores: livro.autores.map((autor) => autor.nome).join(', '),
+      generos: livro.generos.map((genero) => genero.nome).join(', '),
+      preco: livro.preco,
+      imageUrl: this.livroService.getUrlImage(livro.nomeImagem),
+      verDescricao: false,
+      listaFavorito: false, // Inicializa como não favorito
+    }));
+  
+    if (this.authService.isLoggedIn()) {
+      // Se logado, carrega os favoritos e atualiza os estados
+      this.clienteService.getListaFavoritos().subscribe({
+        next: (favoritos) => {
+          favoritos.forEach((favorito) => {
+            const card = cards.find((card) => card.id === favorito.id);
+            if (card) {
+              card.listaFavorito = true; // Marca como favorito
+            }
+          });
+  
+          this.cards.set(cards); // Atualiza os cards com favoritos
+        },
+        error: () => {
+          this.snackBar.open('Erro ao carregar favoritos. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          this.cards.set(cards); // Mesmo com erro, inicializa os cards
+        },
       });
-    });
+    } else {
+      // Caso não logado, inicializa os cards sem favoritos
+      this.cards.set(cards);
+    }
+  }
+  
+  favoritar(card: Card): void {
+    if (!this.authService.isLoggedIn()) {
+      this.snackBar.open('Você precisa estar logado para adicionar favoritos.', 'Fechar', { duration: 3000 });
+      return;
+    }
 
-    this.cards.set(cards);
+    if (!card.listaFavorito) {
+      // Adiciona o livro à lista de Favorito
+      this.clienteService.adicionarLivroFavorito(card.id).subscribe({
+        next: () => {
+          this.snackBar.open('Livro adicionado à lista de Favorito.', 'Fechar', { duration: 3000 });
+          card.listaFavorito = true; // Atualiza o estado visual do card
+        },
+        error: () => {
+          this.snackBar.open('Erro ao adicionar livro à lista de Favorito.', 'Fechar', { duration: 3000 });
+        },
+      });
+    } else {
+      // Se já está na lista de Favorito, exibe mensagem informativa
+      this.snackBar.open('Este livro já está na sua lista de Favorito.', 'Fechar', { duration: 3000 });
+    }
   }
 
   verMais(titulo: string): void {
@@ -185,25 +227,6 @@ export class LivroCardListComponent implements OnInit {
 
   verDescricao(card: Card): void {
     card.verDescricao = !card.verDescricao;
-  }
-
-  favoritar(card: Card, event: Event): void {
-    event.stopPropagation();
-    card.favorito = !card.favorito;
-
-    const button = (event.target as HTMLElement).closest('.favorite-button');
-    if (button) {
-      button.classList.add('spin');
-      setTimeout(() => button.classList.remove('spin'), 600);
-    }
-
-    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '{}');
-    if (card.favorito) {
-      favoritos[card.titulo] = true;
-    } else {
-      delete favoritos[card.titulo];
-    }
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
   }
 
   ordenar(): void {

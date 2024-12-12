@@ -1,42 +1,68 @@
 <div class="container responsive-grid">
-    <mat-card *ngFor="let favorito of favoritos" class="card">
-      <div class="card-clickable">
-        <img mat-card-image [src]="favorito.imageUrl" />
-        <div class="card-content">
-          <mat-card-title class="centered-text">{{ favorito.titulo }}</mat-card-title>
-          <mat-card-subtitle class="centered-text">
-            Autores: {{ favorito.autores }}
-          </mat-card-subtitle>
-          <mat-card-content class="centered-text">
-            Gênero: {{ favorito.generos }}
-          </mat-card-content>
-          <mat-card-content class="centered-text">
-            {{ favorito.preco | currency: 'BRL': 'symbol': '1.2-2' }}
-          </mat-card-content>
-        </div>
+  <div *ngIf="loading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && (favoritos.length > 0 || caixaLivroFavorito.length > 0)">
+    <mat-card *ngFor="let favorito of favoritos" class="card" (click)="verMais(favorito.titulo)">
+      <img mat-card-image [src]="favorito.imageUrl" />
+      <div class="card-content">
+        <mat-card-title class="centered-text">
+          {{ favorito.titulo }}
+        </mat-card-title>
+        <mat-card-subtitle class="centered-text">
+          Autores: {{ favorito.autores }}
+        </mat-card-subtitle>
+        <mat-card-subtitle class="centered-text">
+          {{ favorito.preco | currency : "BRL" : "symbol" : "1.2-2" }}
+        </mat-card-subtitle>
       </div>
-  
+    
       <mat-card-footer class="card-footer">
-        <button
-          mat-button
-          color="warn"
-          (click)="removerFavorito(favorito.id)"
-        >
+        <!-- Evitar propagação do evento para o card -->
+        <button mat-button color="warn" (click)="$event.stopPropagation(); removerFavorito(favorito.id, 'Livro')">
           Remover dos Favoritos
         </button>
-        <button
-          mat-button
-          color="primary"
-          class="card-button"
-          (click)="verMais(favorito.titulo)"
-        >
+        <button mat-button color="primary" class="card-button" (click)="$event.stopPropagation(); verMais(favorito.titulo)">
           Ver Mais
+        </button>
+        <!-- Adicionar ao carrinho -->
+        <button mat-button color="accent" class="card-button" (click)="$event.stopPropagation()">
+          Adicionar ao Carrinho
+        </button>
+      </mat-card-footer>
+    </mat-card>
+    
+
+    <mat-card *ngFor="let caixaLivroFavorito of caixaLivroFavorito" class="card" (click)="verMaisCaixaLivro(caixaLivroFavorito.nome)">
+      <img mat-card-image [src]="caixaLivroFavorito.imageUrl" />
+      <div class="card-content">
+        <mat-card-title class="centered-text">
+          {{ caixaLivroFavorito.nome }}
+        </mat-card-title>
+        <mat-card-subtitle class="centered-text">
+          Autores: {{ caixaLivroFavorito.autores }}
+        </mat-card-subtitle>
+        <mat-card-subtitle class="centered-text">
+          {{ caixaLivroFavorito.preco | currency : "BRL" : "symbol" : "1.2-2" }}
+        </mat-card-subtitle>
+      </div>
+
+      <mat-card-footer class="card-footer">
+        <button mat-button color="warn" (click)="$event.stopPropagation(); removerFavorito(caixaLivroFavorito.id, 'CaixaLivro')">
+          Remover dos Favoritos
+        </button>
+        <button mat-button color="primary" class="card-button" (click)="$event.stopPropagation(); verMaisCaixaLivro(caixaLivroFavorito.nome)">
+          Ver Mais
+        </button>
+        <button mat-button color="accent" class="card-button accent-button" (click)="$event.stopPropagation();">
+          Adicionar ao Carrinho
         </button>
       </mat-card-footer>
     </mat-card>
   </div>
-  
+
   <div *ngIf="favoritos.length === 0" class="no-favorites">
     <p>Não há livros favoritos ainda.</p>
   </div>
-  
+</div>

@@ -19,17 +19,6 @@
       (click)="verMais(card.nome)"
     >
       <div class="card-clickable">
-        <button
-          mat-icon-button
-          color="warn"
-          class="favorite-button"
-          (click)="favoritar(card, $event)"
-          [ngClass]="{ active: card.favorito }"
-        >
-          <mat-icon>{{
-            card.favorito ? "favorite" : "favorite_border"
-          }}</mat-icon>
-        </button>
         <img mat-card-image [src]="card.imageUrl" />
 
         <div class="card-content">
@@ -62,6 +51,14 @@
         </button>
         <button mat-button color="accent" class="card-button accent-button">
           Adicionar ao Carrinho
+        </button>
+        <button
+          mat-button
+          color="warn"
+          class="card-button warn-button"
+          (click)="favoritar(card)"
+        >
+          Adicionar à lista de Favoritos
         </button>
       </mat-card-footer>
     </mat-card>

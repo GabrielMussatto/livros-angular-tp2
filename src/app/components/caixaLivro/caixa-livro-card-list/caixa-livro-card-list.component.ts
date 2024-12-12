@@ -13,9 +13,12 @@ import { CaixaLivro } from '../../../models/caixa-livro.model';
 import { CaixaLivroService } from '../../../services/caixa-livro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { ClienteService } from '../../../services/cliente.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 type Card = {
+  id: number;
   nome: string;
   autores: string;
   generos: string;
@@ -23,7 +26,7 @@ type Card = {
   preco: number;
   imageUrl: string;
   verDescricao: boolean;
-  favorito?: boolean;
+  listaFavorito: boolean;
 }
 
 @Component({
@@ -49,6 +52,8 @@ export class CaixaLivroCardListComponent implements OnInit{
 
   constructor(
     private caixaLivroService: CaixaLivroService,
+    private clienteService: ClienteService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -157,24 +162,64 @@ export class CaixaLivroCardListComponent implements OnInit{
   }
 
   carregarCards(): void {
-    const favoritos: Record<string, boolean> = JSON.parse(localStorage.getItem('favoritos') || '{}');
-
-    const cards: Card[] = [];
-    this.caixaLivros.forEach(caixaLivro => {
-      cards.push({
-        nome: caixaLivro.nome,
-        descricao: caixaLivro.descricao,
-        autores: caixaLivro.autores.map(autor => autor.nome).join(', '),
-        generos: caixaLivro.generos.map(genero => genero.nome).join(', '),
-        preco: caixaLivro.preco,
-        imageUrl: this.caixaLivroService.getUrlImage(caixaLivro.nomeImagem),
-        verDescricao: false,
-        favorito: favoritos[caixaLivro.nome] || false
+    const cards: Card[] = this.caixaLivros.map((caixaLivro) => ({
+      id: caixaLivro.id,
+      nome: caixaLivro.nome,
+      descricao: caixaLivro.descricao,
+      autores: caixaLivro.autores.map((autor) => autor.nome).join(', '),
+      generos: caixaLivro.generos.map((genero) => genero.nome).join(', '),
+      preco: caixaLivro.preco,
+      imageUrl: this.caixaLivroService.getUrlImage(caixaLivro.nomeImagem),
+      verDescricao: false,
+      listaFavorito: false, // Inicializa como não favorito
+    }));
+  
+    if (this.authService.isLoggedIn()) {
+      // Se logado, carrega os favoritos e atualiza os estados
+      this.clienteService.getListaFavoritos().subscribe({
+        next: (favoritos) => {
+          favoritos.forEach((favorito) => {
+            const card = cards.find((card) => card.id === favorito.id);
+            if (card) {
+              card.listaFavorito = true; // Marca como favorito
+            }
+          });
+  
+          this.cards.set(cards); // Atualiza os cards com favoritos
+        },
+        error: () => {
+          this.snackBar.open('Erro ao carregar favoritos. Tente novamente mais tarde.', 'Fechar', { duration: 3000 });
+          this.cards.set(cards); // Mesmo com erro, inicializa os cards
+        },
       });
-    });
-    this.cards.set(cards);
+    } else {
+      // Caso não logado, inicializa os cards sem favoritos
+      this.cards.set(cards);
+    }
   }
+  
+  favoritar(card: Card): void {
+    if (!this.authService.isLoggedIn()) {
+      this.snackBar.open('Você precisa estar logado para adicionar favoritos.', 'Fechar', { duration: 3000 });
+      return;
+    }
 
+    if (!card.listaFavorito) {
+      // Adiciona o livro à lista de Favorito
+      this.clienteService.adicionarCaixaLivroFavorito(card.id).subscribe({
+        next: () => {
+          this.snackBar.open('Caixa de Livro adicionado à lista de Favorito.', 'Fechar', { duration: 3000 });
+          card.listaFavorito = true; // Atualiza o estado visual do card
+        },
+        error: () => {
+          this.snackBar.open('Erro ao adicionar caixa de livro à lista de Favorito.', 'Fechar', { duration: 3000 });
+        },
+      });
+    } else {
+      // Se já está na lista de Favorito, exibe mensagem informativa
+      this.snackBar.open('Esta caixa de livro já está na sua lista de Favorito.', 'Fechar', { duration: 3000 });
+    }
+  }
 
   verMais(nome: string): void{
     this.router.navigate(['/caixaLivros', nome]);
@@ -182,29 +227,6 @@ export class CaixaLivroCardListComponent implements OnInit{
 
   verDescricao(card: Card): void{
     card.verDescricao = !card.verDescricao;
-  }
-
-  favoritar(card: Card, event: Event): void {
-    event.stopPropagation();
-    card.favorito = !card.favorito;
-
-    // Encontra o elemento do botão e adiciona a classe de rotação lateral
-    const button = (event.target as HTMLElement).closest('.favorite-button');
-    if (button) {
-      button.classList.add('spin');
-
-      // Remove a classe após a animação completar
-      setTimeout(() => button.classList.remove('spin'), 600);
-    }
-
-    // Atualiza os favoritos no localStorage
-    const favoritos = JSON.parse(localStorage.getItem('favoritos') || '{}');
-    if (card.favorito) {
-      favoritos[card.nome] = true;
-    } else {
-      delete favoritos[card.nome];
-    }
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
   }
 
   ordenar(): void{
