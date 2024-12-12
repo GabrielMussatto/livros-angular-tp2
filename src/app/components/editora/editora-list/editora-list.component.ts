@@ -127,6 +127,9 @@ export class EditoraListComponent implements OnInit {
   fornecedor() {
     this.router.navigateByUrl('/admin/fornecedores');
   }
+  cupom() {
+    this.router.navigateByUrl('/admin/cupons');
+  }
   voltar() {
     this.router.navigateByUrl('/admin/editoras');
   }
