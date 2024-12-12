@@ -1,0 +1,100 @@
+<mat-toolbar class="titulo">
+    <div class="flex-container">
+        <!-- Botão de voltar -->
+        <button mat-fab color="accent" (click)="voltar()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <!-- Menu com as opções de rotas -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="livro()">
+                <mat-icon>menu_book</mat-icon>
+                <span>Livros</span>
+            </button>
+            <button mat-menu-item (click)="caixaLivros()">
+                <mat-icon>inventory_2</mat-icon>
+                <span>Caixa de Livros</span>
+            </button>
+            <button mat-menu-item (click)="autor()">
+                <mat-icon>person</mat-icon>
+                <span>Autores</span>
+            </button>
+            <button mat-menu-item (click)="genero()">
+                <mat-icon>style</mat-icon>
+                <span>Gêneros</span>
+            </button>
+            <button mat-menu-item (click)="cupom()">
+                <mat-icon>redeem</mat-icon>
+                <span>Cupom</span>
+            </button>
+            <button mat-menu-item (click)="fornecedor()">
+                <mat-icon>local_shipping</mat-icon>
+                <span>Fornecedores</span>
+            </button>
+            <button mat-menu-item (click)="editora()">
+                <mat-icon>business</mat-icon>
+                <span>Editoras</span>
+            </button>
+        </mat-menu>
+
+        <!-- Título da toolbar -->
+        <span class="toolbar-title">Cadastro de Cupons</span>
+
+        <!-- Botão de adicionar -->
+        <button mat-fab color="accent" [matMenuTriggerFor]="menu">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<div class="form-container">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Nome</mat-label>
+                    <input matInput type="text" formControlName="nomeCupom">
+                    <mat-error *ngIf="formGroup.get('nomeCupom')
+                                    && formGroup.get('nomeCupom')?.invalid
+                                    && formGroup.get('nomeCupom')?.touched">
+                        {{getErrorMessage('nomeCupom' , formGroup.get('nomeCupom')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('nomeCupom')?.hasError('apiError')){
+                            <span>{{formGroup.get('nomeCupom')?.getError('apiError')}}</span>
+                        }
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field apearance="fill" class="full-width-input">
+                    <mat-label>Desconto</mat-label>
+                    <input matInput type="number" formControlName="desconto">
+                    <mat-error *ngIf="formGroup.get('desconto')
+                                    && formGroup.get('desconto')?.invalid
+                                    && formGroup.get('desconto')?.touched">
+                        {{getErrorMessage('desconto' , formGroup.get('desconto')?.errors)}}
+
+                        <!--erros do back-end-->
+                        @if(formGroup.get('desconto')?.hasError('apiError')){
+                            <span>{{formGroup.get('desconto')?.getError('apiError')}}</span>
+                        }
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()">
+                Salvar
+            </button>
+
+            <button mat-raised-button *ngIf="formGroup?.get('id')?.value" color="warn" (click)="excluir()"
+                [disabled]="formGroup.invalid">
+                Excluir
+            </button>
+            
+            <button mat-raised-button (click)="voltar()">
+                Cancelar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
