@@ -40,6 +40,9 @@ import { CupomFormComponent } from './components/cupom/cupom-form/cupom-form.com
 import { cupomResolver } from './components/cupom/resolver/cupom.resolver';
 import { SugestaoFuncionarioComponent } from './components/funcionario/sugestao-funcionario/sugestao-funcionario.component';
 import { SugestaoComponent } from './components/sugestao/sugestao.component';
+import { ClienteListComponent } from './components/cliente/cliente-list/cliente-list.component';
+import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
+import { clienteResolver } from './components/cliente/resolver/cliente.resolver';
 
 export const routes: Routes = [
 
@@ -58,6 +61,11 @@ export const routes: Routes = [
             { path: 'autores', component: AutorListComponent, title: 'Lista de Autores', canActivate: [authGuard] },
             { path: 'autores/new', component: AutorFormComponent, title: 'Novo Autor', canActivate: [authGuard] },
             { path: 'autores/edit/:id', component: AutorFormComponent, resolve: { autor: autorResolver }, canActivate: [authGuard] },
+
+            // Rotas para Cliente
+            { path: 'clientes', component: ClienteListComponent, title: 'Lista de Clientes', canActivate: [authGuard] },
+            { path: 'clientes/new', component: ClienteFormComponent, title: 'Novo Cliente', canActivate: [authGuard] },
+            { path: 'clientes/edit/:id', component: ClienteFormComponent, resolve: { cliente: clienteResolver }, canActivate: [authGuard] },
 
             // Rotas para Caixa de Livros
             { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros', canActivate: [authGuard] },
