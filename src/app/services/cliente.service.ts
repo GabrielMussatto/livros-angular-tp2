@@ -26,6 +26,16 @@ export class ClienteService {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
+  findByNome(nome: string, page: number, pageSize: number): Observable<Cliente[]> {
+    const headers = this.getHeaders();
+    const params = {
+      nome,
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/nome`, { headers, params });
+  }
+
   adicionarItemFavorito(idLivro?: number, idCaixaLivro?: number): Observable<void> {
     const headers = this.getHeaders();
     const params: any = {};
@@ -126,7 +136,7 @@ export class ClienteService {
   }
 
   // Buscar cliente por ID
-  findById(id: number): Observable<Cliente> {
+  findById(id: string): Observable<Cliente> {
     return this.httpClient.get<Cliente>(`${this.baseUrl}/${id}`);
   }
 
@@ -136,12 +146,31 @@ export class ClienteService {
   }
 
   // Listar todos os clientes
-  findAll(): Observable<Cliente[]> {
-    return this.httpClient.get<Cliente[]>(this.baseUrl);
+
+
+  findAll(page: number, pageSize: number): Observable<Cliente[]> {
+    const headers = this.getHeaders();
+    const params = {
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Cliente[]>(this.baseUrl, { headers, params });
   }
 
   // Excluir um cliente
   delete(cliente: Cliente): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/${cliente.id}`);
+  }
+
+  countByNome(nome: string): Observable<number> {
+    const headers = this.getHeaders();
+    const params = { nome };
+    return this.httpClient.get<number>(`${this.baseUrl}/count/nome`, { headers, params });
+  }
+
+  // Método para contar o total de clientes
+  count(): Observable<number> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<number>(`${this.baseUrl}/count`, { headers });
   }
 }
