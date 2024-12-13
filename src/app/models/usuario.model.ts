@@ -10,6 +10,6 @@ export class Usuario{
     dataNascimento!: Date;
     email!: string;
     cpf!: string;
-    telefone!: Telefone[];
+    telefone!: Telefone;
     idSexo!: Sexo;
 }
