@@ -1,28 +1,40 @@
-<div class="container">
-    <h1>Sugestões dos Clientes</h1>
-  
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  
-    <div *ngIf="loading" class="text-center">
-      <p>Carregando sugestões...</p>
-    </div>
-  
-    <ul class="list-group" *ngIf="!loading && sugestoes.length > 0">
-      <li class="list-group-item" *ngFor="let sugestao of sugestoes">
-        <strong>Sugestão:</strong> {{ sugestao.sugestao }}
-        <br />
-        <small>Data: {{ sugestao.dataSugestao |  date:'dd/MM/yyyy' }}</small>
-        <br />
-        <small><strong>Cliente:</strong> {{ sugestao?.cliente?.usuario?.nome }}</small>
-        <br />
-        <small><strong>Username Cliente:</strong> {{ sugestao?.cliente?.usuario?.username }}</small>
-      </li>
-    </ul>
-  
-    <div *ngIf="!loading && sugestoes.length === 0">
-      <p class="text-muted">Nenhuma sugestão encontrada.</p>
-    </div>
-  </div>
-  
+<mat-toolbar color="primary" class="titulo">
+  <span class="toolbar-title">Controle de Sugestões</span>
+</mat-toolbar>
+
+<div class="all">
+  <table mat-table [dataSource]="sugestoes" class="mat-elevation-z8">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let sugestao">{{ sugestao.idSugestao }}</td>
+    </ng-container>
+
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome do Cliente</th>
+      <td mat-cell *matCellDef="let sugestao">{{ sugestao.nomeCliente }}</td>
+    </ng-container>
+
+    <!-- Username Column -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef>Username do Cliente</th>
+      <td mat-cell *matCellDef="let sugestao">{{ sugestao.usernameCliente }}</td>
+    </ng-container>
+
+    <!-- Data Nascimento Column -->
+    <ng-container matColumnDef="dataSugestao">
+      <th mat-header-cell *matHeaderCellDef>Data da Sugestão</th>
+      <td mat-cell *matCellDef="let sugestao">{{ sugestao.dataSugestao | date : "dd/MM/yyyy"}}</td>
+    </ng-container>
+
+    <!-- Data Nascimento Column -->
+    <ng-container matColumnDef="sugestao">
+      <th mat-header-cell *matHeaderCellDef>Sugestão do Cliente</th>
+      <td mat-cell *matCellDef="let sugestao">{{ sugestao.sugestao }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

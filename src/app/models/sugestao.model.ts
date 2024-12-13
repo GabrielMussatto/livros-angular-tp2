@@ -4,5 +4,6 @@ export class Sugestao {
     idSugestao!: number;
     sugestao!: string;
     dataSugestao!: Date;
-    cliente!: Cliente;
+    nomeCliente!: string;
+    usernameCliente!: string;
 }
