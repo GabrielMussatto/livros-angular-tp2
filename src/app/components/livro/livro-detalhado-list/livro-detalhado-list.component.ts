@@ -8,17 +8,19 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
 import { ItemPedido } from '../../../models/item-pedido';
 import { CarrinhoService } from '../../../services/carrinho.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-livro-detalhado-list',
   standalone: true,
-  imports: [CommonModule, MatIcon, MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner, RouterModule],
+  imports: [CommonModule, MatIcon, MatCard, MatCardActions, MatCardContent, MatCardFooter, MatCardHeader, MatCardTitle, MatCardSubtitle, NgFor, NgIf, MatProgressSpinner, RouterModule, MatButtonModule],
   templateUrl: './livro-detalhado-list.component.html',
   styleUrls: ['./livro-detalhado-list.component.css']
 })
 export class LivroDetalhadoListComponent implements OnInit {
   livro: Livro | undefined;
   carregando = true;
+  quantidade = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,11 +61,21 @@ export class LivroDetalhadoListComponent implements OnInit {
         idLivro: this.livro.id,
         titulo: this.livro.titulo,
         preco: this.livro.preco,
-        quantidade: 1,
-        subTotal: this.livro.preco * 1,
+        quantidade: this.quantidade,
+        subTotal: this.livro.preco * this.quantidade,
       };
       this.carrinhoService.adicionarAoCarrinho(item);
-      alert(`${this.livro.titulo} foi adicionado ao carrinho!`);
+      alert(`${this.livro.titulo} foi adicionado ao carrinho com quantidade ${this.quantidade}!`);
+    }
+  }
+
+  incrementar(): void {
+    this.quantidade++;
+  }
+
+  decrementar(): void {
+    if (this.quantidade > 1) {
+      this.quantidade--;
     }
   }
 }
