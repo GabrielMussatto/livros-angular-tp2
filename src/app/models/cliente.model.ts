@@ -7,6 +7,7 @@ export class Cliente{
     cep!: string;
     endereco!: string;
     estado!: string;
+    sigla!: string;
     cidade!: string;
     listaFavorito?: number[];
     listaFavoritoCaixaLivro?: number[];

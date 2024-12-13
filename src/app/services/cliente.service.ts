@@ -29,31 +29,28 @@ export class ClienteService {
   findByNome(nome: string, page: number, pageSize: number): Observable<Cliente[]> {
     const headers = this.getHeaders();
     const params = {
-      nome,
       page: page.toString(),
       pageSize: pageSize.toString(),
     };
-    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/nome`, { headers, params });
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/nome/${nome}`, { headers, params });
   }
 
   findByCpf(cpf: string, page: number, pageSize: number): Observable<Cliente[]> {
     const headers = this.getHeaders();
     const params = {
-      cpf,
       page: page.toString(),
       pageSize: pageSize.toString(),
     };
-    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/cpf`, { headers, params });
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/cpf/${cpf}`, { headers, params });
   }
 
   findByEstado(estado: string, page: number, pageSize: number): Observable<Cliente[]> {
     const headers = this.getHeaders();
     const params = {
-      estado,
       page: page.toString(),
       pageSize: pageSize.toString(),
     };
-    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/estado`, { headers, params });
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/estado/${estado}`, { headers, params });
   }
 
   adicionarItemFavorito(idLivro?: number, idCaixaLivro?: number): Observable<void> {
@@ -123,6 +120,7 @@ export class ClienteService {
       cep: cliente.cep,
       endereco: cliente.endereco,
       estado: cliente.estado,
+      sigla: cliente.sigla,
       cidade: cliente.cidade,
       nome: cliente.usuario.nome,
       username: cliente.usuario.username,
@@ -142,6 +140,7 @@ export class ClienteService {
       cep: cliente.cep,
       endereco: cliente.endereco,
       estado: cliente.estado,
+      sigla: cliente.sigla,
       cidade: cliente.cidade,
       nome: cliente.usuario.nome,
       username: cliente.usuario.username,
@@ -160,8 +159,6 @@ export class ClienteService {
     return this.httpClient.get<Cliente>(`${this.baseUrl}/${id}`);
   }
 
-
-
   findAll(page: number, pageSize: number): Observable<Cliente[]> {
     const headers = this.getHeaders();
     const params = {
@@ -178,8 +175,17 @@ export class ClienteService {
 
   countByNome(nome: string): Observable<number> {
     const headers = this.getHeaders();
-    const params = { nome };
-    return this.httpClient.get<number>(`${this.baseUrl}/count/nome`, { headers, params });
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/nome/${nome}`, { headers });
+  }
+
+  countByCpf(cpf: string): Observable<number> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/cpf/${cpf}`, { headers });
+  }
+
+  countByEstado(estado: string): Observable<number> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<number>(`${this.baseUrl}/count/search/estado/${estado}`, { headers });
   }
 
   // Método para contar o total de clientes

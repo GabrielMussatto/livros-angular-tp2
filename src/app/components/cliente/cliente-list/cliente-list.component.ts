@@ -17,11 +17,13 @@ import { CommonModule, NgFor } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CpfPipe } from '../../pipe/cpf.pipe';
+import { TelefonePipe } from '../../pipe/telefone.pipe';
 
 @Component({
   selector: 'app-cliente-list',
   standalone: true,
-  imports: [NgFor,MatSidenavModule, CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
+  imports: [NgFor, CpfPipe, TelefonePipe, MatSidenavModule, CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule,  MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './cliente-list.component.html',
   styleUrls: ['./cliente-list.component.css']
 })
