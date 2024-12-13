@@ -75,7 +75,7 @@
     <!-- ISBN Column -->
     <ng-container matColumnDef="isbn">
       <th mat-header-cell *matHeaderCellDef>ISBN</th>
-      <td mat-cell *matCellDef="let livro">{{ livro.isbn }}</td>
+      <td mat-cell *matCellDef="let livro">{{ livro.isbn | isbn }}</td>
     </ng-container>
 
     <!-- Preco Column -->
