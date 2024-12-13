@@ -16,11 +16,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { TelefonePipe } from '../../pipe/telefone.pipe';
 
 @Component({
   selector: 'app-editora-list',
   standalone: true,
-  imports: [NgFor, MatToolbarModule, MatSidenavModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
+  imports: [NgFor, TelefonePipe, MatToolbarModule, MatSidenavModule, MatIconModule, MatButtonModule, MatTableModule, RouterModule, MatMenuModule, MatPaginatorModule, FormsModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   templateUrl: './editora-list.component.html',
   styleUrls: ['./editora-list.component.css']
 })
