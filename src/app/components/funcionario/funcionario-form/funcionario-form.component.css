@@ -1,0 +1,103 @@
+/* Estilo para a toolbar */
+.toolbar-title {
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    flex: 1;
+    text-align: center;
+  }
+  
+  .titulo{
+    background-color: #1A2E6D; /* Azul Marinho para a toolbar */
+  }
+  
+  .flex-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 2rem;
+    color: #ffffff; 
+    padding: 16px;
+    font-weight: 500;
+  }
+  
+  /* Estilo do contêiner do formulário */
+  .form-container {
+    padding: 2rem;
+    background-color: #FFFACD; /* Amarelo Claro */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 2rem auto;
+    overflow: hidden; /* Para garantir que o arredondamento seja aplicado */
+  }
+  
+  /* Estilo do cartão */
+  mat-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5DC; /* Bege */
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Estilo dos campos de input */
+  .full-width-input {
+    width: 100%;
+    margin-bottom: 1.5rem; /* Espaçamento entre os campos */
+  }
+  
+  .half-width-input {
+    width: 49%;
+    margin-bottom: 1.5rem;
+  }
+  
+  mat-form-field {
+    background-color: #D9D9D9; /* Cinza Claro */
+    border-radius: 15px; /* Bordas arredondadas completas */
+    overflow: hidden; /* Garante que o conteúdo interno não quebre o arredondamento */
+  }
+  
+  mat-form-field .mat-input-element {
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+  }
+  
+  /* Aumenta o espaçamento entre o campo de Fornecedor e Editora */
+  mat-form-field:nth-of-type(6) {
+    margin-bottom: 20px; /* Espaçamento após o campo Fornecedor */
+  }
+  
+  /* Estilo dos campos de telefone */
+  .telefone-fields {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  /* Estilo para ações do cartão */
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  /* Estilo dos botões */
+  button[mat-raised-button] {
+    width: 120px;
+    font-size: 1rem;
+    border-radius: 4px;
+    background-color: #E96A2A; /* Laranja Queimado */
+    color: white;
+  }
+  
+  button[mat-raised-button]:hover {
+    background-color: #F9D56B; /* Amarelo Dourado */
+  }
+  
+  /* Estilo para erros */
+  mat-error {
+    font-size: 0.875rem;
+    color: #D2B48C; /* Marrom Claro */
+  }
+  
