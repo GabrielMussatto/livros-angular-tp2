@@ -28,7 +28,6 @@ import { caixaLivroDetalhadoResolver } from './components/caixaLivro/resolver/ca
 import { AutorDetalhadoListComponent } from './components/autor/autor-detalhado-list/autor-detalhado-list.component';
 import { autorDetalhadoResolver } from './components/autor/resolver/autor-detalhado.resolver';
 import { PaginaInicialComponent } from './components/inicio/pagina-inicial/pagina-inicial.component';
-//import { AdminGuard } from './admin.guard';
 import { LoginFuncionarioComponent } from './components/login/login-funcionario/login-funcionario.component';
 import { LoginClienteComponent } from './components/login/login-cliente/login-cliente.component';
 import { GerenciarComponent } from './components/gerenciar/gerenciar/gerenciar.component';
@@ -37,8 +36,10 @@ import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { authGuard } from './guard/auth.guard';
 import { authClienteGuard } from './guard/auth-cliente.guard';
 import { CupomListComponent } from './components/cupom/cupom-list/cupom-list.component';
-import { cupomResolver } from './components/cupom/resolver/cupom.resolver';
 import { CupomFormComponent } from './components/cupom/cupom-form/cupom-form.component';
+import { cupomResolver } from './components/cupom/resolver/cupom.resolver';
+import { SugestaoFuncionarioComponent } from './components/funcionario/sugestao-funcionario/sugestao-funcionario.component';
+import { SugestaoComponent } from './components/sugestao/sugestao.component';
 
 export const routes: Routes = [
 
@@ -87,6 +88,8 @@ export const routes: Routes = [
             { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores', canActivate: [authGuard] },
             { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor', canActivate: [authGuard] },
             { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, resolve: { fornecedor: fornecedorResolver }, canActivate: [authGuard] },
+
+            { path: 'sugestao', component: SugestaoFuncionarioComponent, title: 'Sugestão', canActivate: [authGuard] },
         ]
     },
     {
@@ -108,6 +111,8 @@ export const routes: Routes = [
             { path: 'favoritos', component: FavoritoComponent, title: 'Favoritos', canActivate: [authClienteGuard]},
 
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [authClienteGuard]},
+
+            { path: 'sugestao', component: SugestaoComponent, title: 'Sugestão'},
 
             { path: 'login', component: LoginClienteComponent, title: 'Login' },
         ]

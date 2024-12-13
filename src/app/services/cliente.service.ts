@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { Cliente } from '../models/cliente.model';
 import { ItemFavorito } from '../models/item-favorito';
+import { Sugestao } from '../models/sugestao.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,15 +66,63 @@ export class ClienteService {
   removerCaixaLivroFavorito(idCaixaLivro: number): Observable<void> {
     return this.removerItemFavorito(idCaixaLivro);
   }
+
+  // Adicionar Sugestão
+  adicionarSugestao(sugestao: string): Observable<Sugestao> {
+    const headers = this.getHeaders();
+    const body = { sugestao };
+    return this.httpClient.post<Sugestao>(
+      `${this.baseUrl}/sugestoes/adicionarSugestao`,
+      body,
+      { headers }
+    );
+  }
+
+  // Buscar Minhas Sugestões
+  findMinhasSugestoes(): Observable<Sugestao[]> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<Sugestao[]>(
+      `${this.baseUrl}/sugestoes/minhasSugestoes`,
+      { headers }
+    );
+  }
  
   // Criar um cliente
   create(cliente: Cliente): Observable<Cliente> {
-    return this.httpClient.post<Cliente>(this.baseUrl, cliente);
+    const data = {
+      cep: cliente.cep,
+      endereco: cliente.endereco,
+      estado: cliente.estado,
+      cidade: cliente.cidade,
+      nome: cliente.usuario.nome,
+      username: cliente.usuario.username,
+      senha: cliente.usuario.senha,
+      dataNascimento: cliente.usuario.dataNascimento,
+      email: cliente.usuario.email,
+      cpf: cliente.usuario.cpf,
+      telefone: cliente.usuario.telefone,
+      idSexo: cliente.usuario.idSexo.id
+    }
+    return this.httpClient.post<Cliente>(this.baseUrl, data);
   }
 
   // Atualizar um cliente
-  update(id: number, cliente: Cliente): Observable<void> {
-    return this.httpClient.put<void>(`${this.baseUrl}/${id}`, cliente);
+  update(cliente: Cliente): Observable<void> {
+    const data = {
+      cep: cliente.cep,
+      endereco: cliente.endereco,
+      estado: cliente.estado,
+      cidade: cliente.cidade,
+      nome: cliente.usuario.nome,
+      username: cliente.usuario.username,
+      senha: cliente.usuario.senha,
+      dataNascimento: cliente.usuario.dataNascimento,
+      email: cliente.usuario.email,
+      cpf: cliente.usuario.cpf,
+      telefone: cliente.usuario.telefone,
+      idSexo: cliente.usuario.idSexo.id
+    }
+    return this.httpClient.put<void>(`${this.baseUrl}/${cliente.id}`, data);
   }
 
   // Buscar cliente por ID
@@ -92,7 +141,7 @@ export class ClienteService {
   }
 
   // Excluir um cliente
-  delete(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  delete(cliente: Cliente): Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/${cliente.id}`);
   }
 }
