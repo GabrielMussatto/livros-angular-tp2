@@ -1,14 +1,136 @@
+/* Container principal */
 .container {
-    margin: 20px;
-  }
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho */
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo para a mensagem de erro */
+.alert {
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Formulário */
+.form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input.form-control {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  border-color: #333;
+}
+
+button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+button[disabled] {
+  background-color: #d6d6d6;
+}
+
+/* Estilo para o carregando */
+.text-center {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}
+
+.btn-primary:hover{
+  color:#ddd; 
+  background-color: #1A2E6D;
+}
+
+/* Lista de sugestões */
+.list-group {
+  list-style: none;
+  padding: 0;
   
+}
+
+.list-group-item {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
+  border-color: #3333335e;
+}
+
+/* Efeito de elevação quando o mouse passa por cima */
+.list-group-item:hover {
+  transform: translateY(-5px); /* Eleva o item */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+}
+
+.list-group-item strong {
+  font-size: 18px;
+  display: block;
+  color: #333;
+}
+
+.list-group-item small {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Mensagem quando não há sugestões */
+.text-muted {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
   .form-inline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
-  
-  .list-group-item {
-    margin-bottom: 5px;
+
+  input.form-control,
+  button {
+    font-size: 14px;
   }
-  
+}

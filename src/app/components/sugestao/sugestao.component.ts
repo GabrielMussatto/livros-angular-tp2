@@ -1,15 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Sugestao } from '../../models/sugestao.model';
 import { ClienteService } from '../../services/cliente.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-sugestao',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [
+    FormsModule,
+     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatIconModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './sugestao.component.html',
-  styleUrl: './sugestao.component.css'
+  styleUrl: './sugestao.component.css',
 })
 export class SugestaoComponent implements OnInit {
   sugestoes: Sugestao[] = [];
@@ -17,7 +36,7 @@ export class SugestaoComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string | null = null;
 
-  constructor(private clienteService: ClienteService) { }
+  constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
     this.buscarMinhasSugestoes();

@@ -1,43 +1,34 @@
 <div class="container">
-    <h1>Minhas Sugestões</h1>
-  
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
+  <h1>Minhas Sugestões</h1>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <form (ngSubmit)="adicionarSugestao()" class="form-inline">
+    <div class="form-group">
+      <label for="novaSugestao">Nova Sugestão:</label>
+      <input
+        type="text"
+        id="novaSugestao"
+        class="form-control"
+        [(ngModel)]="novaSugestao"
+        name="novaSugestao"
+        required
+      />
     </div>
-  
-    <form (ngSubmit)="adicionarSugestao()" class="form-inline">
-      <div class="form-group">
-        <label for="novaSugestao">Nova Sugestão:</label>
-        <input
-          type="text"
-          id="novaSugestao"
-          class="form-control"
-          [(ngModel)]="novaSugestao"
-          name="novaSugestao"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary" [disabled]="loading">
-        {{ loading ? 'Adicionando...' : 'Adicionar' }}
-      </button>
-    </form>
-  
-    <hr />
-  
-    <div *ngIf="loading" class="text-center">
-      <p>Carregando sugestões...</p>
-    </div>
-  
-    <ul class="list-group" *ngIf="!loading && sugestoes.length > 0">
-      <li class="list-group-item" *ngFor="let sugestao of sugestoes">
-        <strong>{{ sugestao.sugestao }}</strong>
-        <br />
-        <small>Data da Sugestão: {{ sugestao.dataSugestao | date:'dd/MM/yyyy' }}</small>
-      </li>
-    </ul>
-  
-    <div *ngIf="!loading && sugestoes.length === 0">
-      <p class="text-muted">Nenhuma sugestão encontrada.</p>
-    </div>
+    <button type="submit" class="btn-primary" [disabled]="loading">
+      {{ loading ? "Adicionando..." : "Adicionar" }}
+    </button>
+  </form>
+  <hr />
+  <div *ngIf="loading" class="text-center"><p>Carregando sugestões...</p></div>
+  <ul class="list-group" *ngIf="!loading && sugestoes.length > 0">
+    <li class="list-group-item" *ngFor="let sugestao of sugestoes">
+      <strong>{{ sugestao.sugestao }}</strong> <br />
+      <small
+        >Data da Sugestão:
+        {{ sugestao.dataSugestao | date : "dd/MM/yyyy" }}</small
+      >
+    </li>
+  </ul>
+  <div *ngIf="!loading && sugestoes.length === 0">
+    <p class="text-muted">Nenhuma sugestão encontrada.</p>
   </div>
-  
+</div>
