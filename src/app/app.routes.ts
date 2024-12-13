@@ -43,6 +43,9 @@ import { SugestaoComponent } from './components/sugestao/sugestao.component';
 import { ClienteListComponent } from './components/cliente/cliente-list/cliente-list.component';
 import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
 import { clienteResolver } from './components/cliente/resolver/cliente.resolver';
+import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
+import { funcionarioResolver } from './components/funcionario/resolver/funcionario.resolver';
+import { FuncionarioFormComponent } from './components/funcionario/funcionario-form/funcionario-form.component';
 
 export const routes: Routes = [
 
@@ -66,6 +69,11 @@ export const routes: Routes = [
             { path: 'clientes', component: ClienteListComponent, title: 'Lista de Clientes', canActivate: [authGuard] },
             { path: 'clientes/new', component: ClienteFormComponent, title: 'Novo Cliente', canActivate: [authGuard] },
             { path: 'clientes/edit/:id', component: ClienteFormComponent, resolve: { cliente: clienteResolver }, canActivate: [authGuard] },
+
+            // Rotas para Funcionario
+            { path: 'funcionarios', component: FuncionarioListComponent, title: 'Lista de Funcionários', canActivate: [authGuard] },
+            { path: 'funcionarios/new', component: FuncionarioFormComponent, title: 'Novo Funcionário', canActivate: [authGuard] },
+            { path: 'funcionarios/edit/:id', component: FuncionarioFormComponent, resolve: { funcionario: funcionarioResolver }, canActivate: [authGuard] },
 
             // Rotas para Caixa de Livros
             { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros', canActivate: [authGuard] },
