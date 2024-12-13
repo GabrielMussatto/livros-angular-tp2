@@ -90,6 +90,10 @@ export class HeaderClienteComponent {
     this.router.navigate(['/favoritos']);
   }
 
+  sugestoes() {
+    this.router.navigate(['/sugestao']);
+  }
+
   verCarrinho() {
     this.router.navigate(['/carrinho']);
   }
