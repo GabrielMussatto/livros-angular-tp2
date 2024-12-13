@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, ObservableLike } from 'rxjs';
 import { Sugestao } from '../models/sugestao.model';
 import { Funcionario } from '../models/funcionario.model';
 
@@ -49,23 +49,48 @@ export class FuncionarioService {
   findByNome(nome: string, page: number, pageSize: number): Observable<Funcionario[]> {
     const headers = this.getHeaders();
     const params = {
-      nome,
       page: page.toString(),
       pageSize: pageSize.toString(),
     };
-    return this.httpClient.get<Funcionario[]>(`${this.baseUrl}/search/nome`, { headers, params });
+    return this.httpClient.get<Funcionario[]>(`${this.baseUrl}/search/nome/${nome}`, { headers, params });
+  }
+
+  findByCargo(cargo: string, page: number, pageSize: number): Observable<Funcionario[]>{
+    const headers = this.getHeaders();
+    const params = {
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Funcionario[]>(`${this.baseUrl}/search/cargo/${cargo}`,  { headers, params });
+  }
+
+  findByCpf(cpf: string, page: number, pageSize: number): Observable<Funcionario[]>{
+    const headers = this.getHeaders();
+    const params = {
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Funcionario[]>(`${this.baseUrl}/search/cpf/${cpf}`, { headers, params });
+  }
+
+  count(): Observable<number> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<number>(`${this.baseUrl}/count`, { headers });
   }
 
   countByNome(nome: string): Observable<number> {
     const headers = this.getHeaders();
-    const params = { nome };
-    return this.httpClient.get<number>(`${this.baseUrl}/count/nome`, { headers, params });
+    return this.httpClient.get<number>(`${this.baseUrl}/count/nome/${nome}`, { headers });
   }
 
-  // Método para contar o total de clientes
-  count(): Observable<number> {
+  countByCargo(cargo: string): Observable<number>{
     const headers = this.getHeaders();
-    return this.httpClient.get<number>(`${this.baseUrl}/count`, { headers });
+    return this.httpClient.get<number>(`${this.baseUrl}/count/cargo/${cargo}`, { headers });
+  }
+
+  countByCpf(cpf: string): Observable<number>{
+    const headers = this.getHeaders();
+    return this.httpClient.get<number>(`${this.baseUrl}/count/cpf/${cpf}`, { headers });
   }
 
   insert(funcionario: Funcionario): Observable<Funcionario> {
