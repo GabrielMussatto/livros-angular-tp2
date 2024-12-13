@@ -56,4 +56,7 @@ export class GerenciarComponent implements OnInit{
   funcionario() {
     this.router.navigateByUrl('/admin/funcionarios');
   }
+  sugestao() {
+    this.router.navigateByUrl('/admin/sugestao');
+  }
 }
