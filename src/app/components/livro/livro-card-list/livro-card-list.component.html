@@ -38,7 +38,7 @@
         <button mat-button color="primary" class="card-button primary-button" (click)="verDescricao(card)">
           {{ card.verDescricao ? "Ocultar Descrição" : "Ver Descrição Breve" }}
         </button>
-        <button mat-button color="accent" class="card-button accent-button">
+        <button mat-button color="accent" class="card-button accent-button" (click)="adicionarAoCarrinho(card)">
           Adicionar ao Carrinho
         </button>
         <button mat-button color="warn" class="card-button warn-button" (click)="favoritar(card)">
