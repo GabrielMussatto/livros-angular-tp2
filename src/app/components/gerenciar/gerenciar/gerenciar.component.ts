@@ -50,4 +50,10 @@ export class GerenciarComponent implements OnInit{
   fornecedor() {
     this.router.navigateByUrl('/admin/fornecedores');
   }
+  cliente() {
+    this.router.navigateByUrl('/admin/clientes');
+  }
+  funcionario() {
+    this.router.navigateByUrl('/admin/funcionarios');
+  }
 }
