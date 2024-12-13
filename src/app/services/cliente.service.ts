@@ -36,6 +36,26 @@ export class ClienteService {
     return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/nome`, { headers, params });
   }
 
+  findByCpf(cpf: string, page: number, pageSize: number): Observable<Cliente[]> {
+    const headers = this.getHeaders();
+    const params = {
+      cpf,
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/cpf`, { headers, params });
+  }
+
+  findByEstado(estado: string, page: number, pageSize: number): Observable<Cliente[]> {
+    const headers = this.getHeaders();
+    const params = {
+      estado,
+      page: page.toString(),
+      pageSize: pageSize.toString(),
+    };
+    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/estado`, { headers, params });
+  }
+
   adicionarItemFavorito(idLivro?: number, idCaixaLivro?: number): Observable<void> {
     const headers = this.getHeaders();
     const params: any = {};
@@ -140,12 +160,6 @@ export class ClienteService {
     return this.httpClient.get<Cliente>(`${this.baseUrl}/${id}`);
   }
 
-  // Buscar cliente por CPF
-  findByCpf(cpf: string): Observable<Cliente[]> {
-    return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/cpf/${cpf}`);
-  }
-
-  // Listar todos os clientes
 
 
   findAll(page: number, pageSize: number): Observable<Cliente[]> {
