@@ -138,3 +138,14 @@
   outline: none; /* Remove o contorno padrão */
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra azul para indicar foco */
 }
+
+.quantidade-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantidade {
+  font-size: 1.2em;
+  font-weight: bold;
+}

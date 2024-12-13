@@ -32,6 +32,15 @@
         </mat-card-content>
 
         <mat-card-actions>
+          <div class="quantidade-control">
+            <button mat-icon-button color="primary" (click)="decrementar()" [disabled]="quantidade <= 1">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <span class="quantidade">{{ quantidade }}</span>
+            <button mat-icon-button color="primary" (click)="incrementar()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
           <button mat-button color="primary" (click)="adicionarAoCarrinho()">Adicionar ao Carrinho</button>
         </mat-card-actions>
       </div>
