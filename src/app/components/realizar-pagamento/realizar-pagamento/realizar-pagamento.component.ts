@@ -13,6 +13,7 @@ import { ClienteService } from '../../../services/cliente.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-realizar-pagamento',
@@ -40,6 +41,7 @@ export class RealizarPagamentoComponent implements OnInit {
   constructor(
     private carrinhoService: CarrinhoService,
     private clienteService: ClienteService,
+    private snackBar: MatSnackBar,
     private router: Router
   ) {}
 
@@ -84,41 +86,41 @@ export class RealizarPagamentoComponent implements OnInit {
       case 'pix':
         this.carrinhoService.finalizarPedidoPix().subscribe({
           next: () => {
-            alert('Pagamento via Pix realizado com sucesso!');
-            this.router.navigateByUrl('/confirmacao-pagamento');
+            this.snackBar.open('Pagamento por pix realizado com sucesso!!', 'Fechar' , {duration: 3000});
+            this.router.navigateByUrl('/acompanharpedido'); // Redireciona
           },
           error: (err) => {
             console.error('Erro ao processar pagamento via Pix:', err);
-            alert('Erro ao processar pagamento via Pix.');
+            this.snackBar.open('Opss... Pagamento por pix falhou. Tente Novamente', 'Fechar' , {duration: 3000});
           },
         });
         break;
       case 'credito':
         this.carrinhoService.finalizarPedidoCartaoCredito(this.cartaoCredito).subscribe({
           next: () => {
-            alert('Pagamento com Cartão de Crédito realizado com sucesso!');
-            this.router.navigateByUrl('/confirmacao-pagamento');
+            this.snackBar.open('Pagamento por Cartão de Crédito realizado com sucesso!!', 'Fechar' , {duration: 3000});
+            this.router.navigateByUrl('/acompanharpedido'); // Redireciona
           },
           error: (err) => {
             console.error('Erro ao processar pagamento com Cartão de Crédito:', err);
-            alert('Erro ao processar pagamento com Cartão de Crédito.');
+            this.snackBar.open('Opss... Pagamento por Cartão de Crédito falhou. Tente Novamente', 'Fechar' , {duration: 3000});
           },
         });
         break;
       case 'boleto':
         this.carrinhoService.finalizarPedidoBoleto().subscribe({
           next: () => {
-            alert('Pagamento com Boleto realizado com sucesso!');
-            this.router.navigateByUrl('/confirmacao-pagamento');
+            this.snackBar.open('Pagamento por Boleto realizado com sucesso!!', 'Fechar' , {duration: 3000});
+            this.router.navigateByUrl('/acompanharpedido'); // Redireciona
           },
           error: (err) => {
             console.error('Erro ao processar pagamento com Boleto:', err);
-            alert('Erro ao processar pagamento com Boleto.');
+            this.snackBar.open('Opss... Pagamento por boleto falhou. Tente Novamente', 'Fechar' , {duration: 3000});
           },
         });
         break;
       default:
-        alert('Método de pagamento inválido!');
+        this.snackBar.open('Opss... Método de pagamento inválido. Tente Novamente', 'Fechar' , {duration: 3000});
     }
   }
 }
