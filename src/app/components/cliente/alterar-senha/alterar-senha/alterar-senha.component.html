@@ -1,32 +1,34 @@
-<mat-card-content>
-    <form [formGroup]="formGroup" class="formulario" novalidate>
-        <!-- Senha -->
-        <mat-form-field appearance="outline" style="width: 100%" class="campos">
-            <mat-label>Senha:</mat-label>
-            <input matInput type="password" placeholder="Digite sua senha" formControlName="senhaAntiga">
-            <mat-error *ngIf="formGroup.get('senhaAntiga')?.hasError('required')">
-                A senha é obrigatória.
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('senhaAntiga')?.hasError('minlength')">
-                A senha deve ter pelo menos 3 caracteres.
-            </mat-error>
-        </mat-form-field>
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="formGroup" class="formulario" novalidate>
+            <!-- Senha -->
+            <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                <mat-label>Senha:</mat-label>
+                <input matInput type="password" placeholder="Digite sua senha" formControlName="senhaAntiga">
+                <mat-error *ngIf="formGroup.get('senhaAntiga')?.hasError('required')">
+                    A senha é obrigatória.
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('senhaAntiga')?.hasError('minlength')">
+                    A senha deve ter pelo menos 3 caracteres.
+                </mat-error>
+            </mat-form-field>
 
-        <!-- Novo Username -->
-        <mat-form-field appearance="outline" style="width: 100%" class="campos">
-            <mat-label>Nova Senha:</mat-label>
-            <input matInput type="password" placeholder="Digite a nova senha" formControlName="novaSenha">
-            <mat-error *ngIf="formGroup.get('novaSenha')?.hasError('required')">
-                A nova senha é obrigatória.
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('novaSenha')?.hasError('minlength')">
-                A senha deve ter pelo menos 3 caracteres.
-            </mat-error>
-        </mat-form-field>
-    </form>
-</mat-card-content>
-<mat-card-actions>
-    <button mat-flat-button mat-button class="botao" (click)="alterarSenha()">
-        Alterar Senha
-    </button>
-</mat-card-actions>
+            <!-- Novo Username -->
+            <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                <mat-label>Nova Senha:</mat-label>
+                <input matInput type="password" placeholder="Digite a nova senha" formControlName="novaSenha">
+                <mat-error *ngIf="formGroup.get('novaSenha')?.hasError('required')">
+                    A nova senha é obrigatória.
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('novaSenha')?.hasError('minlength')">
+                    A senha deve ter pelo menos 3 caracteres.
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button mat-button class="botao" (click)="alterarSenha()">
+            Alterar Senha
+        </button>
+    </mat-card-actions>
+</mat-card>
