@@ -13,12 +13,16 @@
         <tbody>
             <tr *ngFor="let item of itensCarrinho; let i = index">
                 <td>{{ item.titulo }}</td>
-                <td>{{ item.quantidade }}</td>
+                <td>
+                    <button (click)="alterarQuantidade(i, -1)" [disabled]="item.quantidade <= 1">-</button>
+                    {{ item.quantidade }}
+                    <button (click)="alterarQuantidade(i, 1)">+</button>
+                </td>
                 <td>{{ item.preco | currency: 'BRL' }}</td>
                 <td>{{ item.subTotal | currency: 'BRL' }}</td>
                 <td><button (click)="removerItem(i)">Remover</button></td>
             </tr>
-            <p>Total do Carrinho: {{ calcularTotal() | currency: 'BRL' }}</p>
+            <p>SubTotal do Carrinho: {{ calcularTotal() | currency: 'BRL' }}</p>
         </tbody>
     </table>
     <button (click)="limparCarrinho()">Limpar Carrinho</button>

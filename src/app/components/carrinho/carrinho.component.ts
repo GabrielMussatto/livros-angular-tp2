@@ -38,6 +38,7 @@ export class CarrinhoComponent implements OnInit {
       this.carrinhoService.obterCarrinho().subscribe({
         next: (itens) => {
           this.itensCarrinho = itens;
+          this.recalcularSubtotais();
         },
         error: (err) => {
           console.error('Erro ao carregar o carrinho:', err);
@@ -84,13 +85,38 @@ export class CarrinhoComponent implements OnInit {
 
   removerItem(index: number): void {
     this.itensCarrinho.splice(index, 1);
+    this.recalcularSubtotais();
   }
 
   limparCarrinho(): void {
-    this.carrinhoService.limparCarrinho();
+    this.itensCarrinho = [];
+    this.recalcularSubtotais();
   }
 
   calcularTotal(): number {
-    return this.itensCarrinho.reduce((total, item) => total + item.quantidade * (item.preco ?? 0), 0);
+    const total = this.itensCarrinho.reduce(
+      (soma, item) => soma + (item.subTotal ?? 0),
+      0
+    );
+
+    return total;
   }
+
+  recalcularSubtotais(): void {
+    this.itensCarrinho.forEach((item) => {
+        item.subTotal = (item.preco ?? 0) * item.quantidade;
+    });
+  }
+  
+  alterarQuantidade(index: number, delta: number): void {
+    const item = this.itensCarrinho[index];
+    if (item) {
+        item.quantidade += delta;
+        if (item.quantidade < 1) {
+            item.quantidade = 1; // Evitar quantidade zero ou negativa
+        }
+        this.recalcularSubtotais();
+    }
+}
+
 }

@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cliente } from '../models/cliente.model';
 import { ItemFavorito } from '../models/item-favorito';
 import { Sugestao } from '../models/sugestao.model';
+import { Sexo } from '../models/sexo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -115,7 +116,7 @@ export class ClienteService {
   }
  
   // Criar um cliente
-  create(cliente: Cliente): Observable<Cliente> {
+  insert(cliente: Cliente): Observable<Cliente> {
     const data = {
       cep: cliente.cep,
       endereco: cliente.endereco,
@@ -128,14 +129,17 @@ export class ClienteService {
       dataNascimento: cliente.usuario.dataNascimento,
       email: cliente.usuario.email,
       cpf: cliente.usuario.cpf,
-      telefone: cliente.usuario.telefone,
+      telefone: {
+        codigoArea: cliente.usuario.telefone.codigoArea,
+        numero: cliente.usuario.telefone.numero,
+      },
       idSexo: cliente.usuario.idSexo.id
     }
     return this.httpClient.post<Cliente>(this.baseUrl, data);
   }
 
   // Atualizar um cliente
-  update(cliente: Cliente): Observable<void> {
+  update(cliente: Cliente): Observable<Cliente> {
     const data = {
       cep: cliente.cep,
       endereco: cliente.endereco,
@@ -148,10 +152,13 @@ export class ClienteService {
       dataNascimento: cliente.usuario.dataNascimento,
       email: cliente.usuario.email,
       cpf: cliente.usuario.cpf,
-      telefone: cliente.usuario.telefone,
+      telefone: {
+        codigoArea: cliente.usuario.telefone.codigoArea,
+        numero: cliente.usuario.telefone.numero,
+      },
       idSexo: cliente.usuario.idSexo.id
     }
-    return this.httpClient.put<void>(`${this.baseUrl}/${cliente.id}`, data);
+    return this.httpClient.put<Cliente>(`${this.baseUrl}/${cliente.id}`, data);
   }
 
   // Buscar cliente por ID
@@ -192,5 +199,9 @@ export class ClienteService {
   count(): Observable<number> {
     const headers = this.getHeaders();
     return this.httpClient.get<number>(`${this.baseUrl}/count`, { headers });
+  }
+
+  findSexos(): Observable<Sexo[]> {
+    return this.httpClient.get<Sexo[]>(`${this.baseUrl}/sexos`);
   }
 }
