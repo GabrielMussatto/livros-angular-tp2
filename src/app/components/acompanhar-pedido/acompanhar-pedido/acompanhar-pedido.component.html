@@ -1,0 +1,13 @@
+<div class="acompanhar-pedido-container">
+    <h1>Acompanhamento do Pedido</h1>
+    <p>Obrigado por comprar conosco. Você fez uma ótima compra, esperamos que goste!!</p>
+    <p>Estamos processando a entrega do seu pedido. Por favor, aguarde...</p>
+    
+    <mat-progress-bar 
+      mode="determinate" 
+      [value]="progressValue">
+    </mat-progress-bar>
+    
+    <p>Progresso: {{ progressValue }}%</p>
+  </div>
+  
