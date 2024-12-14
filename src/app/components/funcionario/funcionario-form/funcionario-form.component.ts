@@ -26,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { Usuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-funcionario-form',
@@ -105,70 +106,75 @@ export class FuncionarioFormComponent implements OnInit {
   }
 
   initializeForm(): void {
-    const funcionario: Funcionario =
-      this.activatedRoute.snapshot.data['funcionario'];
-
-    // Carregando valores relacionados do objeto "funcionario"
+    const funcionario: Funcionario = this.activatedRoute.snapshot.data['funcionario'];
+  
+    // Verifica se o objeto "funcionario" existe antes de acessar seus campos
     const sexo = funcionario?.usuario?.idSexo
       ? this.sexos.find((s) => s.id === funcionario.usuario.idSexo.id)
       : null;
-    
-
+  
+    const telefone = funcionario?.usuario?.telefone || {};
+  
+    // Garantir que "usuario" não seja undefined
+    if (!funcionario.usuario) {
+      funcionario.usuario = {} as Usuario;  // Inicializa "usuario" caso esteja undefined
+    }
+  
     // Inicializando o formGroup com os valores recuperados
     this.formGroup = this.formBuilder.group({
-      id: [funcionario && funcionario.id ? funcionario.id : null],
+      id: [funcionario?.id || null],
       nome: [
-        funcionario?.usuario?.nome || '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(60),
-        ]),
+        funcionario.usuario?.nome || '',
+        Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(60)]),
       ],
       username: [
-        funcionario?.usuario?.username || '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(30),
-        ]),
+        funcionario.usuario?.username || '',
+        Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
       ],
       senha: [
-        funcionario?.usuario?.senha || '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-        ]),
+        funcionario.usuario?.senha || '',
+        Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       ],
       dataNascimento: [
-        funcionario?.usuario?.dataNascimento || '',
+        funcionario.usuario?.dataNascimento || '',
         Validators.required,
       ],
       email: [
-        funcionario?.usuario?.email || '',
+        funcionario.usuario?.email || '',
         Validators.compose([Validators.required, Validators.email]),
       ],
-      sexo: [sexo, Validators.required], // Aqui você já está passando o objeto `sexo`
+      sexo: [sexo, Validators.required],  // Atribui o valor de sexo
       cpf: [
-        funcionario?.usuario?.cpf || '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ]),
+        funcionario.usuario?.cpf || '',
+        Validators.compose([Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
       ],
       salario: [
-        funcionario?.salario || '',
+        funcionario.salario || '',
         Validators.compose([Validators.required, Validators.min(0)]),
       ],
-      cargo: [funcionario?.cargo || '', Validators.required],
+      cargo: [funcionario.cargo || '', Validators.required],
       telefone: this.formBuilder.group({
-        codigoArea: [(funcionario.usuario && funcionario.usuario.telefone && funcionario.usuario.telefone.codigoArea) ? funcionario.usuario.telefone.codigoArea : '', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(3)])],
-        numero: [(funcionario.usuario && funcionario.usuario.telefone && funcionario.usuario.telefone.numero) ? funcionario.usuario.telefone.numero : '', Validators.compose([Validators.required, Validators.minLength(9), Validators.maxLength(9)])]
-      })
+        codigoArea: [
+          telefone?.codigoArea || '',
+          [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(3),
+          ],
+        ],
+        numero: [
+          telefone?.numero || '',
+          [
+            Validators.required,
+            Validators.minLength(9),
+            Validators.maxLength(9),
+          ],
+        ],
+      }),
     });
   }
+  
+  
 
   salvar(): void {
     this.formGroup.markAllAsTouched();  // Marca todos os campos como tocados
@@ -176,16 +182,36 @@ export class FuncionarioFormComponent implements OnInit {
     if (this.formGroup.valid) {  // Verifica se o formulário é válido
       const funcionario = this.formGroup.value;  // Recupera os dados do formulário
   
+      // Verifica se o "usuario" existe dentro de "funcionario"
+      if (!funcionario.usuario) {
+        funcionario.usuario = {};  // Cria o objeto usuario caso não exista
+      }
+  
+      // Verifica se o objeto "sexo" está sendo enviado corretamente e atribui apenas o id
+      if (funcionario.sexo && funcionario.sexo.id) {
+        funcionario.usuario.idSexo = funcionario.sexo.id;  // Atribui o id do sexo ao usuário
+        delete funcionario.sexo;  // Remove o campo "sexo" do objeto, pois a API espera apenas o id
+      }
+  
+      // Verifica se o telefone está sendo enviado corretamente
+      if (funcionario.telefone) {
+        funcionario.usuario.telefone = funcionario.telefone;
+      }
+  
+      // Verifica se o campo "usuario" está completo e com todos os dados
+      if (!funcionario.usuario.id) {
+        funcionario.usuario.id = null;  // Certifica-se de que o id do usuário seja nulo se for uma criação
+      }
+  
       // Determina se a operação será de inserção ou atualização
       const operacao = funcionario.id == null
-        ? this.funcionarioService.insert(funcionario)  // Caso o ID seja nulo, realiza a inserção
-        : this.funcionarioService.update(funcionario);  // Caso contrário, realiza a atualização
+        ? this.funcionarioService.insert(funcionario)
+        : this.funcionarioService.update(funcionario);
   
       // Subscrição para lidar com a resposta da operação
       operacao.subscribe({
         next: (response) => {  // Manipula a resposta da operação
           if (response) {
-            // Caso a operação seja de inserção e retorne um funcionário
             this.router.navigateByUrl('/admin/funcionarios');
             this.snackBar.open('O Funcionário foi salvo com Sucesso!', 'Fechar', { duration: 3000 });
           }
@@ -198,8 +224,6 @@ export class FuncionarioFormComponent implements OnInit {
       });
     }
   }
-  
-
 
   tratarErros(errorResponse: HttpErrorResponse): void {
     if (errorResponse.status === 400) {
