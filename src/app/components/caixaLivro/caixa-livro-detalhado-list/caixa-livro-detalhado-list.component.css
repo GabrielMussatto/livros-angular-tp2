@@ -1,142 +1,170 @@
 .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Garante que o contêiner ocupe toda a altura da tela */
-  }
-  
-  .loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .loading-content mat-progress-spinner {
-    margin-bottom: 10px; /* Espaço entre o spinner e o texto */
-  }
-  
-  .loading-content p {
-    font-size: 1.1em;
-    color: #555; /* Ajusta a cor para ficar mais suave */
-  }
-  
-  .caixa-livro-detalhado-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .caixa-livro-card {
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Garante que o contêiner ocupe toda a altura da tela */
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.loading-content mat-progress-spinner {
+  margin-bottom: 10px;
+  /* Espaço entre o spinner e o texto */
+}
+
+.loading-content p {
+  font-size: 1.1em;
+  color: #555;
+  /* Ajusta a cor para ficar mais suave */
+}
+
+.caixa-livro-detalhado-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.caixa-livro-card {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.caixa-livro-detalhado-content {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.caixa-livro-imagem {
+  flex: 1;
+  padding-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.caixa-livro-imagem-img {
+  width: 250px;
+  /* Largura fixa */
+  height: 350px;
+  /* Altura fixa */
+  border-radius: 10px;
+  object-fit: cover;
+  /* Cobre todo o espaço disponível sem distorcer */
+  object-position: center;
+  /* Centraliza a parte visível da imagem */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Adiciona uma leve sombra */
+}
+
+.caixa-livro-info {
+  flex: 2;
+  padding-left: 20px;
+}
+
+mat-card-header {
+  margin-bottom: 15px;
+}
+
+mat-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+mat-card-subtitle {
+  font-size: 1.2em;
+  color: gray;
+}
+
+mat-card-content {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+mat-card-actions {
+  margin-top: 15px;
+}
+
+@media (max-width: 768px) {
   .caixa-livro-detalhado-content {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+    flex-direction: column;
   }
-  
+
   .caixa-livro-imagem {
-    flex: 1;
-    padding-right: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-right: 0;
+    margin-bottom: 20px;
   }
-  
-  .caixa-livro-imagem-img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
-  }
-  
+
   .caixa-livro-info {
-    flex: 2;
-    padding-left: 20px;
+    padding-left: 0;
   }
-  
-  mat-card-header {
-    margin-bottom: 15px;
+
+  .caixa-livro-imagem-img {
+    max-width: 100%;
   }
-  
-  mat-card-title {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
-  mat-card-subtitle {
-    font-size: 1.2em;
-    color: gray;
-  }
-  
-  mat-card-content {
-    font-size: 1em;
-    line-height: 1.6;
-  }
-  
-  mat-card-actions {
-    margin-top: 15px;
-  }
-  
-  @media (max-width: 768px) {
-    .caixa-livro-detalhado-content {
-      flex-direction: column;
-    }
-  
-    .caixa-livro-imagem {
-      padding-right: 0;
-      margin-bottom: 20px;
-    }
-  
-    .caixa-livro-info {
-      padding-left: 0;
-    }
-  
-    .caixa-livro-imagem-img {
-      max-width: 100%;
-    }
-  }
-  
-  /* Estilo para o botão "Voltar" */
+}
+
+/* Estilo para o botão "Voltar" */
 .voltar-button {
-  background-color: #f0f0f0; /* Cor de fundo cinza claro */
-  color: #007bff; /* Cor do texto azul */
-  border: 1px solid #007bff; /* Borda azul */
-  border-radius: 30%; /* Bordas arredondadas para um formato circular */
-  cursor: pointer; /* Aparece o cursor de "mãozinha" para indicar que é clicável */
-  transition: background-color 0.3s, transform 0.2s; /* Transições suaves para mudanças de cor e tamanho */
-  display: inline-flex; /* Para alinhar o ícone (se houver) com o texto */
-  justify-content: center; /* Alinha horizontalmente o conteúdo */
-  align-items: center; /* Alinha verticalmente o conteúdo */
-  width: 45px; /* Define uma largura fixa pequena */
-  height: 45px; /* Define uma altura fixa para que o botão seja quase quadrado */
-  margin-top: 20px; /* Espaço do topo (aumente ou diminua conforme necessário) */
-  margin-left: 20px; /* Espaço da direita */
+  background-color: #f0f0f0;
+  /* Cor de fundo cinza claro */
+  color: #007bff;
+  /* Cor do texto azul */
+  border: 1px solid #007bff;
+  /* Borda azul */
+  border-radius: 30%;
+  /* Bordas arredondadas para um formato circular */
+  cursor: pointer;
+  /* Aparece o cursor de "mãozinha" para indicar que é clicável */
+  transition: background-color 0.3s, transform 0.2s;
+  /* Transições suaves para mudanças de cor e tamanho */
+  display: inline-flex;
+  /* Para alinhar o ícone (se houver) com o texto */
+  justify-content: center;
+  /* Alinha horizontalmente o conteúdo */
+  align-items: center;
+  /* Alinha verticalmente o conteúdo */
+  width: 45px;
+  /* Define uma largura fixa pequena */
+  height: 45px;
+  /* Define uma altura fixa para que o botão seja quase quadrado */
+  margin-top: 20px;
+  /* Espaço do topo (aumente ou diminua conforme necessário) */
+  margin-left: 20px;
+  /* Espaço da direita */
 }
 
 /* Efeito ao passar o mouse sobre o botão */
 .voltar-button:hover {
-  background-color: #e6f2ff; /* Cor de fundo mais clara quando o mouse passa */
-  transform: translateY(-2px); /* Efeito de levantar o botão */
+  background-color: #e6f2ff;
+  /* Cor de fundo mais clara quando o mouse passa */
+  transform: translateY(-2px);
+  /* Efeito de levantar o botão */
 }
 
 /* Efeito ao clicar no botão */
 .voltar-button:active {
-  background-color: #cce0ff; /* Cor de fundo ainda mais clara quando pressionado */
-  transform: translateY(2px); /* Efeito de pressionar o botão para baixo */
+  background-color: #cce0ff;
+  /* Cor de fundo ainda mais clara quando pressionado */
+  transform: translateY(2px);
+  /* Efeito de pressionar o botão para baixo */
 }
 
 /* Efeito de foco no botão */
 .voltar-button:focus {
-  outline: none; /* Remove o contorno padrão */
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra azul para indicar foco */
+  outline: none;
+  /* Remove o contorno padrão */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+  /* Adiciona uma sombra azul para indicar foco */
 }
 
 .quantidade-control {
