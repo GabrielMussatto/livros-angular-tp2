@@ -15,6 +15,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ClienteService } from '../../../services/cliente.service';
 import { AuthService } from '../../../services/auth.service';
+import { ItemPedido } from '../../../models/item-pedido';
+import { CarrinhoService } from '../../../services/carrinho.service';
 
 
 type Card = {
@@ -53,6 +55,7 @@ export class CaixaLivroCardListComponent implements OnInit{
   constructor(
     private caixaLivroService: CaixaLivroService,
     private clienteService: ClienteService,
+    private carrinhoService: CarrinhoService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -241,6 +244,24 @@ export class CaixaLivroCardListComponent implements OnInit{
     }
     this.cards.set(ordenarCards);
   }
+
+  adicionarAoCarrinho(card: Card): void {
+      if (!this.authService.isLoggedIn()) {
+        this.snackBar.open('Você precisa estar logado para adicionar ao carrinho.', 'Fechar', { duration: 3000 });
+        return;
+      }
+    
+      const item: ItemPedido = {
+        idCaixaLivro: card.id,
+        titulo: card.nome,
+        preco: card.preco,
+        quantidade: 1 // Quantidade padrão
+         // Inicialmente o subtotal é o preço * quantidade
+      };
+    
+      this.carrinhoService.adicionarAoCarrinho(item);
+      this.snackBar.open('Livro adicionado ao carrinho com sucesso.', 'Fechar', { duration: 3000 });
+    }
 
 }
 
