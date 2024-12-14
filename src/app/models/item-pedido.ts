@@ -6,4 +6,5 @@ export interface ItemPedido {
     quantidade: number;
     desconto?: number;
     subTotal?: number;
+    imageUrl?: string;
 }
