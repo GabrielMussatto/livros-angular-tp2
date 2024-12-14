@@ -1,108 +1,109 @@
-<div class="welcome-message">
-  Seja Bem-Vindo,
-  <span class="username">{{ usuarioLogado?.nome }}</span>!
+<div class="tudo">
+
+  <div class="welcome-message">
+    Seja Bem-Vindo,
+    <span class="username">{{ usuarioLogado?.nome }}</span>!
+  </div>
+
+  <div class="gerenciar-container">
+    <mat-card class="mat-elevation-z3" (click)="autor()">
+      <mat-card-header>
+        <mat-icon>person</mat-icon>
+        <mat-card-title>Autores</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os autores cadastrados.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="livro()">
+      <mat-card-header>
+        <mat-icon>menu_book</mat-icon>
+        <mat-card-title>Livros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os livros disponíveis.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="caixaLivros()">
+      <mat-card-header>
+        <mat-icon>inventory_2</mat-icon>
+        <mat-card-title>Caixas de Livros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie as caixas de livros.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="genero()">
+      <mat-card-header>
+        <mat-icon>style</mat-icon>
+        <mat-card-title>Gêneros</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os gêneros literários.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="cupom()">
+      <mat-card-header>
+        <mat-icon>redeem</mat-icon>
+        <mat-card-title>Cupons</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os cupons de desconto.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="editora()">
+      <mat-card-header>
+        <mat-icon>business</mat-icon>
+        <mat-card-title>Editoras</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie as editoras cadastradas.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="fornecedor()">
+      <mat-card-header>
+        <mat-icon>local_shipping</mat-icon>
+        <mat-card-title>Fornecedores</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os fornecedores.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="cliente()">
+      <mat-card-header>
+        <mat-icon>groups_2</mat-icon>
+        <mat-card-title>Cliente</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os Clientes.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="funcionario()">
+      <mat-card-header>
+        <mat-icon>engineering</mat-icon>
+        <mat-card-title>Funcionários</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Gerencie os Funcionários.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z3" (click)="sugestao()">
+      <mat-card-header>
+        <mat-icon>lightbulb</mat-icon>
+        <mat-card-title>Sugestões</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Veja as Sugestões.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
-
-<div class="gerenciar-container">
-  <mat-card class="mat-elevation-z3" (click)="autor()">
-    <mat-card-header>
-      <mat-icon>person</mat-icon>
-      <mat-card-title>Autores</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os autores cadastrados.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="livro()">
-    <mat-card-header>
-      <mat-icon>menu_book</mat-icon>
-      <mat-card-title>Livros</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os livros disponíveis.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="caixaLivros()">
-    <mat-card-header>
-      <mat-icon>inventory_2</mat-icon>
-      <mat-card-title>Caixas de Livros</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie as caixas de livros.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="genero()">
-    <mat-card-header>
-      <mat-icon>style</mat-icon>
-      <mat-card-title>Gêneros</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os gêneros literários.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="cupom()">
-    <mat-card-header>
-      <mat-icon>redeem</mat-icon>
-      <mat-card-title>Cupons</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os cupons de desconto.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="editora()">
-    <mat-card-header>
-      <mat-icon>business</mat-icon>
-      <mat-card-title>Editoras</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie as editoras cadastradas.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="fornecedor()">
-    <mat-card-header>
-      <mat-icon>local_shipping</mat-icon>
-      <mat-card-title>Fornecedores</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os fornecedores.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="cliente()">
-    <mat-card-header>
-      <mat-icon>groups_2</mat-icon>
-      <mat-card-title>Cliente</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os Clientes.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="funcionario()">
-    <mat-card-header>
-      <mat-icon>engineering</mat-icon>
-      <mat-card-title>Funcionários</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Gerencie os Funcionários.</p>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="mat-elevation-z3" (click)="sugestao()">
-    <mat-card-header>
-      <mat-icon>lightbulb</mat-icon>
-      <mat-card-title>Sugestões</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Veja as Sugestões.</p>
-    </mat-card-content>
-  </mat-card>
-</div>
-
-

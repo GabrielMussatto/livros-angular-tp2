@@ -28,3 +28,7 @@ mat-card:hover {
 .welcome-message .username {
   color: #ff5722; /* Destaque para o nome do usuário */
 }
+
+.tudo{
+  height: 100vh;
+}

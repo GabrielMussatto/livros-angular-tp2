@@ -30,7 +30,7 @@ export class FuncionarioListComponent implements OnInit {
   funcionarios: Funcionario[] = [];
   displayedColumns: string[] = [
     'linha', 'id', 'nome', 'username', 'dataNascimento', 'email', 'cpf', 'telefone',
-    'sexo', 'cargo', 'salario', 'acao'
+    'sexo', 'cargo', 'salario'
   ];
 
   totalRecords = 0;
@@ -121,28 +121,5 @@ export class FuncionarioListComponent implements OnInit {
     this.page = 0; // Reinicia a página ao aplicar filtro
     this.carregarFuncionarios();
     this.snackBar.open('O filtro foi aplicado com sucesso!', 'Fechar', { duration: 3000 });
-  }
-
-  // Excluir cliente
-  excluir(funcionario: Funcionario): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { message: 'Deseja realmente excluir este funcionário? Não será possível reverter.' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.funcionarioService.delete(funcionario).subscribe({
-          next: () => {
-            this.funcionarios = this.funcionarios.filter(c => c.id !== funcionario.id);
-            this.totalRecords--;
-            this.snackBar.open('Funcionario excluído com sucesso!', 'Fechar', { duration: 3000 });
-          },
-          error: (err) => {
-            console.error('Erro ao tentar excluir o funcionario:', err);
-            this.snackBar.open('Erro ao tentar excluir o funcionario', 'Fechar', { duration: 3000 });
-          }
-        });
-      }
-    });
   }
 }

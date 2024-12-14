@@ -1,0 +1,16 @@
+.acompanhar-pedido-container {
+    text-align: center;
+    margin: 50px auto;
+    width: 50%;
+  }
+  
+  mat-progress-bar {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  p {
+    margin-top: 15px;
+    font-size: 1.2rem;
+  }
+  

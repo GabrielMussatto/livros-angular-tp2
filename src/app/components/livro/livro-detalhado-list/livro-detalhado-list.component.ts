@@ -75,7 +75,7 @@ export class LivroDetalhadoListComponent implements OnInit {
 
       };
       this.carrinhoService.adicionarAoCarrinho(item);
-      alert(`${this.livro.titulo} foi adicionado ao carrinho com quantidade ${this.quantidade}!`);
+      this.snackBar.open(`O livro ${this.livro.titulo} foi adicionado ${this.quantidade} ao carrinho.`, 'Fechar' , {duration: 3000});
     }
   }
 
