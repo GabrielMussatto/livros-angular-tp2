@@ -59,20 +59,7 @@ export class LoginClienteComponent implements OnInit{
     }
   }
 
-  // onCadastroSubmit(): void {
-  //   if (this.cadastroForm.valid) {
-  //     const { emailCadastro } = this.cadastroForm.value;
-  //     this.authService.register(emailCadastro).subscribe(
-  //       () => {
-  //         this.snackBar.open('Cadastro realizado com sucesso', 'Close', { duration: 3000 });
-  //         this.router.navigate(['/inicio']);
-  //       },
-  //       (error) => {
-  //         this.snackBar.open('Erro ao cadastrar', 'Close', { duration: 3000 });
-  //       }
-  //     );
-  //   } else {
-  //     this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
-  //   }
-  // }
+  cadastrar(){
+    this.router.navigateByUrl('/cadastreSe');
+  }
 }

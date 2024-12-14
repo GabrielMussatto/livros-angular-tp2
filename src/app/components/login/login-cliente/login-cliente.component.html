@@ -19,24 +19,10 @@
       <button mat-raised-button class="login-button" color="primary" type="submit">
         Login
       </button>
+
+      <button mat-raised-button class="cadastrar-button" color="primary" type="submit" (click)="cadastrar()">
+        Cadastrar-Se
+      </button>
     </form>
   </div>
 </div>
-
-<!-- <mat-divider [vertical]="true"></mat-divider>
-
-    <form [formGroup]="cadastroForm" (ngSubmit)="onCadastroSubmit()" class="form">
-        <div>
-            <h1 class="h1">Cadastrar como novo cliente</h1>
-        </div>
-
-        <div class="flex-column">
-          <label>Email</label>
-        </div>
-        <div class="inputForm">
-          <mat-icon>alternate_email</mat-icon>
-          <input matInput placeholder="Enter your Email" formControlName="emailCadastro" type="text" required>
-          <mat-error *ngIf="cadastroForm.get('emailCadastro')!.hasError('required')"></mat-error>
-        </div>
-        <button class="button-submit" type="submit">Prosseguir</button>
-    </form> -->
