@@ -67,6 +67,7 @@ export class CarrinhoComponent implements OnInit {
           next: (carrinho) => {
             this.carrinhoId = carrinho.id;
             alert('Pedido fechado com sucesso!');
+            this.router.navigateByUrl('/realizarPagamento');
           },
           error: (err) => {
             console.error('Erro ao fechar o pedido:', err);
@@ -75,16 +76,6 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
-  finalizarPedido(): void {
-    this.carrinhoService.finalizarPedido().subscribe({
-      next: () => {
-        alert('Pedido finalizado com sucesso!');
-      },
-      error: (err) => {
-        console.error('Erro ao finalizar o pedido:', err);
-      },
-    });
-  }
 
   removerItem(index: number): void {
     this.itensCarrinho.splice(index, 1);
