@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ItemPedido } from '../models/item-pedido';
+import { CartaoCredito } from '../models/cartao-credito.model';
 
 
 @Injectable({
@@ -110,10 +111,22 @@ export class CarrinhoService {
     localStorage.removeItem(`carrinho_${this.clienteAtualId}`);
   }
 
-  finalizarPedido(): Observable<any> {
+  finalizarPedidoPix(): Observable<any> {
     const token = localStorage.getItem('token'); // Obtenha o token do localStorage
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.patch(`${this.apiUrl}/search/pagar-Pix`, null, { headers });
+  }
+
+  finalizarPedidoBoleto(): Observable<any> {
+    const token = localStorage.getItem('token'); // Obtenha o token do localStorage
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.patch(`${this.apiUrl}/search/pagar-Boleto`, null, { headers });
+  }
+
+  finalizarPedidoCartaoCredito(cartao: CartaoCredito): Observable<CartaoCredito> {
+    const token = localStorage.getItem('token'); // Obtenha o token do localStorage
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<CartaoCredito>(`${this.apiUrl}/search/pagar-Cartao-Credito`, cartao, { headers });
   }
 
 }
