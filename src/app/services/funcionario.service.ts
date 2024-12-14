@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ObservableLike } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Sugestao } from '../models/sugestao.model';
 import { Funcionario } from '../models/funcionario.model';
 import { Sexo } from '../models/sexo.model';
@@ -131,17 +131,21 @@ export class FuncionarioService {
       dataNascimento: funcionario.usuario.dataNascimento,
       email: funcionario.usuario.email,
       cpf: funcionario.usuario.cpf,
+      idSexo: funcionario.usuario.idSexo.id, 
       telefone: {
         codigoArea: funcionario.usuario.telefone.codigoArea,
         numero: funcionario.usuario.telefone.numero,
       },
-      idSexo: funcionario.usuario.idSexo.id,
+      // Verifica se idSexo existe antes de acessar seu id
     };
+  
+    console.log('Enviando para o backend:', data); // Log de depuração
+  
     return this.httpClient.post<Funcionario>(this.baseUrl, data);
   }
 
   // Atualizar um cliente
-  update(funcionario: Funcionario): Observable<void> {
+  update(funcionario: Funcionario): Observable<Funcionario> {
     const data = {
       salario: funcionario.salario,
       cargo: funcionario.cargo,
@@ -157,7 +161,7 @@ export class FuncionarioService {
       },
       idSexo: funcionario.usuario.idSexo.id,
     };
-    return this.httpClient.put<void>(`${this.baseUrl}/${funcionario.id}`, data);
+    return this.httpClient.put<Funcionario>(`${this.baseUrl}/${funcionario.id}`, data);
   }
 
   delete(funcionario: Funcionario): Observable<any> {
