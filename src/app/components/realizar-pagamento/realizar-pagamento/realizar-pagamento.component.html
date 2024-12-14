@@ -1,0 +1,95 @@
+<div class="realizar-pagamento-container mat-elevation-z4">
+  <mat-card class="payment-card">
+    <mat-card-header>
+      <mat-card-title>Realizar Pagamento</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="currentStep === 1">
+      <h2>Dados do Cliente</h2>
+      <p><strong>Nome:</strong> {{ cliente.nome }}</p>
+
+      <div class="itens-carrinho">
+        <h3>Itens no Carrinho</h3>
+        <ul>
+          <li *ngFor="let item of itensCarrinho">
+            {{ item.titulo }} - {{ item.subTotal | currency : "BRL" : "symbol" : "1.2-2" }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="botoes-container">
+        <button mat-raised-button color="primary" (click)="avancar()">Avançar</button>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="currentStep === 2">
+      <h2>Escolha o Método de Pagamento</h2>
+      <mat-radio-group [(ngModel)]="metodoPagamento">
+        <mat-radio-button value="pix">Pix</mat-radio-button>
+        <mat-radio-button value="credito">Cartão de Crédito</mat-radio-button>
+        <mat-radio-button value="boleto">Boleto</mat-radio-button>
+      </mat-radio-group>
+
+      <div *ngIf="metodoPagamento === 'credito'">
+        <h3>Cadastro do Cartão de Crédito</h3>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Número do Cartão</mat-label>
+          <input matInput [(ngModel)]="cartaoCredito.numeroCartao" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Nome Impresso</mat-label>
+          <input matInput [(ngModel)]="cartaoCredito.nomeImpressaoTitular" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Validade</mat-label>
+          <input matInput [(ngModel)]="cartaoCredito.validade" placeholder="ex: 2022-03-10" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>CVC</mat-label>
+          <input matInput type="number" [(ngModel)]="cartaoCredito.cvc" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>CPF do Titular</mat-label>
+          <input matInput type="text" [(ngModel)]="cartaoCredito.cpfTitular" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Bandeira do Cartão</mat-label>
+          <mat-select [(ngModel)]="cartaoCredito.bandeiraCartao" required>
+            <mat-option value="1">Visa</mat-option>
+            <mat-option value="2">MasterCard</mat-option>
+            <mat-option value="3">Elo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="botoes-container">
+        <button mat-raised-button color="accent" (click)="voltar()">Voltar</button>
+        <button mat-raised-button color="primary" (click)="avancar()">Avançar</button>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="currentStep === 3">
+      <h2>Resumo do Pedido</h2>
+      <p><strong>Total do Pedido:</strong>{{ totalPedido | currency : "BRL" : "symbol" : "1.2-2" }}</p>
+
+      <div class="metodo-pagamento">
+        <mat-radio-group [(ngModel)]="metodoPagamento">
+          <mat-radio-button value="pix">Pix</mat-radio-button>
+          <mat-radio-button value="credito">Cartão de Crédito</mat-radio-button>
+          <mat-radio-button value="boleto">Boleto</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="botoes-container">
+        <button mat-raised-button color="accent" (click)="voltar()">Voltar</button>
+        <button mat-raised-button color="primary" (click)="realizarPagamento()">Realizar Pagamento</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
