@@ -4,6 +4,10 @@
 
 }
 
+/* Importação de uma fonte diferenciada para os cupons */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap');
+
+/* Estilo para o carrossel de cupons */
 .cupom-carousel {
     display: flex;
     align-items: center;
@@ -12,40 +16,135 @@
     margin: 20px auto;
     width: 80%;
     max-width: 600px;
-  }
-  
-  .cupom-card {
+    transition: transform 0.9s ease-in-out; /* Efeito de transição suave */
+}
+
+/* Card do cupom */
+/* Estilo do carrossel de cupons */
+.cupom-card {
     flex: 1;
     text-align: center;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    position: relative;
+    overflow: hidden;
+    /* Adiciona um efeito de transição suave */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
   }
   
-  .carousel-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 2rem;
-    color: #555;
+  /* Efeito de hover no card de cupom */
+  .cupom-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Título do cupom */
+  .cupom-card mat-card-title {
+    font-size: 1.5em; /* Tamanho da fonte maior */
+    font-weight: 700; /* Fonte mais grossa */
+    color: #ff6347; /* Cor vibrante para chamar atenção */
+    transition: transform 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px;
+  }
+  
+  /* Efeito no título ao passar o mouse */
+  .cupom-card:hover mat-card-title {
+    transform: scale(1.1);
+    color: #d9534f; /* Cor mais intensa no hover */
+  }
+  
+  /* Transição para o conteúdo do carrossel de cupons */
+  .cupom-carousel .carousel-content {
+    display: flex;
+    gap: 1%;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+    padding: 10px;
+    overflow: hidden;
+  }
+  
+  .cupom-carousel .carousel-content mat-card {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+  }
+  
+  /* Transição suave no movimento do carrossel de cupons */
+  .cupom-carousel .carousel-content mat-card:nth-child(even) {
+    opacity: 0;
+  }
+  
+  .cupom-carousel .carousel-content mat-card:nth-child(odd) {
+    opacity: 1;
+  }
+  
+  /* Efeito ao navegar pelo carrossel */
+  .cupom-carousel button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
   }
   
-  .carousel-btn.left {
-    left: -40px;
+  .cupom-carousel button:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
   }
   
-  .carousel-btn.right {
-    right: -40px;
+  button mat-icon {
+    color: #333;
   }
-  
-  .no-cupons {
-    text-align: center;
-    color: #888;
-    font-size: 1.2rem;
-  }
+/* Botões de navegação do carrossel */
+button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    padding: 0;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+button mat-icon {
+    color: #333;
+}
+
+button:nth-of-type(1) {
+    left: 15px;
+}
+
+button:nth-of-type(2) {
+    right: 15px;
+}
+
+/* Desabilita o botão quando necessário */
+button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
   
 
 /* Estilo do carrossel */

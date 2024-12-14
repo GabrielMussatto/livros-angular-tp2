@@ -108,7 +108,6 @@ export class PaginaInicialComponent implements OnInit {
   }
 
   carregarCupons(): void {
-    this.carregando = true;
   
     this.cupomService.findAll().subscribe(
       (cupons: Cupom[]) => {
@@ -116,12 +115,10 @@ export class PaginaInicialComponent implements OnInit {
   
         console.log('Cupons carregados:', this.cupons);
   
-        this.carregando = false;
   
         // Só inicia o carrossel se houver cupons
-        if (this.cupons.length > 0) {
           this.iniciarCarrosselCupons();
-        }
+        
       },
       (error) => {
         console.error('Erro ao carregar os cupons:', error);
