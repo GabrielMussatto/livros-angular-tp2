@@ -128,7 +128,12 @@ img {
 }
 
 .responsive-grid mat-card img {
+    display: none; /* Oculta qualquer imagem padrão */
+}
+
+.responsive-grid mat-card img[src] {
+    display: block; /* Mostra a imagem apenas se o atributo src estiver presente */
     max-height: 100%;
     max-width: 100%;
-    object-fit: contain; /* Ajusta a imagem proporcionalmente */
+    object-fit: contain; /* Garante que a imagem seja ajustada sem distorção */
 }
