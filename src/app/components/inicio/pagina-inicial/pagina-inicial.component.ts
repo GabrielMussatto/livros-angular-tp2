@@ -10,6 +10,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { MatCard, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIcon } from '@angular/material/icon';
+import { Cupom } from '../../../models/cupom.model';
 
 @Component({
   selector: 'app-pagina-inicial',
@@ -21,6 +22,7 @@ import { MatIcon } from '@angular/material/icon';
 export class PaginaInicialComponent implements OnInit{
   livros: Livro [] = [];
   caixaLivros: CaixaLivro [] = [];
+  cupons: Cupom[] = [];
   autores: Autor [] = [];
   carregando = true;
 
