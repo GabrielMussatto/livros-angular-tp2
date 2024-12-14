@@ -1,3 +1,4 @@
+import { Cupom } from "./cupom.model";
 import { ItemPedido } from "./item-pedido";
 
 export interface Pedido {
@@ -8,4 +9,5 @@ export interface Pedido {
     itens: ItemPedido[];
     statusPagamento?: string;
     statusPedido?: string;
+    cupom?: Cupom
 }

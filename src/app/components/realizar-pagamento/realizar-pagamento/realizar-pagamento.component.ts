@@ -13,33 +13,53 @@ import { ClienteService } from '../../../services/cliente.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { CupomService } from '../../../services/cupom.service';
+import { Cupom } from '../../../models/cupom.model';
 
 @Component({
   selector: 'app-realizar-pagamento',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatCardModule, MatButtonModule, MatRadioModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule, MatOptionModule, MatInputModule, MatLabel, NgIf, NgFor, MatOptionModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatOptionModule,
+    MatInputModule,
+    MatLabel,
+    NgIf,
+    NgFor,
+    MatOptionModule,
+  ],
   templateUrl: './realizar-pagamento.component.html',
   styleUrls: ['./realizar-pagamento.component.css'],
 })
 export class RealizarPagamentoComponent implements OnInit {
-
   currentStep: number = 1; // Controle do passo atual
   totalPedido: number = 0;
   metodoPagamento: string = '';
   itensCarrinho: ItemPedido[] = [];
-  cartaoCredito: CartaoCredito = { 
-    bandeiraCartao: 0, 
-    cpfTitular: '', 
-    cvc: 0, 
-    nomeImpressaoTitular: '', 
-    numeroCartao: '', 
-    validade: '' 
+  cartaoCredito: CartaoCredito = {
+    bandeiraCartao: 0,
+    cpfTitular: '',
+    cvc: 0,
+    nomeImpressaoTitular: '',
+    numeroCartao: '',
+    validade: '',
   };
   cliente: any = {};
+  nomeCupom: string = ''; // Para capturar o nome digitado pelo usuário
+  cupomAplicado: Cupom | null = null; // Para armazenar o cupom aplicado  
+  cupons: Cupom[] = [];
 
   constructor(
     private carrinhoService: CarrinhoService,
     private clienteService: ClienteService,
+    private cupomService: CupomService,
     private router: Router
   ) {}
 
@@ -47,6 +67,11 @@ export class RealizarPagamentoComponent implements OnInit {
     this.carrinhoService.obterCarrinho().subscribe((itens) => {
       this.itensCarrinho = itens;
       this.calcularTotalPedido();
+    });
+
+    // Carregar cupons disponíveis
+    this.cupomService.findAll().subscribe((cupons) => {
+      this.cupons = cupons;
     });
 
     // Carregar dados do cliente
@@ -59,7 +84,34 @@ export class RealizarPagamentoComponent implements OnInit {
   }
 
   calcularTotalPedido(): void {
-    this.totalPedido = this.itensCarrinho.reduce((total, item) => total + (item.subTotal ?? 0), 0);
+    this.totalPedido = this.itensCarrinho.reduce(
+      (total, item) => total + (item.subTotal ?? 0),
+      0
+    );
+  }
+
+  aplicarCupom(): void {
+    if (this.cupomAplicado) {
+      alert('Já existe um cupom aplicado!');
+      return;
+    }
+  
+    const cupom = this.cupons.find((c) => c.nomeCupom === this.nomeCupom.trim());
+  
+    if (cupom) {
+      this.cupomAplicado = cupom; // Armazenar o cupom aplicado
+      this.totalPedido = this.totalPedido * cupom.desconto; // Aplicar o desconto
+      alert(
+        `Cupom "${cupom.nomeCupom}" aplicado! Desconto de ${
+          cupom.desconto 
+        }%. Novo total: ${this.totalPedido.toFixed(2)}`
+      );
+    } else {
+      alert('Cupom inválido ou não encontrado.');
+    }
+  
+    // Limpar o campo de texto
+    this.nomeCupom = '';
   }
 
   avancar(): void {
@@ -79,7 +131,10 @@ export class RealizarPagamentoComponent implements OnInit {
       alert('Selecione um método de pagamento!');
       return;
     }
-
+  
+    // Enviar o cupom se ele estiver selecionado
+    const cupomAplicado = this.cupons.find(c => c.nomeCupom === this.metodoPagamento);
+    
     switch (this.metodoPagamento) {
       case 'pix':
         this.carrinhoService.finalizarPedidoPix().subscribe({

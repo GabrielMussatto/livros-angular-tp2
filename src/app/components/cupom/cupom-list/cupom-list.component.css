@@ -5,6 +5,7 @@
   .all{
     padding-left: 20px;
     padding-right: 20px;
+    height: 100vh;
   }
   
   .toolbar-title {

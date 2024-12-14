@@ -68,6 +68,24 @@
         </mat-form-field>
       </div>
 
+      <div class="cupom-container">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Digite o Cupom</mat-label>
+          <input matInput [(ngModel)]="nomeCupom" placeholder="Ex.: DESCONTO10" />
+        </mat-form-field>
+        <button 
+          mat-raised-button 
+          color="accent" 
+          [disabled]="cupomAplicado" 
+          (click)="aplicarCupom()"
+        >
+          Aplicar Cupom
+        </button>
+        <p *ngIf="cupomAplicado" class="cupom-aplicado">
+          Cupom "{{ cupomAplicado.nomeCupom }}" aplicado! Desconto de {{ cupomAplicado.desconto }}%.
+        </p>
+      </div>
+    
       <div class="botoes-container">
         <button mat-raised-button color="accent" (click)="voltar()">Voltar</button>
         <button mat-raised-button color="primary" (click)="avancar()">Avançar</button>

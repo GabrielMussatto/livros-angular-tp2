@@ -2,33 +2,67 @@
   padding: 20px;
 }
 
-.titulo-pagamento {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.metodo-pagamento-container {
-  max-width: 600px;
+.payment-card {
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.metodo-pagamento-card {
-  margin: 20px 0;
-}
-
-.metodo-item {
-  margin: 10px 0;
-}
-
-.full-width-input {
-  width: 100%;
-  margin-bottom: 10px;
+.itens-carrinho {
+  margin-bottom: 20px;
 }
 
 .botoes-container {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
 .mat-radio-button {
   margin-bottom: 10px;
+}
+
+.full-width-input {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.mat-card-content h2,
+.mat-card-content h3 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.mat-form-field {
+  margin-bottom: 15px;
+}
+
+.mat-select {
+  width: 100%;
+}
+
+.metodo-pagamento {
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid #ccc;
+}
+
+.payment-card mat-card-header {
+  background-color: #f1f1f1;
+}
+
+.payment-card mat-card-title {
+  font-size: 1.5em;
+}
+
+button {
+  margin-top: 20px;
+}
+
+.cupom-aplicado {
+  color: rgb(70, 27, 155);
+  font-weight: bold;
+  margin-top: 8px;
+}
+.full-width-input {
+  width: 100%;
 }
