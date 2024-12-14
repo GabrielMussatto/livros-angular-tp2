@@ -102,6 +102,10 @@ export class HeaderClienteComponent {
     this.router.navigate(['/meuPerfil']);
   }
 
+  meusPedidos(){
+    this.router.navigate(['/meuPedido']);
+  }
+
   // Função de pesquisa que chama os métodos do serviço
   pesquisar(): void {
     if (!this.filtroSelecionado || !this.termoPesquisa.trim()) {

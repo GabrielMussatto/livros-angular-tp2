@@ -1,0 +1,45 @@
+<div class="container">
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-indicator">
+      <mat-progress-spinner
+        mode="indeterminate"
+        color="primary"
+        diameter="50">
+      </mat-progress-spinner>
+      <p>Carregando pedidos...</p>
+    </div>
+  
+    <!-- Lista de Pedidos -->
+    <div *ngIf="!loading && pedidos.length > 0" class="cards-wrapper">
+      <mat-card *ngFor="let pedido of pedidos" class="card">
+        <!-- Título do Pedido -->
+        <mat-card-header>
+          <div mat-card-avatar class="pedido-avatar"></div>
+          <mat-card-title>Pedido #{{ pedido.id }}</mat-card-title>
+          <mat-card-subtitle>Status: {{ pedido.statusPedido }}</mat-card-subtitle>
+        </mat-card-header>
+  
+        <!-- Detalhes do Pedido -->
+        <mat-card-content>
+          <p><strong>Data do Pedido:</strong> {{ pedido.dataPedido | date }}</p>
+          <p><strong>Total:</strong> {{ pedido.valorTotal| currency : "BRL" : "symbol" : "1.2-2" }}</p>
+          <p><strong>Itens:</strong></p>
+          <ul>
+            <li *ngFor="let item of pedido.itens">
+              {{ item.titulo }} - {{ item.quantidade }}x
+            </li>
+          </ul>
+        </mat-card-content>
+  
+        <!-- Ações -->
+        <mat-card-footer class="card-footer">          
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  
+    <!-- Mensagem para Nenhum Pedido -->
+    <div *ngIf="!loading && pedidos.length === 0" class="no-pedidos">
+      <p>Você ainda não possui pedidos.</p>
+    </div>
+  </div>
+  

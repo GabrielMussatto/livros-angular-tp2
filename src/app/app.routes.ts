@@ -48,6 +48,7 @@ import { AlterarUsernameComponent } from './components/cliente/alterar-username/
 import { AlterarSenhaComponent } from './components/cliente/alterar-senha/alterar-senha/alterar-senha.component';
 import { ClientePerfilComponent } from './components/cliente/cliente-perfil/cliente-perfil.component';
 import { CadastroClienteComponent } from './components/cliente/cadastro-cliente/cadastro-cliente/cadastro-cliente.component';
+import { ClientePedidosComponent } from './components/cliente/cliente-pedidos/cliente-pedidos.component';
 
 export const routes: Routes = [
 
@@ -143,6 +144,8 @@ export const routes: Routes = [
             { path: 'meuPerfil', component: ClientePerfilComponent, title: 'Meu Perfil', canActivate: [authClienteGuard]},
 
             { path: 'cadastreSe', component: CadastroClienteComponent, title: 'Cadastre-se' },
+
+            { path: 'meuPedido', component: ClientePedidosComponent, title: 'Meus Pedidos' },
         ]
     }
    

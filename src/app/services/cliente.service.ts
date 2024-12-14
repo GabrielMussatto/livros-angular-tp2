@@ -6,12 +6,14 @@ import { Cliente } from '../models/cliente.model';
 import { ItemFavorito } from '../models/item-favorito';
 import { Sugestao } from '../models/sugestao.model';
 import { Sexo } from '../models/sexo.model';
+import { Pedido } from '../models/pedido';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
   private baseUrl = 'http://localhost:8080/clientes';
+  private urlAPI = 'http://localhost:8080/pedidos';
 
   constructor(
     private httpClient: HttpClient,
@@ -45,6 +47,12 @@ export class ClienteService {
     return this.httpClient.get<Cliente[]>(`${this.baseUrl}/search/cpf/${cpf}`, { headers, params });
   }
 
+  getPedidosCliente(): Observable<Pedido[]> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<Pedido[]>(`${this.urlAPI}/meus-pedidos`, { headers });
+  }
+
+  
   findByEstado(estado: string, page: number, pageSize: number): Observable<Cliente[]> {
     const headers = this.getHeaders();
     const params = {

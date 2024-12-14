@@ -9,5 +9,5 @@ export interface Pedido {
     itens: ItemPedido[];
     statusPagamento?: string;
     statusPedido?: string;
-    cupom?: Cupom
+    cupom?: Cupom;
 }
