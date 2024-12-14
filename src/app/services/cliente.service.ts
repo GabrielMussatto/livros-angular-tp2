@@ -204,4 +204,19 @@ export class ClienteService {
   findSexos(): Observable<Sexo[]> {
     return this.httpClient.get<Sexo[]>(`${this.baseUrl}/sexos`);
   }
+
+  alterarUsername(data: { usernameNovo: string; senha: string }): Observable<any> {
+    const headers = this.getHeaders();
+    return this.httpClient.patch(`${this.baseUrl}/search/alterar-username`, data, { headers });
+  }
+
+  alterarSenha(data: { senhaAntiga: string; novaSenha: string }): Observable<any> {
+    const headers = this.getHeaders();
+    return this.httpClient.patch(`${this.baseUrl}/search/alterar-senha`, data, { headers });
+  }
+
+  meuPerfil(idCliente: number): Observable<Cliente> {
+    const headers = this.getHeaders();
+    return this.httpClient.get<Cliente>(`${this.baseUrl}/search/meu-perfil`, { headers });
+  }
 }

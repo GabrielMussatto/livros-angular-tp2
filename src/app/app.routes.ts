@@ -48,6 +48,8 @@ import { funcionarioResolver } from './components/funcionario/resolver/funcionar
 import { FuncionarioFormComponent } from './components/funcionario/funcionario-form/funcionario-form.component';
 import { RealizarPagamentoComponent } from './components/realizar-pagamento/realizar-pagamento/realizar-pagamento.component';
 import { AcompanharPedidoComponent } from './components/acompanhar-pedido/acompanhar-pedido/acompanhar-pedido.component';
+import { AlterarUsernameComponent } from './components/cliente/alterar-username/alterar-username/alterar-username.component';
+import { AlterarSenhaComponent } from './components/cliente/alterar-senha/alterar-senha/alterar-senha.component';
 
 export const routes: Routes = [
 
@@ -131,8 +133,12 @@ export const routes: Routes = [
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [authClienteGuard]},
             
             { path: 'realizarPagamento', component: RealizarPagamentoComponent, title: 'Realizar Pagamento', canActivate: [authClienteGuard]},
-            
+
             { path: 'acompanharpedido', component: AcompanharPedidoComponent, title: 'Acompanhar Pedido', canActivate: [authClienteGuard]},
+
+            { path: 'alterarUsername', component: AlterarUsernameComponent, title: 'Alterando Username', canActivate: [authClienteGuard]},
+            
+            { path: 'alterarSenha', component: AlterarSenhaComponent, title: 'Alterando Senha', canActivate: [authClienteGuard]},
 
             { path: 'sugestao', component: SugestaoComponent, title: 'Sugestão'},
 
