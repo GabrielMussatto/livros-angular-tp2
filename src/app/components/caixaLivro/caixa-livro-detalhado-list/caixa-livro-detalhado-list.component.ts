@@ -79,7 +79,7 @@ export class CaixaLivroDetalhadoListComponent implements OnInit {
 
       };
       this.carrinhoService.adicionarAoCarrinho(item);
-      alert(`${this.caixaLivro.nome} foi adicionado ao carrinho com quantidade ${this.quantidade}!`);
+      this.snackBar.open(`A Caixa de Livro ${this.caixaLivro.nome} foi adicionada ${this.quantidade} vezes ao carrinho.`, 'Fechar', {duration: 3000});
     }
   }
 
