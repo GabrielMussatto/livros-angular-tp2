@@ -41,16 +41,13 @@ import { cupomResolver } from './components/cupom/resolver/cupom.resolver';
 import { SugestaoFuncionarioComponent } from './components/funcionario/sugestao-funcionario/sugestao-funcionario.component';
 import { SugestaoComponent } from './components/sugestao/sugestao.component';
 import { ClienteListComponent } from './components/cliente/cliente-list/cliente-list.component';
-import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
-import { clienteResolver } from './components/cliente/resolver/cliente.resolver';
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
-import { funcionarioResolver } from './components/funcionario/resolver/funcionario.resolver';
-import { FuncionarioFormComponent } from './components/funcionario/funcionario-form/funcionario-form.component';
 import { RealizarPagamentoComponent } from './components/realizar-pagamento/realizar-pagamento/realizar-pagamento.component';
 import { AcompanharPedidoComponent } from './components/acompanhar-pedido/acompanhar-pedido/acompanhar-pedido.component';
 import { AlterarUsernameComponent } from './components/cliente/alterar-username/alterar-username/alterar-username.component';
 import { AlterarSenhaComponent } from './components/cliente/alterar-senha/alterar-senha/alterar-senha.component';
 import { ClientePerfilComponent } from './components/cliente/cliente-perfil/cliente-perfil.component';
+import { CadastroClienteComponent } from './components/cliente/cadastro-cliente/cadastro-cliente/cadastro-cliente.component';
 
 export const routes: Routes = [
 
@@ -74,13 +71,9 @@ export const routes: Routes = [
 
             // Rotas para Cliente
             { path: 'clientes', component: ClienteListComponent, title: 'Lista de Clientes', canActivate: [authGuard] },
-            { path: 'clientes/new', component: ClienteFormComponent, title: 'Novo Cliente', canActivate: [authGuard] },
-            { path: 'clientes/edit/:id', component: ClienteFormComponent, resolve: { cliente: clienteResolver }, canActivate: [authGuard] },
 
             // Rotas para Funcionario
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Lista de Funcionários', canActivate: [authGuard] },
-            { path: 'funcionarios/new', component: FuncionarioFormComponent, title: 'Novo Funcionário', canActivate: [authGuard] },
-            { path: 'funcionarios/edit/:id', component: FuncionarioFormComponent, resolve: { funcionario: funcionarioResolver }, canActivate: [authGuard] },
 
             // Rotas para Caixa de Livros
             { path: 'caixaLivros', component: CaixaLivroListComponent, title: 'Lista de Caixas de Livros', canActivate: [authGuard] },
@@ -147,7 +140,9 @@ export const routes: Routes = [
 
             { path: 'login', component: LoginClienteComponent, title: 'Login' },
 
-            {path: 'meuPerfil', component: ClientePerfilComponent, title: 'Meu Perfil', canActivate: [authClienteGuard]},
+            { path: 'meuPerfil', component: ClientePerfilComponent, title: 'Meu Perfil', canActivate: [authClienteGuard]},
+
+            { path: 'cadastreSe', component: CadastroClienteComponent, title: 'Cadastre-se' },
         ]
     }
    
