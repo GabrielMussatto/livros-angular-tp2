@@ -50,6 +50,7 @@ import { RealizarPagamentoComponent } from './components/realizar-pagamento/real
 import { AcompanharPedidoComponent } from './components/acompanhar-pedido/acompanhar-pedido/acompanhar-pedido.component';
 import { AlterarUsernameComponent } from './components/cliente/alterar-username/alterar-username/alterar-username.component';
 import { AlterarSenhaComponent } from './components/cliente/alterar-senha/alterar-senha/alterar-senha.component';
+import { ClientePerfilComponent } from './components/cliente/cliente-perfil/cliente-perfil.component';
 
 export const routes: Routes = [
 
@@ -63,6 +64,8 @@ export const routes: Routes = [
             { path: 'login', component: LoginFuncionarioComponent, title: 'Login Admin' },
             
             { path: 'gerenciar', component: GerenciarComponent, title: 'Gerenciar', canActivate: [authGuard] },
+
+
 
             // Rotas para Autores
             { path: 'autores', component: AutorListComponent, title: 'Lista de Autores', canActivate: [authGuard] },
@@ -143,6 +146,8 @@ export const routes: Routes = [
             { path: 'sugestao', component: SugestaoComponent, title: 'Sugestão'},
 
             { path: 'login', component: LoginClienteComponent, title: 'Login' },
+
+            {path: 'meuPerfil', component: ClientePerfilComponent, title: 'Meu Perfil', canActivate: [authClienteGuard]},
         ]
     }
    
