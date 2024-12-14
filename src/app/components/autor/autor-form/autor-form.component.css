@@ -116,3 +116,19 @@ img {
     /* grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); */
     gap: 20px;
 }
+
+.responsive-grid mat-card {
+    background-color: #ffffff; /* Fundo branco */
+    border: 2px dashed #ccc; /* Borda tracejada cinza */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 240px; /* Altura fixa para o quadro */
+    width: 100%; /* Largura total */
+}
+
+.responsive-grid mat-card img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* Ajusta a imagem proporcionalmente */
+}
