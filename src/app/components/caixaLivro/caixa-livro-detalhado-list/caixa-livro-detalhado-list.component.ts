@@ -9,6 +9,8 @@ import { MatIcon } from '@angular/material/icon';
 import { ItemPedido } from '../../../models/item-pedido';
 import { CarrinhoService } from '../../../services/carrinho.service';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-caixa-livro-detalhado-list',
@@ -25,7 +27,9 @@ export class CaixaLivroDetalhadoListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public caixaLivroService: CaixaLivroService,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +63,11 @@ export class CaixaLivroDetalhadoListComponent implements OnInit {
   }
 
   adicionarAoCarrinho(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.snackBar.open('Você precisa estar logado para adicionar ao carrinho.', 'Fechar', { duration: 3000 });
+      return;
+    }
+
     if (this.caixaLivro) {
       const item: ItemPedido = {
         idCaixaLivro: this.caixaLivro.id,

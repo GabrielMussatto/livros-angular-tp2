@@ -49,7 +49,7 @@
         >
           {{ card.verDescricao ? "Ocultar Descrição" : "Ver Descrição Breve" }}
         </button>
-        <button mat-button color="accent" class="card-button accent-button">
+        <button mat-button color="accent" class="card-button accent-button" (click)="adicionarAoCarrinho(card)">
           Adicionar ao Carrinho
         </button>
         <button
