@@ -1,45 +1,47 @@
-<mat-card-content>
-    <form [formGroup]="formGroup" class="formulario" novalidate>
+<mat-card class="tudo">
+    <mat-card-content>
+        <form [formGroup]="formGroup" class="formulario" novalidate>
 
-        <!-- Username Atual -->
-        <mat-form-field appearance="outline" style="width: 100%" class="campos">
-            <mat-label>Username: </mat-label>
-            <input matInput placeholder="Digite seu username" [disabled]="true">
-            {{alterar.username}}
-        </mat-form-field>
+            <!-- Username Atual -->
+            <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                <mat-label>Username: </mat-label>
+                <input matInput placeholder="Digite seu username" [disabled]="true">
+                {{alterar.username}}
+            </mat-form-field>
 
-        <!-- Novo Username -->
-        <mat-form-field appearance="outline" style="width: 100%" class="campos">
-            <mat-label>Novo Username:</mat-label>
-            <input matInput placeholder="Digite o novo username" formControlName="usernameNovo">
-            <mat-error *ngIf="formGroup.get('usernameNovo')?.hasError('required')">
-                O novo username é obrigatório.
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('usernameNovo')?.hasError('minlength')">
-                O username deve ter pelo menos 3 caracteres.
-            </mat-error>
-        </mat-form-field>
+            <!-- Novo Username -->
+            <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                <mat-label>Novo Username:</mat-label>
+                <input matInput placeholder="Digite o novo username" formControlName="usernameNovo">
+                <mat-error *ngIf="formGroup.get('usernameNovo')?.hasError('required')">
+                    O novo username é obrigatório.
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('usernameNovo')?.hasError('minlength')">
+                    O username deve ter pelo menos 3 caracteres.
+                </mat-error>
+            </mat-form-field>
 
-        <!-- Senha -->
-        <mat-form-field appearance="outline" style="width: 100%" class="campos">
-            <mat-label>Senha:</mat-label>
-            <input matInput type="password" placeholder="Digite sua senha" formControlName="senha">
-            <mat-error *ngIf="formGroup.get('senha')?.hasError('required')">
-                A senha é obrigatória.
-            </mat-error>
-            <mat-error *ngIf="formGroup.get('senha')?.hasError('minlength')">
-                A senha deve ter pelo menos 3 caracteres.
-            </mat-error>
-        </mat-form-field>
+            <!-- Senha -->
+            <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                <mat-label>Senha:</mat-label>
+                <input matInput type="password" placeholder="Digite sua senha" formControlName="senha">
+                <mat-error *ngIf="formGroup.get('senha')?.hasError('required')">
+                    A senha é obrigatória.
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('senha')?.hasError('minlength')">
+                    A senha deve ter pelo menos 3 caracteres.
+                </mat-error>
+            </mat-form-field>
 
-    </form>
-</mat-card-content>
-<mat-card-actions>
-    <button mat-flat-button mat-button class="botao" (click)="alterarUsername()">
-        Alterar Username
-    </button>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button mat-button class="botao" (click)="alterarUsername()">
+            Alterar Username
+        </button>
 
-    <button mat-flat-button mat-button class="botao" [routerLink]="'/alterarSenha'">
-        Alterar senha
-    </button>
-</mat-card-actions>
+        <button mat-flat-button mat-button class="botao" [routerLink]="'/alterarSenha'">
+            Alterar senha
+        </button>
+    </mat-card-actions>
+</mat-card>
