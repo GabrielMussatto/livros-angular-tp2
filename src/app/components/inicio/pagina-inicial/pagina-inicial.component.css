@@ -4,6 +4,50 @@
 
 }
 
+.cupom-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .cupom-card {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .carousel-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #555;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .carousel-btn.left {
+    left: -40px;
+  }
+  
+  .carousel-btn.right {
+    right: -40px;
+  }
+  
+  .no-cupons {
+    text-align: center;
+    color: #888;
+    font-size: 1.2rem;
+  }
+  
+
 /* Estilo do carrossel */
 .carrossel-card {
     position: relative;

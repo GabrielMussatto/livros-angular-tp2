@@ -3,6 +3,28 @@
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
 
+  <!-- Carrossel de Cupons -->
+  <div class="cupom-carousel">
+    <h3 class="centralizado">Cupons</h3>
+
+    <!-- Renderiza apenas o cupom atual usando slice -->
+    <mat-card
+      *ngFor="let cupom of cupons.slice(cuponsCarouselIndex, cuponsCarouselIndex + cuponsPorPagina)"
+      class="cupom-card"
+    >
+        <mat-card-title>{{ cupom.nomeCupom }}</mat-card-title>
+        
+    </mat-card>
+
+    <!-- Botões de navegação -->
+    <button mat-icon-button (click)="moveCarouselLeft('cupons')">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="moveCarouselRight('cupons')">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
   <!-- Carrossel de Livros -->
   <div class="container">
     <mat-card class="carrossel-card">
