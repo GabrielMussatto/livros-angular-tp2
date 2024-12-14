@@ -46,6 +46,7 @@ import { clienteResolver } from './components/cliente/resolver/cliente.resolver'
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
 import { funcionarioResolver } from './components/funcionario/resolver/funcionario.resolver';
 import { FuncionarioFormComponent } from './components/funcionario/funcionario-form/funcionario-form.component';
+import { RealizarPagamentoComponent } from './components/realizar-pagamento/realizar-pagamento/realizar-pagamento.component';
 
 export const routes: Routes = [
 
@@ -127,6 +128,8 @@ export const routes: Routes = [
             { path: 'favoritos', component: FavoritoComponent, title: 'Favoritos', canActivate: [authClienteGuard]},
 
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [authClienteGuard]},
+            
+            { path: 'realizarPagamento', component: RealizarPagamentoComponent, title: 'Realizar Pagamento', canActivate: [authClienteGuard]},
 
             { path: 'sugestao', component: SugestaoComponent, title: 'Sugestão'},
 
