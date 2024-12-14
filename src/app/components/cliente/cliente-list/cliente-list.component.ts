@@ -31,7 +31,7 @@ export class ClienteListComponent implements OnInit {
   clientes: Cliente[] = [];
   displayedColumns: string[] = [
     'linha', 'id', 'nome', 'username', 'dataNascimento', 'email', 'cpf', 'telefone', 
-    'sexo', 'cep', 'endereco', 'estado', 'cidade', 'acao'
+    'sexo', 'cep', 'endereco', 'estado', 'cidade'
   ];
 
   totalRecords = 0;
@@ -125,28 +125,5 @@ export class ClienteListComponent implements OnInit {
     this.page = 0; // Reinicia a página ao aplicar filtro
     this.carregarClientes();
     this.snackBar.open('O filtro foi aplicado com sucesso!', 'Fechar', { duration: 3000 });
-  }
-
-  // Excluir cliente
-  excluir(cliente: Cliente): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { message: 'Deseja realmente excluir este cliente? Não será possível reverter.' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.clienteService.delete(cliente).subscribe({
-          next: () => {
-            this.clientes = this.clientes.filter(c => c.id !== cliente.id);
-            this.totalRecords--;
-            this.snackBar.open('Cliente excluído com sucesso!', 'Fechar', { duration: 3000 });
-          },
-          error: (err) => {
-            console.error('Erro ao tentar excluir o cliente:', err);
-            this.snackBar.open('Erro ao tentar excluir o cliente', 'Fechar', { duration: 3000 });
-          }
-        });
-      }
-    });
   }
 }
