@@ -1,0 +1,149 @@
+/* Estilos principais da página */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .navegacao_dados {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .perfil {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Estilos dos dados pessoais */
+  .container_dados {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .container_dados_pessoais {
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a2e6d; /* Azul Marinho */
+    margin-bottom: 20px;
+  }
+  
+  h2.titulo {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2d6a4f; /* Verde Floresta */
+    margin-bottom: 10px;
+  }
+  
+  .dados_pessoais_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .campos, .campo-sexo {
+    width: 100%;
+  }
+  
+  .campos mat-label,
+  .campo-sexo mat-label {
+    color: #1a2e6d; /* Azul Marinho */
+  }
+  
+  .mat-form-field {
+    margin-bottom: 20px;
+  }
+  
+  .mat-form-field input {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9; /* Cinza Claro */
+  }
+  
+  .mat-divider {
+    height: 100%;
+    border-left: 1px solid #d9d9d9; /* Cinza Claro */
+    margin: 0 20px;
+  }
+  
+  .dados_acesso {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dados_acesso .campo_dados_acesso {
+    margin-bottom: 20px;
+  }
+  
+  .botoes {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .botao {
+    background-color: #b2acaa; /* Laranja Queimado */
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+  }
+  
+  .botao:hover {
+    background-color: #a29691;
+  }
+  
+  /* Estilos de telefone e endereço */
+  .dados_pessoais .mat-form-field {
+    margin-bottom: 20px;
+  }
+  
+  .dados_pessoais input {
+    font-size: 1rem;
+  }
+  
+  .dados_pessoais p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #555555;
+  }
+  
+  /* Estilos para os campos de endereço */
+  .dados_pessoais input[disabled] {
+    background-color: #f0f0f0;
+    color: #888888;
+  }
+  
+  /* Estilos do botão de navegação */
+  .opcao mat-icon {
+    color: #1a2e6d; /* Azul Marinho */
+    margin-right: 10px;
+  }
+  
+  .opcao {
+    cursor: pointer;
+  }
+  
+  .opcao:hover {
+    background-color: #d9d9d9; /* Cinza Claro */
+    border-radius: 4px;
+    padding: 10px;
+  }
+  

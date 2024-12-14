@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="navegacao_dados">
+        <mat-nav-list>
+            <mat-list-item class="opcao" routerLink="">
+                <mat-icon matListItemIcon>arrow_back</mat-icon>
+                <span matListItemTitle>Voltar</span>
+            </mat-list-item>
+        </mat-nav-list>
+    </div>
+    <div class="perfil">
+    </div>
+
+    <div class="container_dados">
+        <div class="container_dados_pessoais">
+            <h1>Seus Dados</h1>
+            <div class="container_dados_d">
+                <div class="dados">
+                    <h2 class="titulo">Dados Pessoais</h2>
+                    <div class="dados_pessoais_grid"> 
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>Nome: </mat-label>
+                            <input matInput placeholder="Digite seu nome" [disabled]="true">
+                            {{ usuarioLogado?.nome }}
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>Email: </mat-label>
+                            <input matInput [disabled]="true">
+                            {{ usuarioLogado?.email }}
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>Telefone: </mat-label>
+                            <input matInput placeholder="Digite seu telefone" [disabled]="true">
+                            ({{endereco.codigoArea}}) {{endereco.numero }}
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>CPF: </mat-label>
+                            <input matInput placeholder="Digite seu CPF" [disabled]="true">
+                            {{usuarioLogado?.cpf }}
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" style="width: 100%" class="campo-sexo">
+                            <mat-label>Sexo: </mat-label>
+                            <input matInput placeholder="Digite seu sexo" [disabled]="true">
+                            {{usuarioLogado?.sexo?.nome}}
+                        </mat-form-field>
+                    </div>
+                    <div class="dados_pessoais">
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>Endereço: </mat-label>
+                            <input matInput [disabled]="true">
+                            <p>CEP: {{ endereco.cep }}</p>
+                            <p>Estado: {{ endereco.estado }}</p>
+                            <p>Endereco: {{ endereco.endereco }}</p>
+                            <p>Sigla: {{ endereco.sigla }}
+                            <p>Cidade: {{ endereco.cidade }}</p>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-divider vertical></mat-divider>
+                <div class="dados_acesso">
+                    <h2 class="titulo">Dados de Acesso</h2>
+                    <div class="campo_dados_acesso">
+                        <mat-form-field appearance="outline" style="width: 100%" class="campos">
+                            <mat-label>Username: </mat-label>
+                            <input matInput placeholder="Digite seu username" [disabled]="true">
+                            {{endereco?.username}}
+                        </mat-form-field>
+                    </div>
+                    <div class="botoes">
+                        <button mat-button class="botao" [routerLink]="'/alterarUsername'">
+                            <span>Alterar Username</span>
+                        </button>
+                        <button mat-button class="botao" [routerLink]="'/alterarSenha'">
+                            <span>Alterar Senha</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
