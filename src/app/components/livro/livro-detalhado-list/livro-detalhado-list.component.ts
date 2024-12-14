@@ -63,6 +63,8 @@ export class LivroDetalhadoListComponent implements OnInit {
         preco: this.livro.preco,
         quantidade: this.quantidade,
         subTotal: this.livro.preco * this.quantidade,
+        imageUrl: this.livroService.getUrlImage(this.livro.nomeImagem)// Adiciona a URL da imagem
+
       };
       this.carrinhoService.adicionarAoCarrinho(item);
       alert(`${this.livro.titulo} foi adicionado ao carrinho com quantidade ${this.quantidade}!`);
